@@ -16,7 +16,7 @@ ANDROID:
 `react-native run-android`
 
 
-I added notes attempting to explain what's going on
+I added notes attempting to explain what's going on.
 The current flow of the react-native app is the following:
 
 IOS:
