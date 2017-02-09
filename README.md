@@ -1,6 +1,12 @@
 # BudgetApp
 
 React-Native start up instuctions:
+`brew install node`
+
+`brew install watchman`
+
+`npm install -g react-native-cli`
+
 `git clone https://github.com/CUNYTech/BudgetApp.git`
 
 `cd BudgetApp`
@@ -16,7 +22,7 @@ ANDROID:
 `react-native run-android`
 
 
-I added notes attempting to explain what's going on
+I added notes attempting to explain what's going on.
 The current flow of the react-native app is the following:
 
 IOS:
