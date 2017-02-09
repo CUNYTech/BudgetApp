@@ -1,0 +1,3 @@
+rootProject.name = 'BudgetApp'
+
+include ':app'
