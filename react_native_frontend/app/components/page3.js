@@ -7,8 +7,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import BackButton from './backButton'
-
 export default class Page3 extends Component {
 
   constructor() {
