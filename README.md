@@ -1,6 +1,12 @@
 # BudgetApp
 
 React-Native start up instuctions:
+'brew install node'
+
+'brew install watchman'
+
+'npm install -g react-native-cli'
+
 `git clone https://github.com/CUNYTech/BudgetApp.git`
 
 `cd BudgetApp`
