@@ -11,4 +11,4 @@
 
  import Main from './app/main';
 
-AppRegistry.registerComponent('BudgetApp', () => BudgetApp);
+AppRegistry.registerComponent('BudgetApp', () => Main);
