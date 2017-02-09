@@ -4,6 +4,8 @@
  * @flow
  */
 
+// THIS IS THE ANDROID ACCESS POINT
+
  import React, { Component } from 'react';
  import {
    AppRegistry,

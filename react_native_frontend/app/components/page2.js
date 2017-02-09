@@ -7,7 +7,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import BackButton from './backButton'
 
 export default class Page2 extends Component {
 
@@ -22,11 +21,12 @@ export default class Page2 extends Component {
       name: 'page3'
     })
   }
-
+// THIS IS HOW YOU GO BACK A PAGE. THE pop METHOD BEING CALLED REMOVES THE LAST ITEM THAT WAS pushed INTO THE ARRAY.
+// [1, 2, 3, 4].pop() WOULD LEAVE US WITH [1, 2, 3] SO PAGE 3 WOULD THEN DISPLAY
   back() {
     this.props.navigator.pop()
   }
-
+// A RULE OF REACT-NATIVE IS THAT THE UI NEEDS TO WRAPPED INSIDE A TAG. NOTICE HOW EVERYTHING IS INSIDE THE View TAG. (LINE 32-40)
   render() {
     return (
       <View style={styles.container}>
