@@ -1,3 +1,15 @@
+/**
+ * Filename: LoginForm.js
+ * Purpose: This file creates the login fields and button for logging in.
+ * LINE 23-36 are for the username/email input and has custom keyboard functions
+ * for that (@ symbol displayed by default).
+ * LINE 37-51 are for the password input. 
+ * LINE 46 is a must as it masks the users password upon entry.
+ * LINE 53-55 are for the button, placement and style are dictated by the style container for it.
+ * Created By: John Nolcox
+ * Last Update: 5:40PM 15FEB17 by John Nolcox
+**/
+
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 
@@ -9,7 +21,8 @@ export default class LoginForm extends Component {
                 barStyle="light-content"
                 />
               <TextInput
-                placeholder="username or email"
+                //changes the text in the background
+                placeholder="username or email" 
                 placeholderTextColor="rgba(255,255,255,0.7)"
                 underlineColorAndroid='transparent'
                 //for iOS change next line to 'returnKeyType'
@@ -17,27 +30,37 @@ export default class LoginForm extends Component {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                onSubmitEditing={() => this.passwordInput.focus()}
+                //this allows the textinput to switch to the next input automatically
+                onSubmitEditing={() => this.passwordInput.focus()} 
                 style={styles.input}
                 />
               <TextInput
-                placeholder="password"
+                //changes the text in the bacground
+                placeholder="password" 
                 placeholderTextColor="rgba(255,255,255,0.7)"
                 underlineColorAndroid='transparent'
                 //for iOS change next line to 'returnKeyType'
                 returnKeyLabel="Go"
-                secureTextEntry
+                
+                //IMPORTANT - this "hides" the password as it is typed
+                secureTextEntry 
+
                 style={styles.input}
-                ref={(input) => this.passwordInput = input}
+                //before mentioned reference for auto switching of input after pressing enter in email
+                ref={(input) => this.passwordInput = input} 
                 />
 
               <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>LOGIN</Text>
+                  <Text style={styles.buttonText}>LOGIN</Text> 
               </TouchableOpacity>
             </View>
         );
     }
 }
+
+/**
+ * The below code are all the style references used above
+ */
 
 const styles = StyleSheet.create({
     container: {       
