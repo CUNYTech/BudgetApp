@@ -34,6 +34,8 @@ since it is in the root of the folder it got uploaded to git as well.
             "outDir": "${workspaceRoot}/.vscode/.react"
         },
         {
+            // This line allows you to debugg in a chrome browser however it is annoying since the tab needs
+            // be in the forground
             "name": "Debug in Exponent",
             "program": "${workspaceRoot}/.vscode/launchReactNative.js",
             "type": "reactnative",
