@@ -1,5 +1,5 @@
 /**
- * Filename: Login.js
+ * Filename: login.js
  * Purpose: This file creates the login page. 
  * Created By: John Nolcox
  * Last Update: 6:01PM 15FEB17 by John Nolcox
@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, KeyboardAvoidingView} from 'react-native';
 import LoginForm from './LoginForm';
 
-export default class Login extends Component {
+export default class login extends Component {
     render() {
         return (
           // The following line of code allows everything on screen to move up for the keyboard to appear

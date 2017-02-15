@@ -1,5 +1,5 @@
 /**
- * Filename: LoginForm.js
+ * Filename: loginForm.js
  * Purpose: This file creates the login fields and button for logging in and is used fo Login.js file
  * LINE 23-36 are for the username/email input and has custom keyboard functions
  * for that (@ symbol displayed by default).
@@ -13,7 +13,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, StatusBar } from 'react-native';
 
-export default class LoginForm extends Component {
+export default class loginForm extends Component {
     render() {
         return (
             <View style={styles.container}>
