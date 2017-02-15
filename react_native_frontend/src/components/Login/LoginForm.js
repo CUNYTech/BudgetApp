@@ -1,6 +1,6 @@
 /**
  * Filename: LoginForm.js
- * Purpose: This file creates the login fields and button for logging in.
+ * Purpose: This file creates the login fields and button for logging in and is used fo Login.js file
  * LINE 23-36 are for the username/email input and has custom keyboard functions
  * for that (@ symbol displayed by default).
  * LINE 37-51 are for the password input. 
