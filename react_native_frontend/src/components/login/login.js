@@ -22,12 +22,12 @@ export default class login extends Component {
           // The following line of code allows everything on screen to move up for the keyboard to appear
           // instead of the keyboard covering whatever was there.
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
+              <Text style={styles.appTitle}>Hoola</Text>
               <View style={styles.logoContainer}>
-              <Image
-                style={styles.logo}
-                source={require('../../images/wallet.png')}
+                <Image
+                  style={styles.logo}
+                  source={require('../../images/wallet.png')}
                 />
-
                 <Text style={styles.logoTitle}>An app made for budgeting with rewards!</Text>
               </View>
               <View style={styles.formContainer}>
@@ -40,8 +40,8 @@ export default class login extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#3498db'
+      flex: 1,
+      backgroundColor: '#3498db'
     },
     logoContainer: {
       alignItems: 'center',
@@ -58,5 +58,12 @@ const styles = StyleSheet.create({
       width: 160,
       textAlign: 'center',
       opacity: 0.9
+    },
+    appTitle: {
+      color: "#2BE189",
+      marginTop: 200,
+      fontFamily: 'Marker Felt',
+      fontSize: 80,
+      textAlign: 'center',
     }
 });
