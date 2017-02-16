@@ -1,3 +1,8 @@
+/**
+This is just the file needed for the React Native environment to work correctly inside of Visual Studio Code 
+It allows you to have the language loaded and debug the various OS's. It should have stayed local but I guess
+since it is in the root of the folder it got uploaded to git as well. 
+**/
 {
     "version": "0.2.0",
     "configurations": [
