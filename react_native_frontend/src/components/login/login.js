@@ -1,13 +1,20 @@
 /**
- * Filename: login.js
- * Purpose: This file creates the login page. 
+ * Filename: Login.js
+ * Purpose: This file creates the login page.
  * Created By: John Nolcox
  * Last Update: 6:01PM 15FEB17 by John Nolcox
 **/
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, KeyboardAvoidingView} from 'react-native';
-import LoginForm from './LoginForm';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  KeyboardAvoidingView
+} from 'react-native';
+
+import LoginForm from './loginForm';
 
 export default class login extends Component {
     render() {
