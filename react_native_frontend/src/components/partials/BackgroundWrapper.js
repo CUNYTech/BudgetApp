@@ -53,11 +53,9 @@ BackgroundWrapper.propTypes = {
 
 const styleWrapper = {
     containerImage: {
-        width: window.width,
-        height: window.height,
-        resizeMode: getPlatformValue('android', 'cover', 'contain'),
-        paddingTop: getPlatformValue('android', 5, 22),
-        flex: 1
+      flex: 1,
+      width: null,
+      height: null
     },
     containerView: {
         flex: 1,
