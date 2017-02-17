@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StatusBar
+    AppRegistry,
+    StatusBar
 } from 'react-native';
 import App from './src/App'
 
