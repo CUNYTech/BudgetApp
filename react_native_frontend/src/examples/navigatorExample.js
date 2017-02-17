@@ -1,4 +1,4 @@
-// THIS IS THE FIRST FILE OF OUR APP.
+/*// THIS IS THE FIRST FILE OF OUR APP.
 // THIS IS HOW NAVIGATION WILL WORK
 // THE NAVIGATOR IS A REACT NATIVE COMPONENT AND WE NEED TO IMPORT IT TO USE IT (LINE 6-8)
 
@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 
 // WE NEED TO IMPORT EVERY COMPONENT WE WANT TO USE HERE
-import Page1 from './components/page1'
-import Page2 from './components/page2'
-import Page3 from './components/page3'
-import Page4 from './components/page4'
+import Page1 from './components/wellingtonPages/page1'
+import Page2 from './components/wellingtonPages/page2'
+import Page3 from './components/wellingtonPages/page3'
+import Page4 from './components/wellingtonPages/page4'
 
 
 export default class Main extends Component {
@@ -58,4 +58,4 @@ export default class Main extends Component {
       />
     );
   }
-}
+}*/
