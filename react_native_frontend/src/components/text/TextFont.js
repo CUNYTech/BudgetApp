@@ -12,7 +12,7 @@ export default class TextFont extends Component {
 }
 
 TextFont.defaultProps = {
-    fontFamily: 'Raleway',
+    fontFamily: 'Arial',
     fontWeight: '400',
     color: '#ffffff'
 }
