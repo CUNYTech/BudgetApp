@@ -57,6 +57,7 @@ const styleWrapper = {
         height: window.height,
         resizeMode: getPlatformValue('android', 'cover', 'contain'),
         paddingTop: getPlatformValue('android', 5, 22),
+        flex: 1
     },
     containerView: {
         flex: 1,
