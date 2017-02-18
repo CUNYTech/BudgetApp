@@ -4,8 +4,8 @@ import Logo from './Logo';
 
 export {
     AlertStatus, BackgroundWrapper, Logo
-}
+};
 
 export default {
     AlertStatus, BackgroundWrapper, Logo
-}
+};
