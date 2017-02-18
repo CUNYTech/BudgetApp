@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {getStyleFromProps} from '../../utils';
-import {TextFont} from '../text';
+import React, { Component, PropTypes } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { getStyleFromProps } from '../../utils';
+import { TextFont } from '../text';
 
 export default class Button extends Component {
     render() {
@@ -10,24 +10,26 @@ export default class Button extends Component {
             ...getStyleFromProps(['marginTop', 'width', 'flex'], this.props)
         };
 
-        return <View style={{alignItems: 'center'}}>
-            <TouchableOpacity style={style} onPress={this.props.onPress}>
-                <TextFont style={styleButton.text}>{this.props.children}</TextFont>
-            </TouchableOpacity>
-        </View>
+        return (
+            <View style={{ alignItems: 'center' }}>
+                <TouchableOpacity style={style} onPress={this.props.onPress}>
+                    <TextFont style={styleButton.text}>{this.props.children}</TextFont>
+                </TouchableOpacity>
+            </View>
+        );
     }
 }
 
 Button.defaultProps = {
     width: 179
-}
+};
 
 Button.propTypes = {
     marginTop: PropTypes.number,
     width: PropTypes.number,
     flex: PropTypes.number,
     onPress: PropTypes.func
-}
+};
 
 const styleButton = {
     container: {
@@ -37,8 +39,8 @@ const styleButton = {
         paddingRight: 47,
         backgroundColor: 'rgba(102, 205, 170, 0.6)',
         borderRadius: 30,
-        alignItems: "stretch",
-        shadowColor: "#000000",
+        alignItems: 'stretch',
+        shadowColor: '#000000',
         shadowOpacity: 0.5,
         shadowRadius: 2,
         shadowOffset: {
@@ -49,8 +51,8 @@ const styleButton = {
     text: {
         color: '#ffffff',
         fontSize: 16,
-        fontWeight: "400",
-        textAlign: "center",
+        fontWeight: '400',
+        textAlign: 'center',
         letterSpacing: 3
     }
-}
+};

@@ -86,7 +86,7 @@ export default class Home extends Component {
 
 Home.propTypes = {
     disableInteractionCheck: PropTypes.bool
-}
+};
 
 const loginStyle = StyleSheet.create({
     loginContainer: {
@@ -100,4 +100,4 @@ const loginStyle = StyleSheet.create({
         paddingRight: 15,
         marginTop: 45
     }
-})
+});

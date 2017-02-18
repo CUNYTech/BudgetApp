@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 /**
  * Combine style from props like: marginTop, left, right
@@ -6,28 +6,29 @@ import {Platform} from 'react-native';
  * @param props
  * @returns {{}}
  */
-export function getStyleFromProps(propStyleKeys = [], props = {}){
+export function getStyleFromProps(propStyleKeys = [], props = {}) {
     let style = {};
     propStyleKeys.map((propStyleKey) => {
         const propStyleValue = props[propStyleKey];
-        if(propStyleValue !== undefined && propStyleValue !== null && propStyleValue !== false){
+        if (propStyleValue !== undefined && propStyleValue !== null && propStyleValue !== false) {
             style = {
                 ...style,
                 [propStyleKey]: propStyleValue
-            }
+            };
         }
         return propStyleKey;
     });
-    if(props.style){
+
+    if (props.style) {
         style = {
             ...style,
             ...props.style
-        }
+        };
     }
     return style;
 }
 
-export function getPlatformValue(os, value, valueDefault){
-    if(Platform.OS === os) return value;
-    return valueDefault
+export function getPlatformValue(os, value, valueDefault) {
+    if (Platform.OS === os) return value;
+        return valueDefault;
 }
