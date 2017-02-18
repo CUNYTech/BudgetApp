@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { View, Text, Image, StyleSheet, Alert, Animated } from 'react-native';
-import { Input, Button, Logo, Heading, BackgroundWrapper, AlertStatus } from '../components';
+import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
