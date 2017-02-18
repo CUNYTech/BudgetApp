@@ -55,32 +55,34 @@ export default class Home extends Component {
     }
 
     render() {
-        return <BackgroundWrapper transparent>
-            <View style={loginStyle.loginContainer}>
+        return (
+            <View style={{flex: 1, backgroundColor: 'transparent'}}>
+              <View style={loginStyle.loginContainer}>
                 <Animated.View style={{position: 'relative', top: this.state.logoPositionTop}}>
-                    <Logo/>
+                  <Logo/>
                 </Animated.View>
                 <Animated.View style={{position: 'relative', left: this.state.groupHeadingPositionLeft}}>
-                    <Heading marginTop={89} color="#ffffff" textAlign="center">
-                        {'Hoola'}
-                    </Heading>
-                    <Heading marginTop={16} element="h3" color="#ffffff" textAlign="center">
-                        {'Budgeting With Rewards'}
-                    </Heading>
+                  <Heading marginTop={89} color="#ffffff" textAlign="center">
+                    {'Hoola'}
+                  </Heading>
+                  <Heading marginTop={16} element="h3" color="#ffffff" textAlign="center">
+                    {'Budgeting With Rewards'}
+                  </Heading>
                 </Animated.View>
                 <Animated.View style={{position: 'relative', left: this.state.buttonPositionLeft}}>
-                    <Button marginTop={90} onPress={this.handePressSignIn.bind(this)}>
-                        Sign in
-                    </Button>
+                  <Button marginTop={90} onPress={this.handePressSignIn.bind(this)}>
+                    Sign in
+                  </Button>
                 </Animated.View>
-            </View>
-            <Animated.View style={{position: 'relative', top: this.state.statusPositionTop}}>
+              </View>
+              <Animated.View style={{position: 'relative', top: this.state.statusPositionTop}}>
                 <AlertStatus
-                    textHelper="Don't have account? " textAction="Sign up"
-                    onPressAction={this.handlePressSignUp.bind(this)}
-                />
-            </Animated.View>
-        </BackgroundWrapper>
+                  textHelper="Don't have account? " textAction="Sign up"
+                  onPressAction={this.handlePressSignUp.bind(this)}
+                  />
+              </Animated.View>
+            </View>
+        )
     }
 }
 
