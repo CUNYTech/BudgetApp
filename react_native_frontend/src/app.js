@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Image, StyleSheet}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
-import { BackgroundWrapper } from './components';
 import { Home, Login, Register } from './pages';
 
 const getScenceStyle = (scene) => {
@@ -17,15 +17,23 @@ const getScenceStyle = (scene) => {
 };
 
 export default class App extends Component {
-    render() {
+    render(){
         return (
-            <BackgroundWrapper paddingTop={0}>
-                <Router getSceneStyle={getScenceStyle}>
-                    <Scene key="home" component={Home} initial hideNavBar />
-                    <Scene key="login" component={Login} hideNavBar />
-                    <Scene key="register" component={Register} hideNavBar />
-                </Router>
-            </BackgroundWrapper>
-        );
+          <Image source={require('./images/background.png')} style={styles.backgroundImage}>
+              <Router getSceneStyle={getScenceStyle}>
+                  <Scene key="home" component={Home} initial hideNavBar/>
+                  <Scene key="login" component={Login} hideNavBar/>
+                  <Scene key="register" component={Register} hideNavBar/>
+              </Router>
+          </Image>
+       );
     }
 }
+
+styles = StyleSheet.create ({
+  backgroundImage: {
+    flex: 1,
+    height: null,
+    width: null
+  }
+})

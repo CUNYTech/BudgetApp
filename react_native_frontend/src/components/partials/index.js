@@ -1,11 +1,10 @@
-import AlertStatus from './AlertStatus';
-import BackgroundWrapper from './BackgroundWrapper';
-import Logo from './Logo';
+import AlertStatus from './alertStatus';
+import Logo from './logo';
 
 export {
-    AlertStatus, BackgroundWrapper, Logo
+    AlertStatus, Logo
 };
 
 export default {
-    AlertStatus, BackgroundWrapper, Logo
+    AlertStatus, Logo
 };

@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Animated, InteractionManager, Alert } from 'react-native';
-import {Input, Button, Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
+import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 
-export default class Login extends Component {
+export default class Register extends Component {
     state = {
         username: '',
         email: '',
@@ -83,52 +83,58 @@ export default class Login extends Component {
 
     render() {
         return (
-            <BackgroundWrapper transparent iconLeft="arrow-left-circle" onPressIcon={this.handleBack.bind(this)}>
-                <View style={loginStyle.loginContainer}>
-                    <Animated.View style={{ position: 'relative', top: this.state.animation.headerPositionTop }}>
-                        <Heading color="#ffffff" textAlign="center">
-                            {'Sign up'}
-                        </Heading>
-                    </Animated.View>
-                    <Logo marginTop={25} />
-                    <View style={loginStyle.formContainer}>
-                        <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
-                            <Input label="Username"
-                                   value={this.state.username}
-                                   onChange={this.handleChangeInput.bind(this, 'username')}
-                            />
-                            <Input
-                                  label="Email"
-                                   value={this.state.email}
-                                   marginTop={23}
-                                   onChange={this.handleChangeInput.bind(this, 'email')}
-                            />
-                            <Input
-                                label="Password"
-                                value={this.state.password}
-                                marginTop={23}
-                                onChange={this.handleChangeInput.bind(this, 'password')}
-                                secureTextEntry
-                            />
-                        </Animated.View>
-                        <Animated.View style={{ position: 'relative', top: this.state.animation.buttonPositionTop }}>
-                            <Button marginTop={getPlatformValue('android', 25, 38)} width={200} onPress={this.handleRegister.bind(this)}>
-                                Create
-                            </Button>
-                        </Animated.View>
-                    </View>
-                </View>
-                <AlertStatus
-                    textHelper="Have an account? "
-                    textAction="Login"
-                    onPressAction={this.handleLogin.bind(this)}
-                />
-            </BackgroundWrapper>
+          <View style={loginStyle.container}>
+            <BackButton
+              transparent iconLeft="arrow-left-circle"
+              onPressIcon={this.handleBack.bind(this)}
+            />
+            <View style={loginStyle.loginContainer}>
+              <Animated.View style={{position: 'relative', top: this.state.animation.headerPositionTop}}>
+                <Heading color="#ffffff" textAlign="center">
+                  {'Sign up'}
+                </Heading>
+              </Animated.View>
+              <Logo marginTop={25}/>
+              <View style={loginStyle.formContainer}>
+                <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
+                  <Input label="Username"
+                    value={this.state.username}
+                    onChange={this.handleChangeInput.bind(this, 'username')}
+                  />
+                  <Input label="Email"
+                    value={this.state.email}
+                    marginTop={23}
+                    onChange={this.handleChangeInput.bind(this, 'email')}
+                  />
+                  <Input label="Password"
+                    value={this.state.password}
+                    marginTop={23}
+                    onChange={this.handleChangeInput.bind(this, 'password')}
+                    secureTextEntry
+                  />
+                </Animated.View>
+                <Animated.View style={{position: 'relative', top: this.state.animation.buttonPositionTop}}>
+                  <Button marginTop={getPlatformValue('android',25, 38)} width={200} onPress={this.handleRegister.bind(this)}>
+                    Create
+                  </Button>
+                </Animated.View>
+              </View>
+            </View>
+            <AlertStatus
+              textHelper="Have an account? "
+              textAction="Login"
+              onPressAction={this.handleLogin.bind(this)}
+            />
+          </View>
         );
     }
 }
 
 const loginStyle = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'transparent',
+    },
     loginContainer: {
         flex: 1,
         backgroundColor: 'transparent',

@@ -1,4 +1,4 @@
-import Heading from './Heading';
+import Heading from './heading';
 import TextFont from './TextFont';
 
 export {
