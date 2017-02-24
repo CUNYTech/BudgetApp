@@ -1,9 +1,11 @@
+
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Animated, InteractionManager, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, Animated, InteractionManager, Alert,} from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
+import * as firebase from 'firebase';
 
 export default class Register extends Component {
     state = {
@@ -16,6 +18,18 @@ export default class Register extends Component {
             buttonPositionTop: new Animated.Value(1354)
         }
     }
+
+    // Add new user to Firebase DB
+    async _register(){
+    try{
+        await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+        Alert.alert('Account created');
+    }
+    catch(e){
+        Alert.alert(e);
+        // Handle exceptions
+    }
+}
 
     componentDidMount() {
         Animated.timing(this.state.animation.headerPositionTop, {
@@ -39,13 +53,6 @@ export default class Register extends Component {
         this.setState({
             [stateName]: text
         });
-    }
-
-    handleRegister() {
-        Alert.alert(
-            'Button press',
-            'Created user'
-        );
     }
 
     unmountComponent(callback) {
@@ -114,7 +121,7 @@ export default class Register extends Component {
                   />
                 </Animated.View>
                 <Animated.View style={{position: 'relative', top: this.state.animation.buttonPositionTop}}>
-                  <Button marginTop={getPlatformValue('android',25, 38)} width={200} onPress={this.handleRegister.bind(this)}>
+                  <Button marginTop={getPlatformValue('android',25, 38)} width={200} onPress={this._register.bind(this)}>
                     Create
                   </Button>
                 </Animated.View>
