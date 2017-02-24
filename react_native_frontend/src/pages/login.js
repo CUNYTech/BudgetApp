@@ -31,11 +31,6 @@ export default class Login extends Component {
 
 }
 
-
-
-
-
-
     componentDidMount() {
         const timing = Animated.timing;
         Animated.parallel([

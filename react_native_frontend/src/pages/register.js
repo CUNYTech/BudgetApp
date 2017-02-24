@@ -18,6 +18,7 @@ export default class Register extends Component {
             buttonPositionTop: new Animated.Value(1354)
         }
     }
+
     // Add new user to Firebase DB
     async _register(){
     try{
@@ -28,8 +29,8 @@ export default class Register extends Component {
         Alert.alert(e);
         // Handle exceptions
     }
-
 }
+
     componentDidMount() {
         Animated.timing(this.state.animation.headerPositionTop, {
             toValue: 0,
@@ -53,13 +54,6 @@ export default class Register extends Component {
             [stateName]: text
         });
     }
-
-    /*handleRegister() {
-        Alert.alert(
-            'Button press',
-            'Created user'
-        );
-    }*/
 
     unmountComponent(callback) {
         const timing = Animated.timing;
