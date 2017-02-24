@@ -67,6 +67,7 @@ export default class Input extends Component {
             <TextInput
                 value={this.props.value}
                 style={styleInput.input}
+                autoCapitalize = 'none'
                 onFocus={this.handleFocus.bind(this)}
                 onBlur={this.handleBlur.bind(this)}
                 onChangeText={this.props.onChange}
