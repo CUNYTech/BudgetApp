@@ -4,10 +4,11 @@ import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../compon
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
+import * as firebase from "firebase";
 
 export default class Login extends Component {
     state = {
-        username: '',
+        email: '',
         password: '',
         animation: {
             usernamePostionLeft: new Animated.Value(795),
@@ -16,6 +17,24 @@ export default class Login extends Component {
             statusPositionTop: new Animated.Value(1542)
         }
     }
+
+    //User Login Authentication
+    async _login(){
+    try{
+        await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+        Alert.alert('Welcome!');
+    }
+    catch(e){
+        Alert.alert(e);
+        // Handle exceptions
+    }
+
+}
+
+
+
+
+
 
     componentDidMount() {
         const timing = Animated.timing;
@@ -45,9 +64,9 @@ export default class Login extends Component {
         });
     }
 
-    handePressSignIn() {
+    /*handePressSignIn() {
         Alert.alert('Button pressed', 'User sign in');
-    }
+    }*/
 
     handlePressSignUp() {
         Actions.register();
@@ -72,9 +91,9 @@ export default class Login extends Component {
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Input
-                label="Username"
-                value={this.state.username}
-                onChange={this.handleChangeInput.bind(this, 'username')}
+                label="Email"
+                value={this.state.email}
+                onChange={this.handleChangeInput.bind(this, 'email')}
               />
             </Animated.View>
             <Animated.View style={{ position: 'relative', left: this.state.animation.passwordPositionLeft }}>
@@ -86,7 +105,7 @@ export default class Login extends Component {
               />
               </Animated.View>
               <Animated.View style={{ position: 'relative', top: this.state.animation.loginPositionTop }}>
-                <Button marginTop={60} onPress={this.handePressSignIn.bind(this)}>
+                <Button marginTop={60} onPress={this._login.bind(this)}>
                   Sign in
                 </Button>
               </Animated.View>
