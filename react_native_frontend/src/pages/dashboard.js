@@ -18,25 +18,28 @@ export default class Dashboard extends Component{
 
   render() {
       return (
-        <Container style={dashboardStyle.formContainer}>
-            <Header style={{backgroundColor:'transparent'}}>
-                  <Left>
-                      <Button transparent>
-                          <Icon name='menu' />
-                        </Button>
-                      </Left>
-                      <Body>
-                        <Title style={{color:'whitesmoke'}}>Dashboard</Title>
-                      </Body>
-                      <Right />
-            </Header>
-
+        <Container>
+               <Header style={{backgroundColor:'transparent'}} >
+                   <Left>
+                       <Button onPress ={() => Actions.home()} transparent>
+                           <Icon name='arrow-back' />
+                       </Button>
+                   </Left>
+                   <Body>
+                       <Title style={{fontSize: 18, fontFamily: 'OpenSans',color:'whitesmoke'}} >DA$HB0ARD</Title>
+                   </Body>
+                   <Right>
+                       <Button transparent>
+                           <Icon name='menu' />
+                       </Button>
+                   </Right>
+               </Header>
 
                   <Content>
-                    <View style={{alignItems: "center", padding:190, justifyContent: "center", right: 150}}>
+                    <View style={{alignItems: "center", top: 100}}>
                         <Fab
                           active={this.state.active}
-                          direction="up"
+                          direction="down"
                           style={{ backgroundColor: '#5067FF'}}
                           position="bottomRight"
                           onPress={() => this.setState({ active: !this.state.active })}>
@@ -57,20 +60,20 @@ export default class Dashboard extends Component{
                   <Footer style={{backgroundColor:'transparent'}} >
                         <FooterTab>
                             <Button>
-                                <Icon name="apps" />
+                                <Icon style={{color:'whitesmoke'}} name="apps" />
                                 <Text style={{color:'whitesmoke'}} >Apps</Text>
                             </Button>
                             <Button>
-                                <Icon name="camera" />
-                                <Text style={{color:'whitesmoke'}} >Camera</Text>
+                                <Icon style={{color:'whitesmoke'}} name="camera" />
+                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}} >Camera</Text>
                             </Button>
                             <Button >
-                                <Icon name="navigate" />
-                                <Text style={{color:'whitesmoke'}}>Navigate</Text>
+                                <Icon style={{color:'whitesmoke'}} name="navigate" />
+                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}}>Navigate</Text>
                             </Button>
                             <Button>
-                                <Icon name="person" />
-                                <Text style={{color:'whitesmoke'}}>Friends</Text>
+                                <Icon style={{color:'whitesmoke'}} name="person" />
+                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}}>Friends</Text>
                             </Button>
                         </FooterTab>
                   </Footer>
