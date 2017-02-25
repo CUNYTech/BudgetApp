@@ -18,24 +18,24 @@ export default class Dashboard extends Component{
 
   render() {
       return (
-        <Container>
-               <Header style={{backgroundColor:'transparent'}} >
+        <Container style={{backgroundColor:'floralwhite'}}>
+               <Header style={{backgroundColor:'transparent'}} noShadow >
                    <Left>
-                       <Button onPress ={() => Actions.home()} transparent>
+                       <Button onPress ={() => Actions.home()} transparent noShadow>
                            <Icon name='arrow-back' />
                        </Button>
                    </Left>
                    <Body>
-                       <Title style={{fontSize: 18, fontFamily: 'OpenSans',color:'whitesmoke'}} >DA$HB0ARD</Title>
+                       <Title style={{fontSize: 19,fontFamily: 'OpenSans-Bold',color:'darkolivegreen'}} >DA$HB0@RD</Title>
                    </Body>
                    <Right>
-                       <Button transparent>
+                       <Button transparent noShadow>
                            <Icon name='menu' />
                        </Button>
                    </Right>
                </Header>
-
-                  <Content>
+        <Content>
+                    
                     <View style={{alignItems: "center", top: 100}}>
                         <Fab
                           active={this.state.active}
@@ -60,20 +60,20 @@ export default class Dashboard extends Component{
                   <Footer style={{backgroundColor:'transparent'}} >
                         <FooterTab>
                             <Button>
-                                <Icon style={{color:'whitesmoke'}} name="apps" />
-                                <Text style={{color:'whitesmoke'}} >Apps</Text>
+                                <Icon style={{color:'midnightblue'}} name="stats" />
+                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'midnightblue'}} >Budget</Text>
                             </Button>
                             <Button>
-                                <Icon style={{color:'whitesmoke'}} name="camera" />
-                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}} >Camera</Text>
+                                <Icon style={{color:'darkolivegreen'}} name="cash" />
+                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'darkolivegreen'}} >Goals</Text>
                             </Button>
                             <Button >
-                                <Icon style={{color:'whitesmoke'}} name="navigate" />
-                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}}>Navigate</Text>
+                                <Icon style={{color:'salmon'}} name="trophy" />
+                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'salmon'}}>Points</Text>
                             </Button>
                             <Button>
-                                <Icon style={{color:'whitesmoke'}} name="person" />
-                                <Text style={{fontFamily: 'OpenSans',color:'whitesmoke'}}>Friends</Text>
+                                <Icon style={{color:'goldenrod'}} name="people" />
+                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'goldenrod'}}>Friends</Text>
                             </Button>
                         </FooterTab>
                   </Footer>

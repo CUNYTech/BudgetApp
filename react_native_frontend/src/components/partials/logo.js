@@ -11,8 +11,8 @@ export default class Logo extends Component {
         return (
             <View style={style}>
                 <Image
-                    source={require('../../images/logo.png')}
-                    style={logoStyle.image}
+                    source={require('../../images/Hoola_Small.png')}
+                    //style={logoStyle.image}
                     resizeMode="cover"
                 />
             </View>
@@ -26,10 +26,12 @@ Logo.propTypes = {
 
 const logoStyle = StyleSheet.create({
     imageContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30
     },
     image: {
+        flexGrow:1,
         width: 110,
-        height: 110
+        height:110
     }
 });

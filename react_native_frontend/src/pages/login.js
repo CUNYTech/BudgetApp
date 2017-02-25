@@ -18,6 +18,10 @@ export default class Login extends Component {
         }
     }
 
+
+
+
+
     //User Login Authentication
     async _login(){
     try{
@@ -27,7 +31,8 @@ export default class Login extends Component {
 
     }
     catch(e){
-        Alert.alert(e);
+        Alert.alert("Please Register")
+        Actions.register();
         // Handle exceptions
     }
 
@@ -82,8 +87,8 @@ export default class Login extends Component {
         />
         <View style={loginStyle.loginContainer}>
           <Logo />
-          <Heading marginTop={16} color="#ffffff" textAlign="center">
-            {'Hoola'}
+          <Heading style={{fontFamily:"OpenSans"}} marginTop={16} color="#ffffff" textAlign="center">
+            {/* {'Hoola'} */}
             </Heading>
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
