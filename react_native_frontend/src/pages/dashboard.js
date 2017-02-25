@@ -19,14 +19,14 @@ export default class Dashboard extends Component{
   render() {
       return (
         <Container style={dashboardStyle.formContainer}>
-            <Header>
+            <Header style={{backgroundColor:'transparent'}}>
                   <Left>
                       <Button transparent>
                           <Icon name='menu' />
                         </Button>
                       </Left>
                       <Body>
-                        <Title>Dashboard</Title>
+                        <Title style={{color:'whitesmoke'}}>Dashboard</Title>
                       </Body>
                       <Right />
             </Header>
@@ -53,24 +53,24 @@ export default class Dashboard extends Component{
                       </Fab>
                     </View>
                   </Content>
-                  
-                  <Footer >
+
+                  <Footer style={{backgroundColor:'transparent'}} >
                         <FooterTab>
                             <Button>
                                 <Icon name="apps" />
-                                <Text>Apps</Text>
+                                <Text style={{color:'whitesmoke'}} >Apps</Text>
                             </Button>
                             <Button>
                                 <Icon name="camera" />
-                                <Text>Camera</Text>
+                                <Text style={{color:'whitesmoke'}} >Camera</Text>
                             </Button>
-                            <Button active>
-                                <Icon active name="navigate" />
-                                <Text>Navigate</Text>
+                            <Button >
+                                <Icon name="navigate" />
+                                <Text style={{color:'whitesmoke'}}>Navigate</Text>
                             </Button>
                             <Button>
                                 <Icon name="person" />
-                                <Text>Friends</Text>
+                                <Text style={{color:'whitesmoke'}}>Friends</Text>
                             </Button>
                         </FooterTab>
                   </Footer>
