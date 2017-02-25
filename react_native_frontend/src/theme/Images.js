@@ -1,10 +1,10 @@
 
-const images = {
-  logo: require('../Images/...'),
-  clearLogo: require('../Images/...),
-  any: require('../Images/...'),
-  tileBg: require('../Images/...'),
-  background: require('../Images/...')
+/*const images = {
+  logo: require('...'),
+  clearLogo: require('...'),
+  any: require('...'),
+  tileBg: require('...'),
+  background: require('...')
 }
 
-export default images
+export default images*/

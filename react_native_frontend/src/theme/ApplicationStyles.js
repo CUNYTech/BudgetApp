@@ -42,7 +42,6 @@ const ApplicationStyles = {
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
       marginHorizontal: Metrics.smallMargin
-    }
   },
   darkLabelContainer: {
     backgroundColor: Colors.cloud,
