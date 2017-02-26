@@ -30,10 +30,19 @@ export default class Login extends Component {
         setTimeout(() => Actions.dashboard(), 0);
 
     }
-    catch(e){
-        Alert.alert("Please Register")
-        Actions.register();
-        // Handle exceptions
+    catch(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      }
+        else if(errorCode === 'auth/invalid-email') {
+          alert('Invalid email.');
+      }
+        else if(errorCode === 'auth/user-not-found') {
+          alert('Please Register.');
+          Actions.register();
+      }
     }
 
 }

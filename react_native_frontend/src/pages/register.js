@@ -98,11 +98,11 @@ export default class Register extends Component {
             <View style={loginStyle.loginContainer}>
               <Animated.View style={{position: 'relative', top: this.state.animation.headerPositionTop}}>
                 <Heading color="#ffffff" textAlign="center">
-                  {'Sign up'}
+                  {/* {'Sign up'} */}
                 </Heading>
               </Animated.View>
               <Logo marginTop={25}/>
-              <View style={loginStyle.formContainer}>
+                <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
                   <Input label="Username"
                     value={this.state.username}
@@ -127,7 +127,7 @@ export default class Register extends Component {
                 </Animated.View>
               </View>
             </View>
-            <AlertStatus
+            <AlertStatus style={{fontFamily:'OpenSans'}}
               textHelper="Have an account? "
               textAction="Login"
               onPressAction={this.handleLogin.bind(this)}
