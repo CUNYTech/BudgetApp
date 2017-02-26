@@ -18,10 +18,6 @@ export default class Login extends Component {
         }
     }
 
-
-
-
-
     //User Login Authentication
     async _login(){
     try{

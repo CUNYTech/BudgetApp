@@ -105,15 +105,18 @@ export default class Register extends Component {
                 <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
                   <Input label="Username"
+                    autoCorrect = {false}
                     value={this.state.username}
                     onChange={this.handleChangeInput.bind(this, 'username')}
                   />
                   <Input label="Email"
+                    autoCorrect = {false}
                     value={this.state.email}
                     marginTop={23}
                     onChange={this.handleChangeInput.bind(this, 'email')}
                   />
                   <Input label="Password"
+                    autoCorrect = {false}
                     value={this.state.password}
                     marginTop={23}
                     onChange={this.handleChangeInput.bind(this, 'password')}
