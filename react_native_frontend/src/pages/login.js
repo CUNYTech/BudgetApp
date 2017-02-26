@@ -34,7 +34,7 @@ export default class Login extends Component {
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
+        alert('Incorrect password.');
       }
         else if(errorCode === 'auth/invalid-email') {
           alert('Invalid email.');
@@ -45,7 +45,7 @@ export default class Login extends Component {
       }
     }
 
-}
+    }
 
     componentDidMount() {
         const timing = Animated.timing;
@@ -102,6 +102,7 @@ export default class Login extends Component {
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Input
+                autoCorrect = {false}
                 label="Email"
                 value={this.state.email}
                 onChange={this.handleChangeInput.bind(this, 'email')}

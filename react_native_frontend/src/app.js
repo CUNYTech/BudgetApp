@@ -26,10 +26,10 @@ export default class App extends Component {
         return (
           <Image source={require('./images/background.png')} style={styles.backgroundImage}>
               <Router getSceneStyle={getScenceStyle}>
-                  <Scene key="home" component={Home} hideNavBar/>
+                  <Scene key="home" component={Home} initial hideNavBar/>
                   <Scene key="login" component={Login} hideNavBar/>
                   <Scene key="register" component={Register} hideNavBar/>
-                  <Scene key="dashboard" component={Dashboard} initial hideNavBar/>
+                  <Scene key="dashboard" component={Dashboard} hideNavBar/>
               </Router>
           </Image>
        );

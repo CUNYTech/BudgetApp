@@ -65,6 +65,7 @@ export default class Input extends Component {
     renderInputText() {
         return (
             <TextInput
+                autoCorrect = {this.props.autoCorrect}
                 value={this.props.value}
                 style={styleInput.input}
                 autoCapitalize = 'none'
