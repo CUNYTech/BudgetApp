@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
-import { Home, Login, Register } from './pages';
+import { Home, Login, Register, Goals } from './pages';
 import * as firebase from 'firebase';
 
 const firebaseConfig= require('../firebaseconfig.json')
