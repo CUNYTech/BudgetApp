@@ -8,6 +8,15 @@ const firebaseConfig= require('../firebaseconfig.json')
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 
+ /*const database = firebase.database()
+ const userRef = database.ref('losers');
+ //
+ userRef.push({
+   username: 'simplemath',
+   email: 'okaygo'
+ });*/
+
+
 const getScenceStyle = (scene) => {
     let style = {
         backgroundColor: 'transparent'
