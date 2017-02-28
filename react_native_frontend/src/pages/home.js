@@ -7,7 +7,7 @@ import {Actions} from 'react-native-router-flux';
 
 export default class Home extends Component {
     state = {
-        logoPositionTop: new Animated.Value(-228),
+        logoPositionTop: new Animated.Value(200),
         groupHeadingPositionLeft: new Animated.Value(-614),
         buttonPositionLeft: new Animated.Value(-696),
         statusPositionTop: new Animated.Value(1200)
@@ -63,9 +63,9 @@ export default class Home extends Component {
                 </Animated.View>
                 <Animated.View style={{position: 'relative', left: this.state.groupHeadingPositionLeft}}>
                   <Heading marginTop={89} color="#ffffff" textAlign="center">
-                    {'Hoola'}
+                  {/* {'Hoola'} */}
                   </Heading>
-                  <Heading marginTop={16} element="h3" color="#ffffff" textAlign="center">
+                  <Heading style={{fontFamily:'OpenSans'}}marginTop={16} element="h3" color="#ffffff" textAlign="center">
                     {'Budgeting With Rewards'}
                   </Heading>
                 </Animated.View>

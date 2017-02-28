@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
-import { Home, Login, Register } from './pages';
+import { Home, Login, Register, Dashboard} from './pages';
 import * as firebase from 'firebase';
 
 const firebaseConfig= require('../firebaseconfig.json')
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
+
+ /*const database = firebase.database()
+ const userRef = database.ref('losers');
+ //
+ userRef.push({
+   username: 'simplemath',
+   email: 'okaygo'
+ });*/
+
 
 const getScenceStyle = (scene) => {
     let style = {
@@ -29,6 +38,7 @@ export default class App extends Component {
                   <Scene key="home" component={Home} initial hideNavBar/>
                   <Scene key="login" component={Login} hideNavBar/>
                   <Scene key="register" component={Register} hideNavBar/>
+                  <Scene key="dashboard" component={Dashboard} hideNavBar/>
               </Router>
           </Image>
        );

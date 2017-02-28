@@ -22,14 +22,26 @@ export default class Login extends Component {
     async _login(){
     try{
         await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-        Alert.alert('Welcome!');
+
+        setTimeout(() => Actions.dashboard(), 0);
+
     }
-    catch(e){
-        Alert.alert(e);
-        // Handle exceptions
+    catch(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Incorrect password.');
+      }
+        else if(errorCode === 'auth/invalid-email') {
+          alert('Invalid email.');
+      }
+        else if(errorCode === 'auth/user-not-found') {
+          alert('Please Register.');
+          Actions.register();
+      }
     }
 
-}
+    }
 
     componentDidMount() {
         const timing = Animated.timing;
@@ -80,12 +92,13 @@ export default class Login extends Component {
         />
         <View style={loginStyle.loginContainer}>
           <Logo />
-          <Heading marginTop={16} color="#ffffff" textAlign="center">
-            {'Hoola'}
+          <Heading style={{fontFamily:"OpenSans"}} marginTop={16} color="#ffffff" textAlign="center">
+            {/* {'Hoola'} */}
             </Heading>
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Input
+                autoCorrect = {false}
                 label="Email"
                 value={this.state.email}
                 onChange={this.handleChangeInput.bind(this, 'email')}

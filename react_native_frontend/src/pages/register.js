@@ -7,6 +7,10 @@ import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
 
+// const database = firebase.database()
+// const userRef = database.ref('users');
+
+
 export default class Register extends Component {
     state = {
         username: '',
@@ -17,19 +21,43 @@ export default class Register extends Component {
             formPositionLeft: new Animated.Value(614),
             buttonPositionTop: new Animated.Value(1354)
         }
-    }
+    };
+
+
 
     // Add new user to Firebase DB
     async _register(){
     try{
         await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+
+        // setTimeout(() => userRef.push({
+          // username: this.state.username,
+          // email: this.state.email
+          //  }),
+              // 0);
+
+
         Alert.alert('Account created');
+
     }
-    catch(e){
-        Alert.alert(e);
+    catch(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/email-already-in-use') {
+        alert('Email already in use.');
+      }
         // Handle exceptions
-    }
-}
+    };
+};
+
+
+      // database.ref('users').set({
+        // username: this.state.username,
+        // email: this.state.email
+      // });
+
+
+
 
     componentDidMount() {
         Animated.timing(this.state.animation.headerPositionTop, {
@@ -98,22 +126,25 @@ export default class Register extends Component {
             <View style={loginStyle.loginContainer}>
               <Animated.View style={{position: 'relative', top: this.state.animation.headerPositionTop}}>
                 <Heading color="#ffffff" textAlign="center">
-                  {'Sign up'}
+                  {/* {'Sign up'} */}
                 </Heading>
               </Animated.View>
               <Logo marginTop={25}/>
-              <View style={loginStyle.formContainer}>
+                <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
                   <Input label="Username"
+                    autoCorrect = {false}
                     value={this.state.username}
                     onChange={this.handleChangeInput.bind(this, 'username')}
                   />
                   <Input label="Email"
+                    autoCorrect = {false}
                     value={this.state.email}
                     marginTop={23}
                     onChange={this.handleChangeInput.bind(this, 'email')}
                   />
                   <Input label="Password"
+                    autoCorrect = {false}
                     value={this.state.password}
                     marginTop={23}
                     onChange={this.handleChangeInput.bind(this, 'password')}
@@ -127,7 +158,7 @@ export default class Register extends Component {
                 </Animated.View>
               </View>
             </View>
-            <AlertStatus
+            <AlertStatus style={{fontFamily:'OpenSans'}}
               textHelper="Have an account? "
               textAction="Login"
               onPressAction={this.handleLogin.bind(this)}
