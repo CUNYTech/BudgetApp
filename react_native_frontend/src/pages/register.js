@@ -20,7 +20,8 @@ export default class Register extends Component {
             headerPositionTop: new Animated.Value(-148),
             formPositionLeft: new Animated.Value(614),
             buttonPositionTop: new Animated.Value(1354)
-        }
+        },
+        errors: ''
     };
 
 
@@ -37,14 +38,16 @@ export default class Register extends Component {
               // 0);
 
 
-        Alert.alert('Account created');
+        Actions.dashboard()
 
     }
     catch(error){
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode === 'auth/email-already-in-use') {
-        alert('Email already in use.');
+        this.setState({
+          errors: 'Email is already in use.'
+        })
       }
         // Handle exceptions
     };
@@ -117,6 +120,7 @@ export default class Register extends Component {
     }
 
     render() {
+      const {errors} = this.props
         return (
           <View style={loginStyle.container}>
             <BackButton
@@ -132,6 +136,7 @@ export default class Register extends Component {
               <Logo marginTop={25}/>
                 <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
+                  <Text style={{color: 'red', fontSize: 12}}>{errors}</Text>
                   <Input label="Username"
                     autoCorrect = {false}
                     value={this.state.username}
