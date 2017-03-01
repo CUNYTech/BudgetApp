@@ -4,9 +4,12 @@ import { Scene, Router } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard} from './pages';
 import * as firebase from 'firebase';
 
-const firebaseConfig= require('../firebaseconfig.json')
+const firebaseConfig= require('../firebaseconfig.json');
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export {firebaseApp};
 
-const firebaseApp = firebase.initializeApp(firebaseConfig)
+var rootRef = firebaseApp.database().ref();
+
 
  /*const database = firebase.database()
  const userRef = database.ref('losers');
