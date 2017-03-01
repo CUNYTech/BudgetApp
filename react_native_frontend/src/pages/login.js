@@ -15,32 +15,33 @@ export default class Login extends Component {
             passwordPositionLeft: new Animated.Value(905),
             loginPositionTop: new Animated.Value(1402),
             statusPositionTop: new Animated.Value(1542)
-        }
+        },
+        errors: ''
     }
 
     //User Login Authentication
     async _login(){
-    try{
-        await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+      try{
+          await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 
-        setTimeout(() => Actions.dashboard(), 0);
+          setTimeout(() => Actions.dashboard(), 0);
 
-    }
-    catch(error){
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        alert('Incorrect password.');
       }
-        else if(errorCode === 'auth/invalid-email') {
-          alert('Invalid email.');
+      catch(error){
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if(errorCode === 'auth/user-not-found') {
+          this.setState({
+            errors: ""
+          })
+          Actions.register({errors: "Email has not been registered. Please sign up."});
+        }
+        else {
+          this.setState({
+            errors: "Invalid email or password"
+          })
+        }
       }
-        else if(errorCode === 'auth/user-not-found') {
-          alert('Please Register.');
-          Actions.register();
-      }
-    }
-
     }
 
     componentDidMount() {
@@ -97,6 +98,7 @@ export default class Login extends Component {
             </Heading>
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
+              <Text style={{color: 'red', fontSize: 12}}>{this.state.errors}</Text>
               <Input
                 autoCorrect = {false}
                 label="Email"
