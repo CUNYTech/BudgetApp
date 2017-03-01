@@ -5,11 +5,16 @@ import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../compon
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
+import {firebaseApp} from '../app';
 import * as firebase from 'firebase';
 
-// const database = firebase.database()
-// const userRef = database.ref('users');
 
+
+var rootRef = firebaseApp.database().ref();
+
+
+// const rootRef = firebaseApp.database().ref();
+// const itemsRef = rootRef.child('items');
 
 export default class Register extends Component {
     state = {
@@ -31,9 +36,9 @@ export default class Register extends Component {
     try{
         await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
-        // setTimeout(() => userRef.push({
-          // username: this.state.username,
-          // email: this.state.email
+        //  setTimeout(() => userRef.push({
+          //  username: this.state.username,
+          //  email: this.state.email
           //  }),
               // 0);
 
