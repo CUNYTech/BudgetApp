@@ -253,16 +253,16 @@
 		594F5C7F2ECF4427B607E1A8 /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
 		5BBB7D4987EB445F80565A67 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../node_modules/native-base/Fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		6AC03AC9221B44B7814CD37A /* Rubik-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BlackItalic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-BlackItalic.ttf"; sourceTree = "<group>"; };
-		6E26A7E41E665412009B4788 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
-		6E26A7E51E665412009B4788 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-BoldItalic.ttf"; path = "../assets/fonts/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
-		6E26A7E61E665412009B4788 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBold.ttf"; path = "../assets/fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
-		6E26A7E71E665412009B4788 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../assets/fonts/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		6E26A7E81E665412009B4788 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Italic.ttf"; path = "../assets/fonts/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
-		6E26A7E91E665412009B4788 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Light.ttf"; path = "../assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
-		6E26A7EA1E665412009B4788 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-LightItalic.ttf"; path = "../assets/fonts/OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
-		6E26A7EB1E665412009B4788 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
-		6E26A7EC1E665412009B4788 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "../assets/fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
-		6E26A7ED1E665412009B4788 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiboldItalic.ttf"; path = "../assets/fonts/OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		6E26A81D1E6660FB009B4788 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		6E26A81E1E6660FB009B4788 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-BoldItalic.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		6E26A81F1E6660FB009B4788 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBold.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		6E26A8201E6660FB009B4788 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		6E26A8211E6660FB009B4788 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Italic.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		6E26A8221E6660FB009B4788 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Light.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		6E26A8231E6660FB009B4788 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-LightItalic.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		6E26A8241E6660FB009B4788 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		6E26A8251E6660FB009B4788 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		6E26A8261E6660FB009B4788 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiboldItalic.ttf"; path = "../../../../Desktop/Open_Sans 2/OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		6E40CBDB9BA84065AA240F30 /* SanFranciscoBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFranciscoBold.ttf; path = "../node_modules/native-base/Fonts/SanFranciscoBold.ttf"; sourceTree = "<group>"; };
 		701F1066FFFE41488BCE6E74 /* Rubik-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Italic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-Italic.ttf"; sourceTree = "<group>"; };
 		75BD939B66FF4DB288856DB0 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBold.ttf"; path = "../assets/fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -524,17 +524,17 @@
 				9CCCEFF45CD844CAB57C6700 /* Octicons.ttf */,
 				066669DC01914A20996E7B61 /* SimpleLineIcons.ttf */,
 				E915A5E07F38439BBCB7C7BB /* Zocial.ttf */,
+				6E26A81D1E6660FB009B4788 /* OpenSans-Bold.ttf */,
+				6E26A81E1E6660FB009B4788 /* OpenSans-BoldItalic.ttf */,
+				6E26A81F1E6660FB009B4788 /* OpenSans-ExtraBold.ttf */,
+				6E26A8201E6660FB009B4788 /* OpenSans-ExtraBoldItalic.ttf */,
+				6E26A8211E6660FB009B4788 /* OpenSans-Italic.ttf */,
+				6E26A8221E6660FB009B4788 /* OpenSans-Light.ttf */,
+				6E26A8231E6660FB009B4788 /* OpenSans-LightItalic.ttf */,
+				6E26A8241E6660FB009B4788 /* OpenSans-Regular.ttf */,
+				6E26A8251E6660FB009B4788 /* OpenSans-Semibold.ttf */,
+				6E26A8261E6660FB009B4788 /* OpenSans-SemiboldItalic.ttf */,
 				594F5C7F2ECF4427B607E1A8 /* Andale Mono.ttf */,
-				6E26A7E41E665412009B4788 /* OpenSans-Bold.ttf */,
-				6E26A7E51E665412009B4788 /* OpenSans-BoldItalic.ttf */,
-				6E26A7E61E665412009B4788 /* OpenSans-ExtraBold.ttf */,
-				6E26A7E71E665412009B4788 /* OpenSans-ExtraBoldItalic.ttf */,
-				6E26A7E81E665412009B4788 /* OpenSans-Italic.ttf */,
-				6E26A7E91E665412009B4788 /* OpenSans-Light.ttf */,
-				6E26A7EA1E665412009B4788 /* OpenSans-LightItalic.ttf */,
-				6E26A7EB1E665412009B4788 /* OpenSans-Regular.ttf */,
-				6E26A7EC1E665412009B4788 /* OpenSans-Semibold.ttf */,
-				6E26A7ED1E665412009B4788 /* OpenSans-SemiboldItalic.ttf */,
 				CE61E1AAB62B47A5AFDA2A46 /* Arial Black.ttf */,
 				C7C16150C94C4464BE118515 /* Arial.ttf */,
 				EFEAC7606BB0402883D41012 /* Comic Sans MS.ttf */,
