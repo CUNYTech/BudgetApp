@@ -31,12 +31,6 @@ export default class Login extends Component {
 
           var user = this.props.Firebase.auth().currentUser;
 
-            // if (user != null) {
-              // this.setState({
-                // username: user.getDisplayName()
-              // });
-            //  }
-
             if (user) {
               Alert.alert('Welcome' + ' '+ user.displayName + '!');
             } else {
