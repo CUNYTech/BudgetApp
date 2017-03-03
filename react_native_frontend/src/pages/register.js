@@ -7,11 +7,6 @@ import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 
 
-// Firebase = this.props
-
-
-// const itemsRef = rootRef.child('items');
-
 export default class Register extends Component {
     state = {
         username: '',
@@ -26,20 +21,23 @@ export default class Register extends Component {
     };
 
 
-
-
-
     // Add new user to Firebase DB
     async _register(){
     try{
         await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
 
+        var user = this.props.Firebase.auth().currentUser;
         var ref = this.props.Firebase.database().ref();
-        var userRef = ref.child('users');
+        var userRef = ref.child('users/');
+
+        user.updateProfile({
+          displayName: this.state.username,
+        });
 
          setTimeout(() => userRef.push({
-           username: this.state.username,
-           email: this.state.email
+           displayName: this.state.username,
+           email: this.state.email,
+
            }),
               0);
 
@@ -58,14 +56,6 @@ export default class Register extends Component {
         // Handle exceptions
     };
 };
-
-
-      // database.ref('users').set({
-        // username: this.state.username,
-        // email: this.state.email
-      // });
-
-
 
 
     componentDidMount() {
@@ -142,7 +132,7 @@ export default class Register extends Component {
               <Logo marginTop={25}/>
                 <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
-                  <Text style={{color: 'red', fontSize: 12}}>{errors}</Text>
+                  <Text style={{color: 'red', fontSize: 12}}>{this.state.errors}</Text>
                   <Input label="Username"
                     autoCorrect = {false}
                     value={this.state.username}

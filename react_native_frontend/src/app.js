@@ -7,17 +7,6 @@ import * as firebase from "firebase";
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-
-
-// module.exports.FBApp = FbApp.database();
-
- //
- // userRef.push({
-  //  username: 'simplemath',
-  //  email: 'okaygo'
- // });*/
-
-
 const getScenceStyle = (scene) => {
     let style = {
         backgroundColor: 'transparent'

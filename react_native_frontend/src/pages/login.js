@@ -6,10 +6,12 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import * as firebase from "firebase";
 
+
 export default class Login extends Component {
     state = {
         email: '',
         password: '',
+        username: '',
         animation: {
             usernamePostionLeft: new Animated.Value(795),
             passwordPositionLeft: new Animated.Value(905),
@@ -19,10 +21,28 @@ export default class Login extends Component {
         errors: ''
     }
 
+
+
+
     //User Login Authentication
     async _login(){
       try{
-          await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+          await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+
+          var user = this.props.Firebase.auth().currentUser;
+
+            // if (user != null) {
+              // this.setState({
+                // username: user.getDisplayName()
+              // });
+            //  }
+
+            if (user) {
+              Alert.alert('Welcome' + ' '+ user.displayName + '!');
+            } else {
+              // No user is signed in.
+            }
+
 
           setTimeout(() => Actions.dashboard(), 0);
 
@@ -43,6 +63,10 @@ export default class Login extends Component {
         }
       }
     }
+
+
+
+
 
     componentDidMount() {
         const timing = Animated.timing;
