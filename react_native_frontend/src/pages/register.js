@@ -7,6 +7,9 @@ import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 
 
+// const rootRef = firebaseApp.database().ref();
+// const itemsRef = rootRef.child('items');
+
 export default class Register extends Component {
     state = {
         username: '',

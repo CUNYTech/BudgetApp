@@ -3,9 +3,9 @@ import { Image, StyleSheet}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard} from './pages';
 import * as firebase from "firebase";
-
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+export {firebaseApp};
 
 const getScenceStyle = (scene) => {
     let style = {
