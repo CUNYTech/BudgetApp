@@ -33,6 +33,7 @@ export default class Register extends Component {
         var ref = this.props.Firebase.database().ref();
         var userRef = ref.child('users/');
 
+
         user.updateProfile({
           displayName: this.state.username,
         });
@@ -59,6 +60,42 @@ export default class Register extends Component {
         // Handle exceptions
     };
 };
+
+
+    async _load(){
+
+      try{ await this.props.Firebase.auth().currentUser;
+        //Pull user profile
+        var name, email, photoUrl, uid, emailVerified;
+
+        if (user != null) {
+          name = user.displayName;
+          email = user.email;
+          photoUrl = user.photoURL;
+          emailVerified = user.emailVerified;
+          uid = user.uid;
+        }
+        //Create UID nodes in DB
+        var userPointsRef = ref.child('userReadable/userPoints').child(uid);
+        var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+
+        setTimeout(()=> userPointsRef.push({
+          displayName: this.state.username,
+          points:''
+        }),0);
+
+        setTimeout(()=> userFriendsRef.push({
+          displayName: this.state.username,
+          friends:''
+        }),0);
+
+
+      }
+      catch(error){
+        console.log(error);
+      };
+
+    }
 
 
     componentDidMount() {

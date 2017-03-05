@@ -16,6 +16,15 @@ export default class Dashboard extends Component{
     active: false
   };
 
+ _signOut(){
+  this.props.Firebase.auth().signOut().then(function() {
+
+    Actions.login();
+  }, function(error) {
+  // An error happened.
+  });
+ }
+
   render() {
       return (
         <Container style={{backgroundColor:'floralwhite'}}>
@@ -26,6 +35,11 @@ export default class Dashboard extends Component{
                        </Button>
                    </Left>
                    <Body>
+                     <Button marginTop={90} onPress={this._signOut.bind(this)}>
+                       <Text>
+                       Sign Out
+                       </Text>
+                     </Button>
                        <Title style={{fontSize: 19,fontFamily: 'OpenSans-Bold',color:'darkolivegreen'}} >DA$HB0@RD</Title>
                    </Body>
                    <Right>
@@ -35,7 +49,7 @@ export default class Dashboard extends Component{
                    </Right>
                </Header>
         <Content>
-                    
+
                     <View style={{alignItems: "center", top: 100}}>
                         <Fab
                           active={this.state.active}

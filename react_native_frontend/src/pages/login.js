@@ -22,23 +22,38 @@ export default class Login extends Component {
     }
 
 
-
-
     //User Login Authentication
     async _login(){
       try{
-          await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+          await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
 
           var user = this.props.Firebase.auth().currentUser;
+          var name, email, photoUrl, uid, emailVerified;
 
             if (user) {
+              uid = user.uid;
               Alert.alert('Welcome' + ' '+ user.displayName + '!');
             } else {
               // No user is signed in.
             }
 
+            //Create UID nodes in DB
+            var ref = this.props.Firebase.database().ref();
+            var userPointsRef = ref.child('userReadable/userPoints').child(uid);
+            var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
 
-          setTimeout(() => Actions.dashboard(), 0);
+
+            setTimeout(()=> userPointsRef.set({
+              displayName: user.displayName,
+              points:''
+            }),0);
+
+            setTimeout(()=> userFriendsRef.set({
+              displayName: user.displayName,
+              friends:''
+            }),0);
+
+            setTimeout(() => Actions.dashboard(), 0);
 
       }
       catch(error){
@@ -57,9 +72,6 @@ export default class Login extends Component {
         }
       }
     }
-
-
-
 
 
     componentDidMount() {
