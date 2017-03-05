@@ -32,7 +32,7 @@ export default class Login extends Component {
 
             if (user) {
               uid = user.uid;
-              Alert.alert('Welcome' + ' '+ user.displayName + '!');
+              // Alert.alert('Welcome' + ' '+ user.displayName + '!');
             } else {
               // No user is signed in.
             }
@@ -54,7 +54,7 @@ export default class Login extends Component {
           }).then(function(eventPoints){
               userPointsRef.update({points:eventPoints})
               .then(function(){
-                Alert.alert("success");
+                // Alert.alert("success");
               })
 
           });
