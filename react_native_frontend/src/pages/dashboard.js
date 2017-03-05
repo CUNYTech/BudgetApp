@@ -1,13 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager
+    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity
 } from 'react-native';
 import {Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
-import { H1,Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body,
-Icon, Form, Item, Input, Label,Fab,Badge  } from 'native-base';
 import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Dashboard extends Component{
 
@@ -25,95 +24,59 @@ export default class Dashboard extends Component{
   });
  }
 
-  render() {
-      return (
-        <Container style={{backgroundColor:'floralwhite'}}>
-               <Header style={{backgroundColor:'transparent'}} noShadow >
-                   <Left>
-                       <Button onPress ={() => Actions.home()} transparent noShadow>
-                           <Icon name='arrow-back' />
-                       </Button>
-                   </Left>
-                   <Body>
-                     <Button marginTop={90} onPress={this._signOut.bind(this)}>
-                       <Text>
-                       Sign Out
-                       </Text>
-                     </Button>
-                       <Title style={{fontSize: 19,fontFamily: 'OpenSans-Bold',color:'darkolivegreen'}} >DA$HB0@RD</Title>
-                   </Body>
-                   <Right>
-                       <Button transparent noShadow>
-                           <Icon name='menu' />
-                       </Button>
-                   </Right>
-               </Header>
-        <Content>
+ render() {
+       return (
+           <View style={styles.container}>
+             <View style={styles.header}>
+               <TouchableOpacity>
+                 <Icon name="bars" size={30} color="white" style={{}} />
+               </TouchableOpacity>
+               <Text style={{
+                   fontSize: 25,
+                   textAlign: 'left',
+                   width: 250,
+                   color: 'white',
+                   fontWeight: '300'
+                 }}>
+                 Dashboard
+               </Text>
+                 <Icon name="diamond" size={30} color="#fff176" style={{}} />
+             </View>
+             <View style={styles.section}>
 
-                    <View style={{alignItems: "center", top: 100}}>
-                        <Fab
-                          active={this.state.active}
-                          direction="down"
-                          style={{ backgroundColor: '#5067FF'}}
-                          position="bottomRight"
-                          onPress={() => this.setState({ active: !this.state.active })}>
-                              <Icon name="share" />
-                            <Button style={{ backgroundColor: '#34A34F' }}>
-                              <Icon name="logo-whatsapp" />
-                            </Button>
-                            <Button style={{ backgroundColor: '#3B5998' }}>
-                              <Icon name="logo-facebook" />
-                            </Button>
-                            <Button disabled style={{ backgroundColor: '#DD5144' }}>
-                              <Icon name="mail" />
-                            </Button>
-                      </Fab>
-                    </View>
-                  </Content>
+             </View>
+             <View style={styles.section}>
+               <ScrollView horizontal={true} contentContainerStyle>
 
-                  <Footer style={{backgroundColor:'transparent'}} >
-                        <FooterTab>
-                            <Button>
-                                <Icon style={{color:'midnightblue'}} name="stats" />
-                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'midnightblue'}} >Budget</Text>
-                            </Button>
-                            <Button>
-                                <Icon style={{color:'darkolivegreen'}} name="cash" />
-                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'darkolivegreen'}} >Goals</Text>
-                            </Button>
-                            <Button >
-                                <Icon style={{color:'salmon'}} name="trophy" />
-                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'salmon'}}>Points</Text>
-                            </Button>
-                            <Button>
-                                <Icon style={{color:'goldenrod'}} name="people" />
-                                <Text style={{fontFamily: 'OpenSans-Semibold',color:'goldenrod'}}>Friends</Text>
-                            </Button>
-                        </FooterTab>
-                  </Footer>
+               </ScrollView>
+             </View>
+             <View style={styles.section}>
+
+             </View>
 
 
-              </Container>
+           </View>
+         )
+       }
+     }
 
-
-        )
-      }
-}
-
-const dashboardStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'transparent'
-  },
-    loginContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        paddingTop: 49,
-    },
-    formContainer: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: getPlatformValue('android', 25, 45)
-    }
-});
+ const styles = StyleSheet.create({
+   container: {
+     flex: 1,
+     backgroundColor: 'white',
+   },
+     header: {
+         paddingTop: getPlatformValue('android', 25, 20),
+         flex: 0,
+         flexDirection: 'row',
+         height: 60,
+         backgroundColor: '#1de9b6',
+         justifyContent: 'space-around',
+         alignItems: 'center'
+     },
+     section: {
+         flex: 1,
+         borderColor: 'red',
+         borderWidth: 1,
+     }
+ });
