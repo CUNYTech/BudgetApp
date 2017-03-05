@@ -25,6 +25,15 @@ export default class Dashboard extends Component{
  }
 
  render() {
+   const friends = []
+   for (var i = 0; i <= 10; i++) {
+     friends.push( <View style={{alignItems: 'center', margin: 10}}>
+                     <Icon name="user" size={80} color="#e0e0e0" style={{ width: 60, height: 60, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 30, overflow: 'hidden'}} />
+                     <Text style={{fontSize: 12, fontWeight: 'bold'}}>Tom</Text>
+                     <Text style={{fontSize: 12, fontWeight: 'bold'}}>400 pts</Text>
+                   </View>)
+                   }
+                   
        return (
            <View style={styles.container}>
              <View style={styles.header}>
@@ -42,19 +51,46 @@ export default class Dashboard extends Component{
                </Text>
                  <Icon name="diamond" size={30} color="#fff176" style={{}} />
              </View>
-             <View style={styles.section}>
 
-             </View>
-             <View style={styles.section}>
+             <TouchableOpacity style={styles.section}>
+               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                 Daily Points
+               </Text>
+             </TouchableOpacity>
+
+            <View style={styles.friendsSection}>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                   Friends
+                 </Text>
+                 <TouchableOpacity>
+                   <Icon name="arrow-right" size={25} color="#424242" style={{}} />
+                 </TouchableOpacity>
+               </View>
                <ScrollView horizontal={true} contentContainerStyle>
-
+                <View style={{alignItems: 'center', margin: 10}}>
+                  <Icon name="user" size={80} color="#e0e0e0" style={{ width: 60, height: 60, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 30, overflow: 'hidden'}} />
+                  <Text style={{fontSize: 12, fontWeight: 'bold'}}>Tom</Text>
+                  <Text style={{fontSize: 12, fontWeight: 'bold'}}>400 pts</Text>
+                </View>
+                { friends }
                </ScrollView>
              </View>
-             <View style={styles.section}>
 
-             </View>
+             <TouchableOpacity style={styles.section}>
+               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                 Goals
+               </Text>
+             </TouchableOpacity>
 
-
+            <View style={styles.section}>
+              <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                Budget
+              </Text>
+              <TouchableOpacity style={styles.addExpense} activeOpacity={.7}>
+                <Icon name="plus-circle" size={60} color="#e64a19" style={{}} />
+              </TouchableOpacity>
+            </View>
            </View>
          )
        }
@@ -78,5 +114,15 @@ export default class Dashboard extends Component{
          flex: 1,
          borderColor: 'red',
          borderWidth: 1,
+     },
+     friendsSection: {
+         flex: 0,
+         borderColor: 'red',
+         borderWidth: 1,
+     },
+     addExpense: {
+       position: 'absolute',
+       bottom: 30,
+       right: 30,
      }
  });
