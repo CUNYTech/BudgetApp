@@ -5,11 +5,10 @@ import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../compon
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
-import * as firebase from 'firebase';
 
-// const database = firebase.database()
-// const userRef = database.ref('users');
 
+// const rootRef = firebaseApp.database().ref();
+// const itemsRef = rootRef.child('items');
 
 export default class Register extends Component {
     state = {
@@ -25,17 +24,26 @@ export default class Register extends Component {
     };
 
 
-
     // Add new user to Firebase DB
     async _register(){
     try{
-        await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+        await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
 
-        // setTimeout(() => userRef.push({
-          // username: this.state.username,
-          // email: this.state.email
-          //  }),
-              // 0);
+        var user = this.props.Firebase.auth().currentUser;
+        var ref = this.props.Firebase.database().ref();
+        var userRef = ref.child('users/');
+
+
+        user.updateProfile({
+          displayName: this.state.username,
+        });
+
+         setTimeout(() => userRef.push({
+           displayName: this.state.username,
+           email: this.state.email,
+
+           }),
+              0);
 
 
         Actions.dashboard()
@@ -54,12 +62,40 @@ export default class Register extends Component {
 };
 
 
-      // database.ref('users').set({
-        // username: this.state.username,
-        // email: this.state.email
-      // });
+    async _load(){
+
+      try{ await this.props.Firebase.auth().currentUser;
+        //Pull user profile
+        var name, email, photoUrl, uid, emailVerified;
+
+        if (user != null) {
+          name = user.displayName;
+          email = user.email;
+          photoUrl = user.photoURL;
+          emailVerified = user.emailVerified;
+          uid = user.uid;
+        }
+        //Create UID nodes in DB
+        var userPointsRef = ref.child('userReadable/userPoints').child(uid);
+        var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+
+        setTimeout(()=> userPointsRef.push({
+          displayName: this.state.username,
+          points:''
+        }),0);
+
+        setTimeout(()=> userFriendsRef.push({
+          displayName: this.state.username,
+          friends:''
+        }),0);
 
 
+      }
+      catch(error){
+        console.log(error);
+      };
+
+    }
 
 
     componentDidMount() {
@@ -136,7 +172,7 @@ export default class Register extends Component {
               <Logo marginTop={25}/>
                 <View style={loginStyle.formContainer}>
                 <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
-                  <Text style={{color: 'red', fontSize: 12}}>{errors}</Text>
+                  <Text style={{color: 'red', fontSize: 12}}>{this.state.errors}</Text>
                   <Input label="Username"
                     autoCorrect = {false}
                     value={this.state.username}
