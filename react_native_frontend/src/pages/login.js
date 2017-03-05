@@ -28,7 +28,7 @@ export default class Login extends Component {
           await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
 
           var user = this.props.Firebase.auth().currentUser;
-          var name, email, photoUrl, uid, emailVerified;
+          var name, email, photoUrl, uid, emailVerified
 
             if (user) {
               uid = user.uid;
@@ -38,14 +38,32 @@ export default class Login extends Component {
             }
 
             //Create UID nodes in DB
-            var ref = this.props.Firebase.database().ref();
-            var userPointsRef = ref.child('userReadable/userPoints').child(uid);
-            var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+          var ref = this.props.Firebase.database().ref();
+          var userPointsRef = ref.child('userReadable/userPoints').child(uid);
+          var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+
+
+
+          //Get Uses Current Points and Updates According To Event
+          userPointsRef.once('value').then(function(snap){
+                userPoints = snap.val().points;
+                return points = (userPoints)
+          }).then(function(points){
+             var eventPoints = 1000 + (points);
+             return eventPoints;
+          }).then(function(eventPoints){
+              userPointsRef.update({points:eventPoints})
+              .then(function(){
+                Alert.alert("success");
+              })
+
+          });
+
 
 
             setTimeout(()=> userPointsRef.set({
               displayName: user.displayName,
-              points:''
+              points: 20
             }),0);
 
             setTimeout(()=> userFriendsRef.set({
