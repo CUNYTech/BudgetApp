@@ -13,6 +13,7 @@
     "react-native": "0.38.0",
     "react-native-pathjs-charts": "0.0.26",
     "react-native-router-flux": "^3.37.0",
+    "react-native-svg": "^4.4.1",
     "react-native-vector-icons": "^3.0.0",
     "uuid": "^3.0.0"
   },
