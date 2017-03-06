@@ -97,7 +97,7 @@ const options = {
   margin: {
     top: 20,
     left: 0,
-    bottom: 50,
+    bottom: 64,
     right: 0
   },
   color: '#673ab7',
@@ -283,6 +283,7 @@ export default class Dashboard extends Component{
      },
      friendsSection: {
          flex: 0,
+         marginTop: 5,
          backgroundColor: 'white',
          borderColor: 'red',
          borderWidth: 0,
