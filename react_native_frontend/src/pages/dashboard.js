@@ -7,6 +7,103 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Bar } from 'react-native-pathjs-charts'
+
+
+
+
+const data = [
+  [{
+    "v": 49,
+    "name": "M"
+  }, {
+    "v": 42,
+    "name": "T"
+  }, {
+    "v": 69,
+    "name": "W"
+  }, {
+    "v": 62,
+    "name": "Th"
+  }, {
+    "v": 29,
+    "name": "F"
+  }, {
+    "v": 15,
+    "name": "S"
+  }, {
+    "v": 35,
+    "name": "Su"
+  }, {
+    "v": 42,
+    "name": "T"
+  }, {
+    "v": 69,
+    "name": "W"
+  }, {
+    "v": 62,
+    "name": "Th"
+  }, {
+    "v": 29,
+    "name": "F"
+  }, {
+    "v": 15,
+    "name": "S"
+  }, {
+    "v": 35,
+    "name": "Su"
+  }]
+]
+
+const options = {
+  width: 540,
+  height: 100,
+  margin: {
+    top: 20,
+    left: 0,
+    bottom: 50,
+    right: 0
+  },
+  color: '#2980B9',
+  gutter: -.5,
+  animate: {
+    type: 'oneByOne',
+    duration: 200,
+    fillTransition: 3
+  },
+  axisX: {
+    showAxis: true,
+    showLines: true,
+    showLabels: true,
+    showTicks: true,
+    zeroAxis: false,
+    orient: 'bottom',
+    label: {
+      fontFamily: 'Arial',
+      fontSize: 12,
+      fontWeight: true,
+      fill: '#34495E'
+    }
+  },
+  axisY: {
+    showAxis: false,
+    showLines: false,
+    showLabels: false,
+    showTicks: false,
+    zeroAxis: false,
+    orient: 'left',
+    label: {
+      fontFamily: 'Arial',
+      fontSize: 8,
+      fontWeight: true,
+      fill: '#34495E'
+    }
+  }
+}
+
+
+
+
 
 export default class Dashboard extends Component{
 
@@ -65,14 +162,21 @@ export default class Dashboard extends Component{
                  }}>
                  Dashboard
                </Text>
-                 <Icon name="diamond" size={30} color="#fff176" style={{}} />
+                <Icon name="diamond" size={30} color="#fff176" style={{}} />
              </View>
 
-             <TouchableOpacity style={styles.section}>
+             <View style={styles.section}>
                <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
                  Daily Points
                </Text>
-             </TouchableOpacity>
+               <ScrollView
+                 horizontal={true}
+                 showsHorizontalScrollIndicator={false}
+                 bounces={false}
+                 >
+                 <Bar data={data} options={options} accessorKey='v'/>
+               </ScrollView>
+             </View>
 
             <View style={styles.friendsSection}>
               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
