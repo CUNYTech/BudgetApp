@@ -178,7 +178,7 @@ export default class Dashboard extends Component{
    const friends = []
    for (var i = 0; i <= 10; i++) {
      friends.push( <View style={{alignItems: 'center', margin: 10}}>
-                     <Icon name="user" size={50} color="#e0e0e0" style={{ width: 40, height: 40, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 20, overflow: 'hidden'}} />
+                     <Icon name="user" size={50} color="#e0e0e0" style={{ width: 40, height: 40, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#1de9b6', borderRadius: 20, overflow: 'hidden'}} />
                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>400 pts</Text>
                    </View>)
@@ -203,38 +203,47 @@ export default class Dashboard extends Component{
              </View>
 
              <View style={styles.section}>
-               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                 <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
-                    Daily Points
-                  </Text>
-                  <TouchableOpacity>
-                    <Icon name="arrow-right" size={20} color="#424242" />
-                  </TouchableOpacity>
-                </View>
+               <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                  Daily Points
+                </Text>
+                <Icon name="arrow-right" size={25} color="#424242" />
+               </TouchableOpacity>
                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
                  <Bar data={data} options={options} accessorKey='v'/>
                </ScrollView>
              </View>
 
             <View style={styles.friendsSection}>
-              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                 <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
                    Friends
                  </Text>
-                 <TouchableOpacity>
-                   <Icon name="arrow-right" size={20} color="#424242" />
-                 </TouchableOpacity>
-               </View>
+                   <Icon name="arrow-right" size={25} color="#424242" />
+               </TouchableOpacity>
                <ScrollView horizontal={true} contentContainerStyle showsHorizontalScrollIndicator={false}>
                 { friends }
                </ScrollView>
              </View>
 
              <TouchableOpacity style={styles.section}>
-               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6', marginBottom: 10}}>
                  Goals
                </Text>
-
+               <TouchableOpacity
+                 onPress={this.handleBudgetPress.bind(this)}
+                 style={{ height: 40, marginRight: 20, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#bdbdbd', borderRadius: 20, backgroundColor: '#eeeeee' }}
+                 >
+                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: this.state.budgetTracker.margin }}></View>
+                 <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, left: 110, texttAlign: 'center', fontSize: 20, fontWeight: '900', color: '#00bfa5'}}>Japan Trip</Text>
+               </TouchableOpacity>
+               <TouchableOpacity
+                 onPress={this.handleBudgetPress.bind(this)}
+                 style={{ height: 40, marginRight: 20, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#bdbdbd', borderRadius: 20, backgroundColor: '#eeeeee' }}
+                 >
+                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: this.state.budgetTracker.margin }}></View>
+                 <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, left: 110, texttAlign: 'center', fontSize: 20, fontWeight: '900', color: '#00bfa5'}}>Burning Man</Text>
+               </TouchableOpacity>
              </TouchableOpacity>
 
             <View style={styles.budgetSection}>
