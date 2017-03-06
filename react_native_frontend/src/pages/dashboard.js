@@ -52,11 +52,47 @@ const data = [
   }, {
     "v": 35,
     "name": "Su"
+  }, {
+    "v": 42,
+    "name": "T"
+  }, {
+    "v": 69,
+    "name": "W"
+  }, {
+    "v": 62,
+    "name": "Th"
+  }, {
+    "v": 29,
+    "name": "F"
+  }, {
+    "v": 15,
+    "name": "S"
+  }, {
+    "v": 35,
+    "name": "Su"
+  }, {
+    "v": 42,
+    "name": "T"
+  }, {
+    "v": 69,
+    "name": "W"
+  }, {
+    "v": 62,
+    "name": "Th"
+  }, {
+    "v": 29,
+    "name": "F"
+  }, {
+    "v": 15,
+    "name": "S"
+  }, {
+    "v": 35,
+    "name": "Su"
   }]
 ]
 
 const options = {
-  width: 540,
+  width: 1040,
   height: 100,
   margin: {
     top: 20,
@@ -64,7 +100,7 @@ const options = {
     bottom: 50,
     right: 0
   },
-  color: '#2980B9',
+  color: '#673ab7',
   gutter: -.5,
   animate: {
     type: 'oneByOne',
@@ -151,7 +187,7 @@ export default class Dashboard extends Component{
            <View style={styles.container}>
              <View style={styles.header}>
                <TouchableOpacity>
-                 <Icon name="bars" size={30} color="white" style={{}} />
+                 <Icon name="bars" size={30} color="white" />
                </TouchableOpacity>
                <Text style={{
                    fontSize: 25,
@@ -162,18 +198,19 @@ export default class Dashboard extends Component{
                  }}>
                  Dashboard
                </Text>
-                <Icon name="diamond" size={30} color="#fff176" style={{}} />
+                <Icon name="diamond" size={30} color="#fff176" />
              </View>
 
              <View style={styles.section}>
-               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
-                 Daily Points
-               </Text>
-               <ScrollView
-                 horizontal={true}
-                 showsHorizontalScrollIndicator={false}
-                 bounces={false}
-                 >
+               <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                 <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+                    Daily Points
+                  </Text>
+                  <TouchableOpacity>
+                    <Icon name="arrow-right" size={20} color="#424242" />
+                  </TouchableOpacity>
+                </View>
+               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
                  <Bar data={data} options={options} accessorKey='v'/>
                </ScrollView>
              </View>
@@ -184,10 +221,10 @@ export default class Dashboard extends Component{
                    Friends
                  </Text>
                  <TouchableOpacity>
-                   <Icon name="arrow-right" size={25} color="#424242" style={{}} />
+                   <Icon name="arrow-right" size={20} color="#424242" />
                  </TouchableOpacity>
                </View>
-               <ScrollView horizontal={true} contentContainerStyle>
+               <ScrollView horizontal={true} contentContainerStyle showsHorizontalScrollIndicator={false}>
                 <View style={{alignItems: 'center', margin: 10}}>
                   <Icon name="user" size={80} color="#e0e0e0" style={{ width: 60, height: 60, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 30, overflow: 'hidden'}} />
                   <Text style={{fontSize: 12, fontWeight: 'bold'}}>Tom</Text>
@@ -219,7 +256,7 @@ export default class Dashboard extends Component{
               </View>
             </View>
             <TouchableOpacity style={styles.addExpense} activeOpacity={.7}>
-              <Icon name="plus-circle" size={60} color="#e64a19" style={{}} />
+              <Icon name="plus-circle" size={60} color="#e64a19" style={{backgroundColor: 'white'}}/>
             </TouchableOpacity>
            </View>
          )
@@ -229,7 +266,7 @@ export default class Dashboard extends Component{
  const styles = StyleSheet.create({
    container: {
      flex: 1,
-     backgroundColor: 'white',
+     backgroundColor: '#eeeeee',
    },
      header: {
          paddingTop: getPlatformValue('android', 25, 20),
@@ -243,12 +280,16 @@ export default class Dashboard extends Component{
      section: {
          flex: 1,
          borderColor: 'red',
-         borderWidth: 1,
+         marginTop: 5,
+         borderWidth: 0,
+         backgroundColor: 'white',
+
      },
      friendsSection: {
          flex: 0,
+         backgroundColor: 'white',
          borderColor: 'red',
-         borderWidth: 1,
+         borderWidth: 0,
      },
      addExpense: {
        position: 'absolute',
