@@ -177,9 +177,9 @@ export default class Dashboard extends Component{
    const friends = []
    for (var i = 0; i <= 10; i++) {
      friends.push( <View style={{alignItems: 'center', margin: 10}}>
-                     <Icon name="user" size={80} color="#e0e0e0" style={{ width: 60, height: 60, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 30, overflow: 'hidden'}} />
-                     <Text style={{fontSize: 12, fontWeight: 'bold'}}>Tom</Text>
-                     <Text style={{fontSize: 12, fontWeight: 'bold'}}>400 pts</Text>
+                     <Icon name="user" size={50} color="#e0e0e0" style={{ width: 40, height: 40, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 20, overflow: 'hidden'}} />
+                     <Text style={{fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
+                     <Text style={{fontSize: 10, fontWeight: 'bold'}}>400 pts</Text>
                    </View>)
                    }
     const tracker = this.state.budgetTracker
@@ -225,11 +225,6 @@ export default class Dashboard extends Component{
                  </TouchableOpacity>
                </View>
                <ScrollView horizontal={true} contentContainerStyle showsHorizontalScrollIndicator={false}>
-                <View style={{alignItems: 'center', margin: 10}}>
-                  <Icon name="user" size={80} color="#e0e0e0" style={{ width: 60, height: 60, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#424242', borderRadius: 30, overflow: 'hidden'}} />
-                  <Text style={{fontSize: 12, fontWeight: 'bold'}}>Tom</Text>
-                  <Text style={{fontSize: 12, fontWeight: 'bold'}}>400 pts</Text>
-                </View>
                 { friends }
                </ScrollView>
              </View>
@@ -238,6 +233,7 @@ export default class Dashboard extends Component{
                <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
                  Goals
                </Text>
+
              </TouchableOpacity>
 
             <View style={styles.section}>
