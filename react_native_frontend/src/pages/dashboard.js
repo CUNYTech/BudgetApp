@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity
+    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
 } from 'react-native';
 import {Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
@@ -138,19 +138,50 @@ const options = {
 }
 
 
-
+var CustomLayoutAnimation = {
+  duration: 50,
+  create: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+    property: LayoutAnimation.Properties.opacity,
+  },
+  update: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+  },
+};
 
 
 export default class Dashboard extends Component{
 
-
-  state = {
+constructor(){
+  super();
+  this.state = {
+    expenseTotal: 0,
+    expenseTotalChange: 0,
+    addExpenseOffest: 700,
     active: false,
+    count: 0,
+    budget: 0,
     budgetTracker: {
       value: 0,
       margin: 0
     }
   };
+
+}
+
+
+  async setExpense(){
+    var curentUser = this.props.Firebase.database().ref().child('users/-Kedv5jZoXwl0BXQH3AP');
+    curentUser.once('value').then(function(snap){
+      var updatedValue = snap.val().expenses;
+      return updatedValue
+    }).then(function(value){
+      _this.setState({
+        expenseTotal: value
+      })
+    })
+  }
+
 
  _signOut(){
   this.props.Firebase.auth().signOut().then(function() {
@@ -162,19 +193,95 @@ export default class Dashboard extends Component{
  }
 
  handleBudgetPress() {
-   const num = this.state.budgetTracker.margin
-   const num_v = this.state.budgetTracker.value
-   if (num_v < 1000) {
+   const expense = +this.state.expenseTotal
+   const width = 273
+   const budget = 1000
+   const value = expense/budget
+
+
+
+   if (value < 1) {
+     const num = (value*273)
       this.setState({
         budgetTracker: {
-          value: (num_v + 30),
-          margin: (num + 10)
+          margin: num
+        }
+      })
+    } else {
+      this.setState({
+        budgetTracker: {
+          margin: 273
         }
       })
     }
  }
 
+async _updateExpenses() {
+  LayoutAnimation.configureNext(CustomLayoutAnimation)
+
+  const newValue = +this.state.expenseTotalChange
+  const total = +this.state.expenseTotalChange + +this.state.expenseTotal
+
+  if (newValue > 0) {
+    var curentUser = this.props.Firebase.database().ref().child('users/-Kedv5jZoXwl0BXQH3AP');
+    const _this = this
+
+    curentUser.update({
+      expenses: total
+    })
+
+    curentUser.once('value').then(function(snap){
+      var updatedValue = snap.val().expenses;
+      return updatedValue
+    }).then(function(value){
+      const width = 273
+      const budget = 1000
+
+      if ((value/budget) < 1) {
+        const num = (value*273)
+        LayoutAnimation.configureNext(CustomLayoutAnimation)
+
+         _this.setState({
+           expenseTotal: value,
+           budgetTracker: {
+             margin: (value/budget*width)
+           }
+         })
+       } else {
+         LayoutAnimation.configureNext(CustomLayoutAnimation)
+
+         _this.setState({
+           expenseTotal: value,
+           budgetTracker: {
+             margin: 273
+           }
+         })
+       }
+
+
+    })
+  }
+  this.showAddExpense()
+}
+
+showAddExpense() {
+LayoutAnimation.configureNext(CustomLayoutAnimation)
+  if (this.state.addExpenseOffest == 700) {
+    this.setState({
+      addExpenseOffest: 300
+    })
+  } else {
+    this.setState({
+      addExpenseOffest: 700,
+      expenseTotalChange: 0
+    })
+  }
+
+}
+
  render() {
+  //  const thing = this.props.Firebase.database().ref('users/-Kedv5jZoXwl0BXQH3AP');
+   const expenseTotal = this.state.expenseTotal
    const friends = []
    for (var i = 0; i <= 10; i++) {
      friends.push( <View style={{alignItems: 'center', margin: 10}}>
@@ -234,14 +341,14 @@ export default class Dashboard extends Component{
                  onPress={this.handleBudgetPress.bind(this)}
                  style={{ height: 40, marginRight: 20, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#bdbdbd', borderRadius: 20, backgroundColor: '#eeeeee' }}
                  >
-                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: this.state.budgetTracker.margin }}></View>
+                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: 0 }}></View>
                  <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, left: 110, texttAlign: 'center', fontSize: 20, fontWeight: '900', color: '#00bfa5'}}>Japan Trip</Text>
                </TouchableOpacity>
                <TouchableOpacity
                  onPress={this.handleBudgetPress.bind(this)}
                  style={{ height: 40, marginRight: 20, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#bdbdbd', borderRadius: 20, backgroundColor: '#eeeeee' }}
                  >
-                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: this.state.budgetTracker.margin }}></View>
+                 <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: 0 }}></View>
                  <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, left: 110, texttAlign: 'center', fontSize: 20, fontWeight: '900', color: '#00bfa5'}}>Burning Man</Text>
                </TouchableOpacity>
              </TouchableOpacity>
@@ -250,20 +357,46 @@ export default class Dashboard extends Component{
               <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
                 Budget
               </Text>
-              <TouchableOpacity
-                onPress={this.handleBudgetPress.bind(this)}
+              <View
                 style={{ height: 40, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}
                 >
                 <View style={{flex: 1, backgroundColor: '#4527a0', width: this.state.budgetTracker.margin }}></View>
-              </TouchableOpacity>
+              </View>
               <View style={{flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5}}>
-                <Text style={{marginLeft: this.state.budgetTracker.margin}}>${this.state.budgetTracker.value}</Text>
+                <Text style={{marginLeft: this.state.budgetTracker.margin}}>${ expenseTotal }</Text>
                 <Text>$1,000</Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.addExpense} activeOpacity={.7}>
+            <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
               <Icon name="plus-circle" size={50} color="#e64a19" style={{backgroundColor: 'white'}}/>
             </TouchableOpacity>
+            <View style={{
+                position: 'absolute',
+                top: this.state.addExpenseOffest,
+                width: 300,
+                height: 200,
+                left: 35,
+                borderWidth: 1,
+                borderRadius: 15,
+                borderColor: '#1de9b6',
+                backgroundColor: '#1de9b6',
+                justifyContent: 'center',
+              }}>
+              <Text style={{textAlign: 'center', fontWeight: '800',}}>ADD AN EXPENSE</Text>
+              <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
+                <Text style={{fontSize: 35}}>$</Text>
+                <TextInput
+                  style={{height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
+                  onChangeText={(expenseTotalChange) => this.setState({expenseTotalChange})}
+                  value={this.state.expenseTotalChange}
+                  />
+              </View>
+              <TouchableOpacity
+                onPress={this._updateExpenses.bind(this)}
+                style={{height: 45, width: 200, backgroundColor: '#fff176', borderRadius: 10, marginLeft: 55, overflow: 'hidden', justifyContent: 'center'}}>
+                <Text style={{textAlign: 'center', fontWeight: '900'}}>ADD</Text>
+              </TouchableOpacity>
+            </View>
            </View>
          )
        }
