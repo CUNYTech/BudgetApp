@@ -41,10 +41,16 @@ export default class Register extends Component {
          setTimeout(() => userRef.push({
            displayName: this.state.username,
            email: this.state.email,
-
+           budget: 0,
+           savings: 0,
+           expenses: 0,
+           level: 1,
+           levelProgress: .01,
+           points: 0,
+           friends: [],
+           goals: [],
            }),
               0);
-
 
         Actions.dashboard()
 
