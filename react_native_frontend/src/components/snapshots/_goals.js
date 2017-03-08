@@ -31,12 +31,12 @@ export default class GoalsSnapshot extends Component{
       )
     });
     return (
-    <TouchableOpacity style={styles.section}>
-      <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6', marginBottom: 10}}>
-        Goals
-      </Text>
-      { goals }
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.section}>
+        <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6', marginBottom: 10}}>
+          Goals
+        </Text>
+        { goals }
+      </TouchableOpacity>
     )
   }
 }
