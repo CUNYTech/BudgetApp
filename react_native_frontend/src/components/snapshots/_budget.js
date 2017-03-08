@@ -35,7 +35,6 @@ export default class BudgetSnapshot extends Component{
     };
   }
 
-
   async setExpense(){
     var curentUser = this.props.Firebase.database().ref().child('users/-Kedv5jZoXwl0BXQH3AP');
     curentUser.once('value').then(function(snap){
