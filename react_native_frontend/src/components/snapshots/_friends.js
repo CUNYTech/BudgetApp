@@ -22,7 +22,7 @@ export default class FriendsSnapshot extends Component{
    for (var i = 0; i <= 10; i++) {
      friends.push(
        <View style={{alignItems: 'center', margin: 10}}>
-         <Icon name="user" size={50} color="#e0e0e0" style={{ width: 40, height: 40, backgroundColor: '#bdbdbd', borderWidth: 1, borderColor: '#1de9b6', borderRadius: 20, overflow: 'hidden'}} />
+         <Icon name="user" size={50} color="#e0e0e0" style={styles.icon} />
          <Text style={{fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
          <Text style={{fontSize: 10, fontWeight: 'bold'}}>400 pts</Text>
        </View>
@@ -51,5 +51,14 @@ export default class FriendsSnapshot extends Component{
        backgroundColor: 'white',
        borderColor: 'red',
        borderWidth: 0,
+   },
+   icon: {
+     width: 40,
+     height: 40,
+     backgroundColor: '#bdbdbd',
+     borderWidth: 1,
+     borderColor: '#1de9b6',
+     borderRadius: 20,
+     overflow: 'hidden'
    }
  });
