@@ -8,7 +8,7 @@ import { Colors, Metrics, Fonts, ApplicationStyles } from '../../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Bar } from 'react-native-pathjs-charts'
 
-const data = [
+const graphData = [
   [{"v": 49, "name": "1/18"},
   {"v": 42, "name": "1/19"},
   {"v": 69, "name": "1/21"},
@@ -93,22 +93,22 @@ export default class PointsSnapshot extends Component{
     };
   }
 
- render() {
-       return (
-         <View style={styles.section}>
-           <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
-              Daily Points
-            </Text>
-            <Icon name="arrow-right" size={25} color="#424242" />
-           </TouchableOpacity>
-           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
-             <Bar data={data} options={options} accessorKey='v'/>
-           </ScrollView>
-         </View>
-         )
-       }
-     }
+  render() {
+    return (
+      <View style={styles.section}>
+        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+            Daily Points
+          </Text>
+          <Icon name="arrow-right" size={25} color="#424242" />
+        </TouchableOpacity>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
+          <Bar data={graphData} options={options} accessorKey='v'/>
+        </ScrollView>
+      </View>
+    )
+  }
+}
 
  const styles = StyleSheet.create({
    section: {
