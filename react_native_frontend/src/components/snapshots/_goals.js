@@ -18,21 +18,23 @@ export default class GoalsSnapshot extends Component{
   }
 
   render() {
+    var i = 1
     const goals = []
     const myGoals = ['Paris Trip', "Yeezy's"]
     myGoals.forEach(function(element) {
       goals.push(
-        <TouchableOpacity style={styles.goal} >
-          <View style={{flex: 1, backgroundColor: '#4527a0', borderRadius: 20, width: 0, justifyContent: '' }}></View>
-          <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, width: 335, textAlign: 'center', fontSize: 20, fontWeight: '900', color: '#00bfa5'}}>
+        <TouchableOpacity key={i} style={styles.goal} >
+          <View style={{flex: 1, backgroundColor: 'black', borderRadius: 20, width: 0}}></View>
+          <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, width: 335, textAlign: 'center', fontSize: 20, color: 'black'}}>
             { element }
           </Text>
       </TouchableOpacity>
       )
+      i+=1
     });
     return (
       <TouchableOpacity style={styles.section}>
-        <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6', marginBottom: 10}}>
+        <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black', marginBottom: 10}}>
           Goals
         </Text>
         { goals }

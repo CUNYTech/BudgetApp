@@ -26,8 +26,8 @@ export default class BudgetSnapshot extends Component{
     super();
     this.state = {
       expenseTotal: 0,
-      expenseTotalChange: 0,
-      addExpenseOffest: 700,
+      expenseTotalChange: '0',
+      addExpenseOffest: -200,
       budget: 0,
       budgetTracker: {
         margin: 0
@@ -35,8 +35,10 @@ export default class BudgetSnapshot extends Component{
     };
   }
 
+
+
   async setExpense(){
-    var curentUser = this.props.Firebase.database().ref().child('users/-Kedv5jZoXwl0BXQH3AP');
+    var curentUser = this.props.Firebase.database().ref().child('users/KekWXr8FARMbsXbRonL');
     curentUser.once('value').then(function(snap){
       var updatedValue = snap.val().expenses;
       return updatedValue
@@ -48,6 +50,7 @@ export default class BudgetSnapshot extends Component{
   }
 
   async _updateExpenses() {
+
     const newExpenseValue = +this.state.expenseTotalChange
     const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal
     const _this = this
@@ -55,7 +58,7 @@ export default class BudgetSnapshot extends Component{
     const fixedBudget = 1000
 
     if (newExpenseValue > 0) {
-      var curentUser = this.props.Firebase.database().ref().child('users/-Kedv5jZoXwl0BXQH3AP');
+      var curentUser = this.props.Firebase.database().ref().child('-KekWXr8FARMbsXbRonL');
       curentUser.update({ expenses: newExpensesTotal })
       curentUser.once('value').then(function(snap){
         var updatedValue = snap.val().expenses;
@@ -98,7 +101,7 @@ export default class BudgetSnapshot extends Component{
  render() {
    return (
     <View style={styles.budgetSection}>
-      <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+      <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black'}}>
         Budget
       </Text>
       <View style={{ height: 40, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}>
@@ -113,7 +116,7 @@ export default class BudgetSnapshot extends Component{
         </Text>
       </View>
       <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
-        <Icon name="plus-circle" size={50} color="#e64a19" style={{backgroundColor: 'white'}}/>
+        <Icon name="plus-circle" size={50} color="#3949ab" style={{backgroundColor: 'white'}}/>
       </TouchableOpacity>
       <View style={{
         position: 'absolute',
@@ -123,11 +126,11 @@ export default class BudgetSnapshot extends Component{
         left: 35,
         borderWidth: 1,
         borderRadius: 15,
-        borderColor: '#1de9b6',
-        backgroundColor: '#1de9b6',
+        borderColor: 'black',
+        backgroundColor: 'black',
         justifyContent: 'center',
       }}>
-        <Text style={{textAlign: 'center', fontWeight: '800',}}>
+        <Text style={{textAlign: 'center', color: 'white' }}>
           ADD AN EXPENSE
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
@@ -137,14 +140,14 @@ export default class BudgetSnapshot extends Component{
           <TextInput
             style={{height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
             onChangeText={(expenseTotalChange) => this.setState({expenseTotalChange})}
-            value={this.state.expenseTotalChange}
+            value={""+this.state.expenseTotalChange+""}
           />
         </View>
         <TouchableOpacity
           onPress={this._updateExpenses.bind(this)}
           style={styles.addExpenseButton}
         >
-          <Text style={{textAlign: 'center', fontWeight: '900'}}>
+          <Text style={{textAlign: 'center', color: 'white' }}>
             ADD
           </Text>
         </TouchableOpacity>
@@ -171,7 +174,7 @@ export default class BudgetSnapshot extends Component{
      addExpenseButton: {
         height: 45,
         width: 200,
-        backgroundColor: '#fff176',
+        backgroundColor: '#3949ab',
         borderRadius: 10,
         marginLeft: 55,
         overflow: 'hidden',

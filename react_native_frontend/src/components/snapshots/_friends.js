@@ -21,7 +21,7 @@ export default class FriendsSnapshot extends Component{
    const friends = []
    for (var i = 0; i <= 10; i++) {
      friends.push(
-       <View style={{alignItems: 'center', margin: 10}}>
+       <View key={i} style={{alignItems: 'center', margin: 10}}>
          <Icon name="user" size={50} color="#e0e0e0" style={styles.icon} />
          <Text style={{fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
          <Text style={{fontSize: 10, fontWeight: 'bold'}}>400 pts</Text>
@@ -31,12 +31,12 @@ export default class FriendsSnapshot extends Component{
   return (
     <View style={styles.friendsSection}>
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-        <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+        <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black'}}>
           Friends
         </Text>
         <Icon name="arrow-right" size={25} color="#424242" />
       </TouchableOpacity>
-      <ScrollView horizontal={true} contentContainerStyle showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         { friends }
       </ScrollView>
     </View>
@@ -57,7 +57,7 @@ export default class FriendsSnapshot extends Component{
      height: 40,
      backgroundColor: '#bdbdbd',
      borderWidth: 1,
-     borderColor: '#1de9b6',
+     borderColor: 'black',
      borderRadius: 20,
      overflow: 'hidden'
    }

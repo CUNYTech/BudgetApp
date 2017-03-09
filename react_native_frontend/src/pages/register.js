@@ -68,9 +68,9 @@ export default class Register extends Component {
 };
 
 
-    async _load(){
+    _load(){
 
-      try{ await this.props.Firebase.auth().currentUser;
+       this.props.Firebase.auth().currentUser;
         //Pull user profile
         var name, email, photoUrl, uid, emailVerified;
 
@@ -94,12 +94,6 @@ export default class Register extends Component {
           displayName: this.state.username,
           friends:''
         }),0);
-
-
-      }
-      catch(error){
-        console.log(error);
-      };
 
     }
 

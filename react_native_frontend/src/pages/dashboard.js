@@ -67,7 +67,7 @@ export default class Dashboard extends Component{
          flex: 0,
          flexDirection: 'row',
          height: 60,
-         backgroundColor: '#1de9b6',
+         backgroundColor: 'black',
          justifyContent: 'space-around',
          alignItems: 'center'
     }

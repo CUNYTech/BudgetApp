@@ -32,9 +32,9 @@ export default class Login extends Component {
 
             if (user) {
               uid = user.uid;
-              // Alert.alert('Welcome' + ' '+ user.displayName + '!');
+              Alert.alert('Welcome' + ' '+ uid + '!');
             } else {
-              // No user is signed in.
+              Alert.alert('nouser!');
             }
 
             //Create UID nodes in DB
@@ -58,7 +58,6 @@ export default class Login extends Component {
               })
 
           });
-
 
 
             setTimeout(()=> userPointsRef.set({
