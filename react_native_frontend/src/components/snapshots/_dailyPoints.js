@@ -45,7 +45,7 @@ const options = {
     bottom: 78,
     right: 0
   },
-  color: '#673ab7',
+  color: '#607d8b',
   gutter: -.5,
   animate: {
     type: 'oneByOne',
@@ -63,7 +63,7 @@ const options = {
       fontFamily: 'Arial',
       fontSize: 12,
       fontWeight: true,
-      fill: '#34495E'
+      fill: 'black'
     }
   },
   axisY: {
@@ -77,7 +77,7 @@ const options = {
       fontFamily: 'Arial',
       fontSize: 8,
       fontWeight: true,
-      fill: '#34495E'
+      fill: 'black'
     }
   }
 }
@@ -97,7 +97,7 @@ export default class PointsSnapshot extends Component{
     return (
       <View style={styles.section}>
         <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-          <Text style={{fontFamily: 'OpenSans', fontWeight: '900', fontSize: 20, color: '#1de9b6'}}>
+          <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black'}}>
             Daily Points
           </Text>
           <Icon name="arrow-right" size={25} color="#424242" />
