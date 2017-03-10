@@ -54,12 +54,22 @@ export default class BudgetSnapshot extends Component{
       var updatedValue = snap.val().expenses;
       return updatedValue
     }).then(function(value){
+      if((value/fixedBudget) < 1){
       _this.setState({
         expenseTotal: value,
         budgetTracker: {
           margin: (value/fixedBudget*budgetTrackerWidth)
         }
       })
+    }
+    else{
+      _this.setState({
+        expenseTotal: value,
+        budgetTracker: {
+          margin: (budgetTrackerWidth)
+        }
+      })
+    }
     })
   }
   catch(e){

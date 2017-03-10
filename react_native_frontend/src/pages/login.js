@@ -32,7 +32,6 @@ export default class Login extends Component {
 
             if (user) {
               uid = user.uid;
-              Alert.alert('Welcome' + ' '+ uid + '!');
             } else {
               // No user is signed in.
             }
