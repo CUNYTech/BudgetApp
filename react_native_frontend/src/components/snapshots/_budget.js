@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
+    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation,Platform
 } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../../utils';
@@ -68,11 +68,6 @@ export default class BudgetSnapshot extends Component{
 }
 
 
-
-
-
-
-
   async _updateExpenses() {
 
     try{
@@ -126,9 +121,10 @@ export default class BudgetSnapshot extends Component{
   }
 
   showAddExpense() {
+    var offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation)
     if (this.state.addExpenseOffest == -200) {
-      this.setState({ addExpenseOffest: 220 })
+      this.setState({ addExpenseOffest: offSet }) //Set to 0 for android
     } else {
       this.setState({
         addExpenseOffest: -200,
