@@ -35,21 +35,53 @@ export default class BudgetSnapshot extends Component{
     };
   }
 
+  componentWillMount(){
+    this.setExpense();
+  }
 
+  async setExpense() {
+    try{
+      const _this = this
+      const fixedBudget = 1000
+      const budgetTrackerWidth = 273
+      await this.props.Firebase.auth().currentUser;
 
-  async setExpense(){
-    var curentUser = this.props.Firebase.database().ref().child('users/KekWXr8FARMbsXbRonL');
-    curentUser.once('value').then(function(snap){
+    var uid =  this.props.Firebase.auth().currentUser.uid;
+    var ref = this.props.Firebase.database().ref();
+    var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
+
+    userExpensesRef.once('value').then(function(snap){
       var updatedValue = snap.val().expenses;
       return updatedValue
     }).then(function(value){
       _this.setState({
-        expenseTotal: value
+        expenseTotal: value,
+        budgetTracker: {
+          margin: (value/fixedBudget*budgetTrackerWidth)
+        }
       })
     })
   }
+  catch(e){
+    console.log(error);
+  }
+}
+
+
+
+
+
+
 
   async _updateExpenses() {
+
+    try{
+
+      var ref = this.props.Firebase.database().ref();
+      var user = this.props.Firebase.auth().currentUser;
+      var uid = user.uid;
+
+      var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
 
     const newExpenseValue = +this.state.expenseTotalChange
     const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal
@@ -58,9 +90,9 @@ export default class BudgetSnapshot extends Component{
     const fixedBudget = 1000
 
     if (newExpenseValue > 0) {
-      var curentUser = this.props.Firebase.database().ref().child('-KekWXr8FARMbsXbRonL');
-      curentUser.update({ expenses: newExpensesTotal })
-      curentUser.once('value').then(function(snap){
+      // var curentUser = this.props.Firebase.database().ref().child(uid);
+      userExpensesRef.update({ expenses: newExpensesTotal })
+      userExpensesRef.once('value').then(function(snap){
         var updatedValue = snap.val().expenses;
         return updatedValue
       }).then(function(value){
@@ -72,7 +104,8 @@ export default class BudgetSnapshot extends Component{
               margin: (value/fixedBudget*budgetTrackerWidth)
             }
           })
-        } else {
+        }
+         else {
           LayoutAnimation.configureNext(CustomLayoutAnimation)
           _this.setState({
             expenseTotal: value,
@@ -84,6 +117,12 @@ export default class BudgetSnapshot extends Component{
       })
     }
     this.showAddExpense()
+
+  }
+
+    catch(e){
+      console.log(e);
+    }
   }
 
   showAddExpense() {
