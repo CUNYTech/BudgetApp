@@ -34,7 +34,7 @@ export default class Login extends Component {
               uid = user.uid;
               Alert.alert('Welcome' + ' '+ uid + '!');
             } else {
-              Alert.alert('nouser!');
+              // No user is signed in.
             }
 
             //Create UID nodes in DB
@@ -45,30 +45,30 @@ export default class Login extends Component {
 
 
           //Get Uses Current Points and Updates According To Event
-          userPointsRef.once('value').then(function(snap){
-                userPoints = snap.val().points;
-                return points = (userPoints)
-          }).then(function(points){
-             var eventPoints = 1000 + (points);
-             return eventPoints;
-          }).then(function(eventPoints){
-              userPointsRef.update({points:eventPoints})
-              .then(function(){
-                // Alert.alert("success");
-              })
+          // userPointsRef.once('value').then(function(snap){
+          //       userPoints = snap.val().points;
+          //       return points = (userPoints)
+          // }).then(function(points){
+          //    var eventPoints = 1000 + (points);
+          //    return eventPoints;
+          // }).then(function(eventPoints){
+          //     userPointsRef.update({points:eventPoints})
+          //     .then(function(){
+          //       // Alert.alert("success");
+          //     })
+          //
+          // });
 
-          });
 
-
-            setTimeout(()=> userPointsRef.set({
-              displayName: user.displayName,
-              points: 20
-            }),0);
-
-            setTimeout(()=> userFriendsRef.set({
-              displayName: user.displayName,
-              friends:''
-            }),0);
+            // setTimeout(()=> userPointsRef.set({
+            //   displayName: user.displayName,
+            //   points: 20
+            // }),0);
+            //
+            // setTimeout(()=> userFriendsRef.set({
+            //   displayName: user.displayName,
+            //   friends:''
+            // }),0);
 
             setTimeout(() => Actions.dashboard(), 0);
 
