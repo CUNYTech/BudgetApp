@@ -39,14 +39,15 @@ export default class Dashboard extends Component{
               </TouchableOpacity>
               <Text style={{
                 fontSize: 25,
-                textAlign: 'left',
+                textAlign: 'center',
                 width: 250,
                 color: 'white',
-                fontWeight: '300'
+                fontWeight: '300',
+                marginBottom:5
               }}>
-                Dashboard
+                HOME
               </Text>
-              <Icon name="diamond" size={30} color="#fff176" />
+              <Icon name="diamond" size={20} color="pink" />
             </View>
             <PointsSnapshot Firebase={this.props.Firebase} />
             <FriendsSnapshot Firebase={this.props.Firebase} />

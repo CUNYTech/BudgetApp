@@ -42,10 +42,10 @@ const options = {
   margin: {
     top: 20,
     left: 0,
-    bottom: 78,
+    bottom: 80,
     right: 0
   },
-  color: '#607d8b',
+  color: '#3949ab',
   gutter: -.5,
   animate: {
     type: 'oneByOne',
@@ -54,16 +54,17 @@ const options = {
   },
   axisX: {
     showAxis: true,
-    showLines: true,
+    showLines: false,
     showLabels: true,
-    showTicks: true,
+    showTicks: false,
     zeroAxis: false,
     orient: 'bottom',
     label: {
+      marginBottom: 100,
       fontFamily: 'OpenSans',
       fontSize: 12,
       fontWeight: true,
-      fill: 'black'
+      fill: 'white'
     }
   },
   axisY: {
@@ -77,7 +78,7 @@ const options = {
       fontFamily: 'OpenSans',
       fontSize: 8,
       fontWeight: true,
-      fill: 'black'
+      fill: 'white'
     }
   }
 }
@@ -97,10 +98,10 @@ export default class PointsSnapshot extends Component{
     return (
       <View style={styles.section}>
         <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-          <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black'}}>
-            Daily Points
+          <Text style={{textAlign: 'left',marginRight:4,fontFamily: 'OpenSans', fontSize: 17, color: 'white'}}>
+            DAILY POINTS
           </Text>
-          <Icon name="arrow-right" size={25} color="#424242" />
+          <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" />
         </TouchableOpacity>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
           <Bar data={graphData} options={options} accessorKey='v'/>
@@ -114,8 +115,8 @@ export default class PointsSnapshot extends Component{
    section: {
        flex: 1,
        borderColor: 'red',
-       marginTop: 5,
+       marginTop: .5,
        borderWidth: 0,
-       backgroundColor: 'white',
+       backgroundColor: 'black',
    }
  });

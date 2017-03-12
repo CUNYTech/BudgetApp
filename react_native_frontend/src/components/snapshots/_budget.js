@@ -146,22 +146,22 @@ export default class BudgetSnapshot extends Component{
  render() {
    return (
     <View style={styles.budgetSection}>
-      <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black'}}>
-        Budget
+      <Text style={{marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: 'white'}}>
+        BUDGET
       </Text>
-      <View style={{ height: 40, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}>
-        <View style={{flex: 1, backgroundColor: '#4527a0', width: this.state.budgetTracker.margin }}></View>
+      <View style={{ backgroundColor: '#292421',height: 40, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}>
+        <View style={{flex: 1, backgroundColor: '#3949ab', width: this.state.budgetTracker.margin }}></View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5}}>
-        <Text style={{marginLeft: this.state.budgetTracker.margin}}>
+        <Text style={{color:'white',marginLeft: this.state.budgetTracker.margin}}>
           ${ this.state.expenseTotal }
         </Text>
-        <Text>
+        <Text style={{color:'white'}}>
           $1,000
         </Text>
       </View>
       <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
-        <Icon name="plus-circle" size={50} color="#3949ab" style={{backgroundColor: 'white'}}/>
+        <Icon name="plus-circle" size={50} color="#76EE00" style={{backgroundColor: 'black'}}/>
       </TouchableOpacity>
       <View style={{
         position: 'absolute',
@@ -179,7 +179,7 @@ export default class BudgetSnapshot extends Component{
           ADD AN EXPENSE
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
-          <Text style={{fontSize: 35}}>
+          <Text style={{color: 'white',fontSize: 35}}>
             $
           </Text>
           <TextInput
@@ -205,11 +205,11 @@ export default class BudgetSnapshot extends Component{
  const styles = StyleSheet.create({
      budgetSection: {
          flex: 0,
-         borderColor: 'red',
-         marginTop: 5,
+         borderColor: 'whitesmoke',
+         marginTop: .6,
          paddingBottom: 10,
          borderWidth: 0,
-         backgroundColor: 'white',
+         backgroundColor: 'black',
      },
      addExpense: {
         position: 'absolute',

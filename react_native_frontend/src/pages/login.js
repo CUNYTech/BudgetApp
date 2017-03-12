@@ -37,8 +37,8 @@ export default class Login extends Component {
               // No user is signed in.
             }
 
-          event_a = '10'
-          _updatePoints(event_a, uid);
+          event_10 = '10'
+          _updatePoints(event_10, uid);
 
           setTimeout(() => Actions.dashboard(), 0);
 
