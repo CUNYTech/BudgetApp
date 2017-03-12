@@ -60,7 +60,7 @@ const options = {
     zeroAxis: false,
     orient: 'bottom',
     label: {
-      fontFamily: 'Arial',
+      fontFamily: 'OpenSans',
       fontSize: 12,
       fontWeight: true,
       fill: 'black'
@@ -74,7 +74,7 @@ const options = {
     zeroAxis: false,
     orient: 'left',
     label: {
-      fontFamily: 'Arial',
+      fontFamily: 'OpenSans',
       fontSize: 8,
       fontWeight: true,
       fill: 'black'
