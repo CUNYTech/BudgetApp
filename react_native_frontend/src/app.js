@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image, StyleSheet}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard} from './pages';
+import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
 
 const firebaseConfig= require('../firebaseconfig.json');

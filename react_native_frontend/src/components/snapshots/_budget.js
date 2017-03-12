@@ -61,21 +61,21 @@ export default class BudgetSnapshot extends Component{
           margin: (value/fixedBudget*budgetTrackerWidth)
         }
       })
-    }
-    else{
+      }
+      else{
       _this.setState({
         expenseTotal: value,
         budgetTracker: {
           margin: (budgetTrackerWidth)
         }
       })
-    }
+      }
     })
-  }
-  catch(e){
+    }
+    catch(e){
     console.log(error);
+    }
   }
-}
 
 
   async _updateExpenses() {
