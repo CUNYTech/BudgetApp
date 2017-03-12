@@ -25,7 +25,7 @@ export default class GoalsSnapshot extends Component{
       goals.push(
         <TouchableOpacity key={i} style={styles.goal} >
           <View style={{flex: 1, backgroundColor: 'black', borderRadius: 20, width: 0}}></View>
-          <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, width: 335, textAlign: 'center', fontSize: 20, color: 'black'}}>
+          <Text style={{backgroundColor: 'transparent', position: 'absolute', top: 5, width: 335, textAlign: 'center', fontSize: 20, color: 'white'}}>
             { element }
           </Text>
       </TouchableOpacity>
@@ -34,8 +34,8 @@ export default class GoalsSnapshot extends Component{
     });
     return (
       <TouchableOpacity style={styles.section}>
-        <Text style={{fontFamily: 'OpenSans', fontSize: 20, color: 'black', marginBottom: 10}}>
-          Goals
+        <Text style={{marginLeft: 6,fontFamily: 'OpenSans', fontSize: 17, color: 'white', marginBottom: 10}}>
+          GOALS
         </Text>
         { goals }
       </TouchableOpacity>
@@ -47,9 +47,9 @@ export default class GoalsSnapshot extends Component{
    section: {
        flex: 1,
        borderColor: 'red',
-       marginTop: 5,
+       marginTop: .5,
        borderWidth: 0,
-       backgroundColor: 'white',
+       backgroundColor: 'black',
    },
    goal: {
      height: 40,
@@ -59,6 +59,6 @@ export default class GoalsSnapshot extends Component{
      borderWidth: 1,
      borderColor: '#bdbdbd',
      borderRadius: 20,
-     backgroundColor: '#eeeeee'
+     backgroundColor: '#292421'
    }
  });

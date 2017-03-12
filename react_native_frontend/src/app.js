@@ -27,7 +27,7 @@ export default class App extends Component {
         return (
           <Image source={require('./images/background.png')} style={styles.backgroundImage}>
               <Router getSceneStyle={getScenceStyle}>
-                  <Scene key="home" component={Home} Firebase = {firebaseApp} initial hideNavBar/>
+                  <Scene key="home" component={Home} Firebase = {firebaseApp}  initial hideNavBar/>
                   <Scene key="login" component={Login} Firebase = {firebaseApp} hideNavBar/>
                   <Scene key="register" component={Register} Firebase = {firebaseApp} hideNavBar/>
                   <Scene key="dashboard" component={Dashboard} Firebase = {firebaseApp} hideNavBar/>
