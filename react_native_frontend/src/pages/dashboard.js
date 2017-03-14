@@ -38,12 +38,12 @@ export default class Dashboard extends Component{
                 <Icon name="bars" size={30} color="white" />
               </TouchableOpacity>
               <Text style={{
-                fontSize: 25,
+                fontSize: 23,
                 textAlign: 'center',
                 width: 250,
                 color: 'white',
                 fontWeight: '300',
-                marginBottom:5
+                marginBottom:0
               }}>
                 HOME
               </Text>
@@ -68,7 +68,7 @@ export default class Dashboard extends Component{
          flex: 0,
          flexDirection: 'row',
          height: 60,
-         backgroundColor: 'black',
+         backgroundColor: '#02081c',
          justifyContent: 'space-around',
          alignItems: 'center'
     }
