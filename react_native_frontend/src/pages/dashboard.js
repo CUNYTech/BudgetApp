@@ -61,15 +61,17 @@ export default class Dashboard extends Component{
  const styles = StyleSheet.create({
    container: {
      flex: 1,
-     backgroundColor: '#eeeeee',
+     backgroundColor: '#e0e0e0',
    },
      header: {
          paddingTop: getPlatformValue('android', 25, 20),
          flex: 0,
          flexDirection: 'row',
          height: 60,
-         backgroundColor: '#02081c',
+         backgroundColor: '#424242',
          justifyContent: 'space-around',
-         alignItems: 'center'
+         alignItems: 'center',
+         borderBottomWidth: 1,
+         borderColor: '#e0e0e0'
     }
  });
