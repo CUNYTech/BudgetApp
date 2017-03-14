@@ -6,49 +6,59 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../../utils';
 import { Colors, Metrics, Fonts, ApplicationStyles } from '../../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts'
+import { StockLine } from 'react-native-pathjs-charts'
 
 const graphData = [
-  [{"v": 49, "name": "1/18"},
-  {"v": 42, "name": "1/19"},
-  {"v": 69, "name": "1/21"},
-  {"v": 62, "name": "1/22"},
-  {"v": 29, "name": "1/23"},
-  {"v": 15, "name": "1/24"},
-  {"v": 35, "name": "1/25"},
-  {"v": 42, "name": "1/26"},
-  {"v": 69, "name": "1/27"},
-  {"v": 62, "name": "1/28"},
-  {"v": 29, "name": "1/30"},
-  {"v": 15, "name": "2/1"},
-  {"v": 35, "name": "2/2"},
-  {"v": 42, "name": "2/3"},
-  {"v": 69, "name": "2/4"},
-  {"v": 62, "name": "2/4"},
-  {"v": 29, "name": "2/5"},
-  {"v": 15, "name": "2/6"},
-  {"v": 35, "name": "2/7"},
-  {"v": 42, "name": "2/8"},
-  {"v": 69, "name": "2/9"},
-  {"v": 62, "name": "2/10"},
-  {"v": 29, "name": "2/11"},
-  {"v": 15,"name": "2/12"},
-  {"v": 35, "name": "2/13"}]
-]
+    [{
+      "x": 0,
+      "y": 17782
+    }, {
+      "x": 1,
+      "y": 28497
+    }, {
+      "x": 2,
+      "y": 27128
+    }, {
+      "x": 3,
+      "y": 33413
+    }, {
+      "x": 4,
+      "y": 48257
+    }, {
+      "x": 5,
+      "y": 40579
+    }, {
+      "x": 6,
+      "y": 52893
+    }, {
+      "x": 7,
+      "y": 60663
+    }, {
+      "x": 8,
+      "y": 55715
+    }, {
+      "x": 9,
+      "y": 70305
+    }, {
+      "x": 10,
+      "y": 88592
+    }]
+  ]
+
 
 const options = {
-  width: 1040,
-  height: 100,
+  width: 375,
+  height: 160,
   margin: {
     top: 20,
     left: 0,
     bottom: 90,
     right: 0
   },
-  color: '#bdf5e4',
+  color: '#424242',
   gutter: -.5,
   animate: {
-    type: 'oneByOne',
+    type: 'twoByTwo',
     duration: 200,
     fillTransition: 3
   },
@@ -98,13 +108,12 @@ export default class PointsSnapshot extends Component{
     return (
       <View style={styles.section}>
         <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-          <Text style={{textAlign: 'left',marginLeft:6,fontFamily: 'OpenSans', fontSize: 17, color: 'white'}}>
+          <Text style={{textAlign: 'left',marginLeft: 10,fontFamily: 'OpenSans', fontSize: 17, color: '#424242'}}>
             DAILY POINTS
           </Text>
-          {/* <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" /> */}
         </TouchableOpacity>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
-          <Bar data={graphData} options={options} accessorKey='v'/>
+          <StockLine data={graphData} options={options} xKey='x' yKey='y' />
         </ScrollView>
       </View>
     )
@@ -115,8 +124,8 @@ export default class PointsSnapshot extends Component{
    section: {
        flex: 1,
        borderColor: 'red',
-       marginTop: .5,
+       marginTop: 2,
        borderWidth: 0,
-       backgroundColor: 'black',
+       backgroundColor: 'white',
    }
  });

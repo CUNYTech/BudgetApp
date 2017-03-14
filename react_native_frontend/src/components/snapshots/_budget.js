@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 var CustomLayoutAnimation = {
-  duration: 50,
+  duration: 500,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
     property: LayoutAnimation.Properties.opacity,
@@ -275,7 +275,6 @@ export default class BudgetSnapshot extends Component{
     }
   }
 
-
     showAddBudget() {
       var offSet = (Platform.OS === 'ios') ? 220 : 0;
       LayoutAnimation.configureNext(CustomLayoutAnimation)
@@ -287,35 +286,35 @@ export default class BudgetSnapshot extends Component{
           budgetValueChange: 0
         })
       }
+    }
+
+  handlePress() {
+    Actions.budget()
   }
 
  render() {
    return (
-    <View style={styles.budgetSection}>
-      <Text style={{marginLeft: 6, fontFamily: 'OpenSans', fontSize: 15, color: 'white'}}>
+    <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
+      <Text style={{marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#424242'}}>
         BUDGET
       </Text>
-      <View style={{   borderRadius: 5,backgroundColor: '#02081c',height: 40, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: .5, borderColor: '#e0e0e0'}}>
-        <View style={{  borderRadius: 5,flex: 1, backgroundColor: '#bdf5e4', width: this.state.budgetTracker.margin }}></View>
+      <View style={{ backgroundColor: 'white', height: 16, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}>
+          <View style={{flex: 1, backgroundColor: '#a5d6a7', width: this.state.budgetTracker.margin }}></View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5}}>
-        <Text style={{color:'white',marginLeft: this.state.budgetTracker.margin}}>
+        <Text style={{color:'#424242',marginLeft: this.state.budgetTracker.margin}}>
           ${ this.state.expenseTotal }
         </Text>
-        <Text style={{right:20,color:'white'}}>
+        <Text style={{right:20,color:'#424242'}}>
           ${ this.state.budgetValue }
         </Text>
       </View>
       <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
-        <Icon name="plus-circle" size={50} color="#55cf4a" style={{bottom: 60, marginLeft: 330, backgroundColor: 'black'}}/>
+        <Icon name="plus-circle" size={50} color="#a5d6a7" style={{bottom: -10, backgroundColor: 'white'}}/>
       </TouchableOpacity>
-
-
-      <TouchableOpacity style={{bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}>
-        <Icon name="circle" size={50} color="red" style={{backgroundColor: 'black'}}/>
+      <TouchableOpacity style={{position: 'absolute', bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}>
+        <Icon name="circle" size={50} color="red" style={{backgroundColor: 'transparent'}}/>
       </TouchableOpacity>
-
-
       <View style={{
         position: 'absolute',
         bottom: this.state.addBudgetOffset,
@@ -366,7 +365,7 @@ export default class BudgetSnapshot extends Component{
         backgroundColor: 'black',
         justifyContent: 'center',
       }}>
-        <Text style={{textAlign: 'center', color: 'white' }}>
+        <Text style={{textAlign: 'center', color: '#424242' }}>
           ADD AN EXPENSE
         </Text>
         <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
@@ -388,7 +387,7 @@ export default class BudgetSnapshot extends Component{
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
    )
   }
 }
@@ -396,11 +395,11 @@ export default class BudgetSnapshot extends Component{
  const styles = StyleSheet.create({
      budgetSection: {
          flex: 0,
-         borderColor: 'whitesmoke',
-         marginTop: .6,
+         borderColor: '#424242',
+         marginTop: 2,
          paddingBottom: 10,
          borderWidth: 0,
-         backgroundColor: 'black',
+         backgroundColor: 'white',
      },
      addExpense: {
         position: 'absolute',
@@ -410,7 +409,7 @@ export default class BudgetSnapshot extends Component{
      addExpenseButton: {
         height: 45,
         width: 200,
-        backgroundColor: '#3949ab',
+        backgroundColor: '#086788',
         borderRadius: 10,
         marginLeft: 55,
         overflow: 'hidden',
