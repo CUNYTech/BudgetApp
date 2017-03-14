@@ -28,7 +28,7 @@ export default class FriendsSnapshot extends Component{
      friends.push(
        <View key={i} style={{alignItems: 'center', margin: 10}}>
          <Icon name="user" size={50} color="#e0e0e0" style={styles.icon} />
-         <Text style={{color: '424242', fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
+         <Text style={{color: '#424242', fontSize: 10, fontWeight: 'bold'}}>Tom</Text>
          <Text style={{fontSize: 10, fontWeight: 'bold'}}>400 pts</Text>
        </View>
      )

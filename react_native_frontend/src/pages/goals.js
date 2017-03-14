@@ -108,11 +108,11 @@ export default class Goals extends Component{
    const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
    myGoals.forEach(function(element) {
      goals.push(
-       <View style={{marginTop: 10}}>
+       <View key={i} style={{marginTop: 10}}>
          <Text style={{backgroundColor: 'transparent', position: 'absolute', width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
            { element }
          </Text>
-         <View key={i} style={styles.goal} >
+         <View style={styles.goal} >
          <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
      </View>
    </View>
