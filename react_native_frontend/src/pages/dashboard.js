@@ -8,7 +8,6 @@ import { getPlatformValue } from '../utils';
 import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Bar } from 'react-native-pathjs-charts';
-import Menu from '../components/form';
 
 var CustomLayoutAnimation = {
   duration: 50,
@@ -39,7 +38,7 @@ export default class Dashboard extends Component{
                 <Icon name="bars"
                  size={30}
                  color="white"
-                 onPress={this._toggleSideMenu.bind(this)}/> //Work-in-progress
+                 onPress={this.props.sideMenu}/>
               </TouchableOpacity>
               <Text style={{
                 fontSize: 23,
