@@ -1,4 +1,7 @@
 import { Platform } from 'react-native';
+import {pointHelpers} from './pointHelpers';
+export {pointHelpers}
+
 
 /**
  * Combine style from props like: marginTop, left, right

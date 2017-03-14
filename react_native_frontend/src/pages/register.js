@@ -33,19 +33,10 @@ export default class Register extends Component {
         var ref = this.props.Firebase.database().ref();
         var userRef = ref.child('users/');
 
-
         user.updateProfile({
           displayName: this.state.username,
-        });
-
-         setTimeout(() => userRef.push({
-           displayName: this.state.username,
-           email: this.state.email,
-
-           }),
-              0);
-
-
+        })
+        this._load(user);
         Actions.dashboard()
 
     }
@@ -61,10 +52,9 @@ export default class Register extends Component {
     };
 };
 
+    _load(user){
+        var ref = this.props.Firebase.database().ref();
 
-    async _load(){
-
-      try{ await this.props.Firebase.auth().currentUser;
         //Pull user profile
         var name, email, photoUrl, uid, emailVerified;
 
@@ -78,22 +68,28 @@ export default class Register extends Component {
         //Create UID nodes in DB
         var userPointsRef = ref.child('userReadable/userPoints').child(uid);
         var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+        var userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+        var userBudgetRef = ref.child('userReadable/userBudget').child(uid);
 
-        setTimeout(()=> userPointsRef.push({
+        setTimeout(()=> userPointsRef.set({
           displayName: this.state.username,
           points:''
         }),0);
 
-        setTimeout(()=> userFriendsRef.push({
+        setTimeout(()=> userFriendsRef.set({
           displayName: this.state.username,
           friends:''
         }),0);
 
+        setTimeout(()=> userTotalExpensesRef.set({
+          displayName: this.state.username,
+          expenses: 0,
+        }),0);
 
-      }
-      catch(error){
-        console.log(error);
-      };
+        setTimeout(()=> userBudgetRef.set({
+          displayName: this.state.username,
+          budget: 0,
+        }),0);
 
     }
 

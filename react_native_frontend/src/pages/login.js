@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import * as firebase from "firebase";
+import {_updatePoints} from '../utils/pointHelpers'
 
 
 export default class Login extends Component {
@@ -32,46 +33,16 @@ export default class Login extends Component {
 
             if (user) {
               uid = user.uid;
-              Alert.alert('Welcome' + ' '+ user.displayName + '!');
             } else {
               // No user is signed in.
             }
 
-            //Create UID nodes in DB
-          var ref = this.props.Firebase.database().ref();
-          var userPointsRef = ref.child('userReadable/userPoints').child(uid);
-          var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+          event_10 = '10'
+          _updatePoints(event_10, uid);
+
+          setTimeout(() => Actions.dashboard(), 0);
 
 
-
-          //Get Uses Current Points and Updates According To Event
-          userPointsRef.once('value').then(function(snap){
-                userPoints = snap.val().points;
-                return points = (userPoints)
-          }).then(function(points){
-             var eventPoints = 1000 + (points);
-             return eventPoints;
-          }).then(function(eventPoints){
-              userPointsRef.update({points:eventPoints})
-              .then(function(){
-                Alert.alert("success");
-              })
-
-          });
-
-
-
-            setTimeout(()=> userPointsRef.set({
-              displayName: user.displayName,
-              points: 20
-            }),0);
-
-            setTimeout(()=> userFriendsRef.set({
-              displayName: user.displayName,
-              friends:''
-            }),0);
-
-            setTimeout(() => Actions.dashboard(), 0);
 
       }
       catch(error){
