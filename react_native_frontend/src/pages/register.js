@@ -36,7 +36,6 @@ export default class Register extends Component {
         user.updateProfile({
           displayName: this.state.username,
         })
-
         this._load(user);
         Actions.dashboard()
 
@@ -69,7 +68,8 @@ export default class Register extends Component {
         //Create UID nodes in DB
         var userPointsRef = ref.child('userReadable/userPoints').child(uid);
         var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-        var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
+        var userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+        var userBudgetRef = ref.child('userReadable/userBudget').child(uid);
 
         setTimeout(()=> userPointsRef.set({
           displayName: this.state.username,
@@ -81,9 +81,14 @@ export default class Register extends Component {
           friends:''
         }),0);
 
-        setTimeout(()=> userExpensesRef.set({
+        setTimeout(()=> userTotalExpensesRef.set({
           displayName: this.state.username,
           expenses: 0,
+        }),0);
+
+        setTimeout(()=> userBudgetRef.set({
+          displayName: this.state.username,
+          budget: 0,
         }),0);
 
     }

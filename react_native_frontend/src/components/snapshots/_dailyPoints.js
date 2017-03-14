@@ -42,10 +42,10 @@ const options = {
   margin: {
     top: 20,
     left: 0,
-    bottom: 80,
+    bottom: 90,
     right: 0
   },
-  color: '#3949ab',
+  color: '#bdf5e4',
   gutter: -.5,
   animate: {
     type: 'oneByOne',
@@ -97,11 +97,11 @@ export default class PointsSnapshot extends Component{
   render() {
     return (
       <View style={styles.section}>
-        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-          <Text style={{textAlign: 'left',marginRight:4,fontFamily: 'OpenSans', fontSize: 17, color: 'white'}}>
+        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+          <Text style={{textAlign: 'left',marginLeft:6,fontFamily: 'OpenSans', fontSize: 17, color: 'white'}}>
             DAILY POINTS
           </Text>
-          <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" />
+          {/* <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" /> */}
         </TouchableOpacity>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} bounces={false}>
           <Bar data={graphData} options={options} accessorKey='v'/>

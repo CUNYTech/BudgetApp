@@ -32,10 +32,10 @@ export default class FriendsSnapshot extends Component{
   return (
     <View style={styles.friendsSection}>
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-        <Text style={{marginRight: 282, marginTop: 1,fontFamily: 'OpenSans', fontSize: 17, color: 'white',}}>
+        <Text style={{marginRight: 308, marginTop: 4,fontFamily: 'OpenSans', fontSize: 15, color: 'white',}}>
           FRIENDS
         </Text>
-        <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" />
+        {/* <Icon style={{marginRight: 4, marginTop: 4}} name="chevron-right" size={20} color="#fff176" /> */}
       </TouchableOpacity>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         { friends }
