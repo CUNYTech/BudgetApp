@@ -89,11 +89,10 @@ export default class Menu extends Component{
 
   }
 
-
  render() {
    var i = 1
    const goals = []
-   const myGoals = ['Paris Trip', "Pixel", "Mac"]
+   const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
    myGoals.forEach(function(element) {
      goals.push(
        <View key={i} style={{marginTop: 10}}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View}  from 'react-native';
+import { Image, StyleSheet, View, Text}  from 'react-native';
 import { Scene, Router } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard, Friends, Goals, Budget} from './pages';
 
@@ -46,7 +46,7 @@ export default class App extends Component {
     const list = [{
       title: 'Dashboard',
       icon: 'apps',
-      onPress: 'this.props.dashboard'
+      onPress: '{this.props.dashboard.bind(this)}'
     },
     {
       title: 'Daily Points',
@@ -56,17 +56,17 @@ export default class App extends Component {
     {
       title: 'Friends',
       icon: 'people',
-      onPress: 'this.props.friends'
+      onPress: '{this.props.friends.bind(this)}'
     },
     {
       title: 'Goals',
       icon: 'stars',
-      onPress: 'this.props.goals'
+      onPress: '{this.props.goals.bind(this)}'
     },
     {
       title: 'Budget',
       icon: 'insert-chart',
-      onPress: 'this.props.budget'
+      onPress: '{this.props.budget.bind(this)}'
     },
     {
       title: 'Settings',
@@ -82,7 +82,7 @@ export default class App extends Component {
          key={i}
          title={item.title}
          leftIcon={{name: item.icon}}
-         onPressIcon={item.onPress}
+         onPress={item.onPress}
        />);
    });
   return items
@@ -102,11 +102,19 @@ export default class App extends Component {
 
   render(){
     const Items = this.Items()
-    const Menu = (<View style={{flex: 1, backgroundColor: 'ededed', paddingTop: 50}}>
-                    <List>
-                      { Items }
-                    </List>
-                  </View>)
+    const Menu = (
+      <View style={
+        {flex: 1,
+        backgroundColor: 'white',
+        paddingTop: 40}}>
+        <List>
+          { Items }
+        </List>
+        <Text>
+          v0.0.1
+        </Text>
+      </View>)
+
     return (
       <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
         <Image source={require('./images/background.png')} style={styles.backgroundImage}>
