@@ -5,9 +5,9 @@ import {
 import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/';
+import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts';
+import { Bar } from 'react-native-pathjs-charts'
 
 var CustomLayoutAnimation = {
   duration: 50,
@@ -27,17 +27,18 @@ export default class Dashboard extends Component{
     this.state = {
 
     };
+
+  }
+  componentDidMount() {
+    this.props.hideSideMenu()
   }
 
  render() {
        return (
           <View style={styles.container}>
             <View style={styles.header}>
-              <TouchableOpacity>
-                <Icon name="bars"
-                 size={30}
-                 color="white"
-                 onPress={this.props.sideMenu}/>
+              <TouchableOpacity onPress={this.props.sideMenu}>
+                <Icon name="bars" size={30} color="white" />
               </TouchableOpacity>
               <Text style={{
                 fontSize: 23,

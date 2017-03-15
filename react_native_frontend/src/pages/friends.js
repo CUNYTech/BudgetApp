@@ -31,6 +31,11 @@ export default class Friends extends Component{
     };
   }
 
+  componentDidMount() {
+    this.props.hideSideMenu()
+  }
+
+
   back() {
     Actions.pop()
   }

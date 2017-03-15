@@ -31,6 +31,11 @@ export default class Goals extends Component{
     };
   }
 
+  componentDidMount() {
+    this.props.hideSideMenu()
+  }
+
+
   back() {
     Actions.pop()
   }

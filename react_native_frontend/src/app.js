@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View, Text}  from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
+import { Image, StyleSheet, View, Text, TouchableOpacity}  from 'react-native';
+import { Scene, Router, Actions, ActionConst  } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard, Friends, Goals, Budget} from './pages';
 
 import {pointHelpers} from './utils/pointHelpers';
@@ -31,9 +31,67 @@ export default class App extends Component {
     super()
     this.state = {
       isOpen: false,
-      show: true
+      show: true,
+      list: []
     }
 
+  }
+
+  componentDidMount() {
+    this.setState({
+      list: [<View style={
+          {flex: 1,
+          backgroundColor: 'white',
+          paddingTop: 40}}>
+          <List>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+            <ListItem
+                key={1}
+                title={'Dashboard'}
+                leftIcon={{name: 'apps'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+              <ListItem
+                key={2}
+                title={'Daily Points'}
+                leftIcon={{name: 'timeline'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.friends.bind(this)}>
+              <ListItem
+                key={3}
+                title={'Friends'}
+                leftIcon={{name: 'people'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.goals.bind(this)}>
+              <ListItem
+                key={4}
+                title={'Goals'}
+                leftIcon={{name: 'stars'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.budget.bind(this)}>
+              <ListItem
+                key={5}
+                title={'Budget'}
+                leftIcon={{name: 'insert-chart'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+              <ListItem
+              key={6}
+              title={'Settings'}
+              leftIcon={{name: 'settings'}}
+              />
+            </TouchableOpacity>
+          </List>
+          <Text>
+            v0.0.1
+          </Text>
+        </View>]
+    })
   }
 
   toggleSideMenu () {
@@ -42,50 +100,14 @@ export default class App extends Component {
     })
   }
 
-  Items() {
-    const list = [{
-      title: 'Dashboard',
-      icon: 'apps',
-      onPress: '{this.props.dashboard.bind(this)}'
-    },
-    {
-      title: 'Daily Points',
-      icon: 'timeline',
-      onPress: '' //future points page
-    },
-    {
-      title: 'Friends',
-      icon: 'people',
-      onPress: '{this.props.friends.bind(this)}'
-    },
-    {
-      title: 'Goals',
-      icon: 'stars',
-      onPress: '{this.props.goals.bind(this)}'
-    },
-    {
-      title: 'Budget',
-      icon: 'insert-chart',
-      onPress: '{this.props.budget.bind(this)}'
-    },
-    {
-      title: 'Settings',
-      icon: 'settings',
-      onPress: "" //for the future settings page
-    }
-  ]
+  hideSideMenu () {
+    this.setState({
+      isOpen: false
+    })
+  }
 
-  var items =[];
-  list.forEach(function(item, i){
-     items.push(
-       <ListItem
-         key={i}
-         title={item.title}
-         leftIcon={{name: item.icon}}
-         onPress={item.onPress}
-       />);
-   });
-  return items
+  Items() {
+
   }
 
   deactivateSideMenu() {
@@ -101,19 +123,7 @@ export default class App extends Component {
   }
 
   render(){
-    const Items = this.Items()
-    const Menu = (
-      <View style={
-        {flex: 1,
-        backgroundColor: 'white',
-        paddingTop: 40}}>
-        <List>
-          { Items }
-        </List>
-        <Text>
-          v0.0.1
-        </Text>
-      </View>)
+    const Menu = this.state.list[0]
 
     return (
       <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
@@ -122,10 +132,10 @@ export default class App extends Component {
                 <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} initial hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="login" component={Login} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="register" component={Register} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="dashboard" component={Dashboard} Firebase={firebaseApp} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="friends" component={Friends} Firebase={firebaseApp} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="dashboard" component={Dashboard} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="friends" component={Friends} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
         </Image>
       </SideMenu>
@@ -137,6 +147,7 @@ styles = StyleSheet.create ({
   backgroundImage: {
     flex: 1,
     height: null,
-    width: null
+    width: null,
+
   }
 })
