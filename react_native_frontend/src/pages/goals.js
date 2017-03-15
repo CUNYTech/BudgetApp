@@ -146,7 +146,7 @@ export default class Goals extends Component{
               <Icon name="diamond" size={20} color="pink" />
             </View>
             <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-              <Icon name='angle-left' size={25} />
+              <Icon name='angle-left' size={0} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.section}>
               <Text style={{marginLeft: 6,fontFamily: 'OpenSans', fontSize: 17, color: '#424242', marginBottom: 10}}>

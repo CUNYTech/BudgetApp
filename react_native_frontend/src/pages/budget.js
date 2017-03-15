@@ -125,13 +125,13 @@ render() {
         <Icon name="diamond" size={20} color="pink" />
       </View>
       <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-        <Icon name='angle-left' size={25} />
+        <Icon name='angle-left' size={0} />
       </TouchableOpacity>
         <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
           <Icon name="plus-circle" size={50} color="#a5d6a7" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
         </TouchableOpacity>
         <View style={{
-          position: 'absolute',
+          position: 'relative',
           bottom: this.state.addExpenseOffest,
           width: 300,
           height: 200,
@@ -142,7 +142,7 @@ render() {
           backgroundColor: 'black',
           justifyContent: 'center',
         }}>
-          <Text style={{textAlign: 'center', color: '#424242' }}>
+          <Text style={{textAlign: 'center', color: '#FFFFFF' }}>
             ADD AN EXPENSE
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>

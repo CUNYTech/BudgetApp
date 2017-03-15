@@ -47,8 +47,8 @@ const graphData = [
 
 
 const options = {
-  width: 375,
-  height: 160,
+  width: 601,
+  height: 275,
   margin: {
     top: 20,
     left: 0,
