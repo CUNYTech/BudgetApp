@@ -50,7 +50,6 @@ export default class Friends extends Component{
       var uid =  this.props.Firebase.auth().currentUser.uid;
       var ref = this.props.Firebase.database().ref();
       var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-
       userFriendsRef.child('1').orderByKey().once('value').then(function(snap){
         var friendList=[]
         snap.forEach(function(snapshot){
