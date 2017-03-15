@@ -28,6 +28,11 @@ export default class Budget extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.hideSideMenu()
+  }
+
+
   async _updateExpenses() {
 
     try{
@@ -102,7 +107,10 @@ render() {
       <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity>
-          <Icon name="bars" size={30} color="white" />
+          <Icon name="bars"
+          size={30}
+          color="white"
+          onPress={this.props.sideMenu}/>
         </TouchableOpacity>
         <Text style={{
           fontSize: 25,

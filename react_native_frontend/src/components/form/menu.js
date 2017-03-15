@@ -2,10 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {
     View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
 } from 'react-native';
-import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
-import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Bar } from 'react-native-pathjs-charts'
 
@@ -20,7 +17,7 @@ var CustomLayoutAnimation = {
   },
 };
 
-export default class Goals extends Component{
+export default class Menu extends Component{
 
   constructor(){
     super();
@@ -30,11 +27,6 @@ export default class Goals extends Component{
       addFriendOffset: -200,
     };
   }
-
-  componentDidMount() {
-    this.props.hideSideMenu()
-  }
-
 
   back() {
     Actions.pop()
@@ -94,18 +86,8 @@ export default class Goals extends Component{
   }
 
   showAddExpense() {
-    var offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation)
-    if (this.state.addExpenseOffest == -200) {
-      this.setState({ addExpenseOffest: offSet }) //Set to 0 for android
-    } else {
-      this.setState({
-        addExpenseOffest: -200,
-        expenseTotalChange: 0
-      })
-    }
-  }
 
+  }
 
  render() {
    var i = 1
@@ -129,9 +111,9 @@ export default class Goals extends Component{
             <View style={styles.header}>
               <TouchableOpacity>
                 <Icon name="bars"
-                size={30}
-                color="white"
-                onPress={this.props.sideMenu}/>
+                 size={30}
+                 color="white"
+                 onPress={this.props.sideMenu}/>
               </TouchableOpacity>
               <Text style={{
                 fontSize: 25,
@@ -202,7 +184,6 @@ export default class Goals extends Component{
      backgroundColor: 'white',
    },
    header: {
-       paddingTop: getPlatformValue('android', 25, 20),
        flex: 0,
        flexDirection: 'row',
        height: 60,

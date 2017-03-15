@@ -1,4 +1,4 @@
-import Form, { Input, Button, BackButton } from './form';
+import Form, { Input, Button, BackButton, Menu } from './form';
 import Partials, { AlertStatus, Logo } from './partials';
 import Text, { TextFont, Heading } from './text';
 import Snapshots, {BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from './snapshots';
@@ -9,7 +9,7 @@ export {
     Form, Input, Button, BudgetSnapshot,
     Partials, AlertStatus, BackButton, Logo,
     Text, TextFont, Heading, GoalsSnapshot,
-    FriendsSnapshot, PointsSnapshot
+    FriendsSnapshot, PointsSnapshot, Menu
 };
 
 export default {
@@ -26,5 +26,6 @@ export default {
     BudgetSnapshot,
     GoalsSnapshot,
     FriendsSnapshot,
-    PointsSnapshot
+    PointsSnapshot,
+    Menu
 };

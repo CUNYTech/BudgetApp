@@ -27,14 +27,17 @@ export default class Dashboard extends Component{
     this.state = {
 
     };
-  }
 
+  }
+  componentDidMount() {
+    this.props.hideSideMenu()
+  }
 
  render() {
        return (
           <View style={styles.container}>
             <View style={styles.header}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.props.sideMenu}>
                 <Icon name="bars" size={30} color="white" />
               </TouchableOpacity>
               <Text style={{

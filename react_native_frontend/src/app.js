@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet}  from 'react-native';
-import { Scene, Router } from 'react-native-router-flux';
+import { Image, StyleSheet, View, Text, TouchableOpacity}  from 'react-native';
+import { Scene, Router, Actions, ActionConst  } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard, Friends, Goals, Budget} from './pages';
+
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
+import {SideMenu, List, ListItem} from 'react-native-elements';
+import Icon from 'react-native-elements';
 
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -23,28 +26,128 @@ const getScenceStyle = (scene) => {
 };
 
 export default class App extends Component {
-    render(){
-        return (
-          <Image source={require('./images/background.png')} style={styles.backgroundImage}>
-              <Router getSceneStyle={getScenceStyle}>
-                  <Scene key="home" component={Home} Firebase = {firebaseApp}  initial hideNavBar/>
-                  <Scene key="login" component={Login} Firebase = {firebaseApp} hideNavBar/>
-                  <Scene key="register" component={Register} Firebase = {firebaseApp} hideNavBar/>
-                  <Scene key="dashboard" component={Dashboard} Firebase = {firebaseApp} hideNavBar/>
-                  <Scene key="friends" component={Friends} Firebase = {firebaseApp} hideNavBar/>
-                  <Scene key="goals" component={Goals} Firebase = {firebaseApp} hideNavBar/>
-                  <Scene key="budget" component={Budget} Firebase = {firebaseApp} hideNavBar/>
 
-              </Router>
-          </Image>
-       );
+  constructor () {
+    super()
+    this.state = {
+      isOpen: false,
+      show: true,
+      list: []
     }
+
+  }
+
+  componentDidMount() {
+    this.setState({
+      list: [<View style={
+          {flex: 1,
+          backgroundColor: 'white',
+          paddingTop: 40}}>
+          <List>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+            <ListItem
+                key={1}
+                title={'Dashboard'}
+                leftIcon={{name: 'apps'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+              <ListItem
+                key={2}
+                title={'Daily Points'}
+                leftIcon={{name: 'timeline'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.friends.bind(this)}>
+              <ListItem
+                key={3}
+                title={'Friends'}
+                leftIcon={{name: 'people'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.goals.bind(this)}>
+              <ListItem
+                key={4}
+                title={'Goals'}
+                leftIcon={{name: 'stars'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.budget.bind(this)}>
+              <ListItem
+                key={5}
+                title={'Budget'}
+                leftIcon={{name: 'insert-chart'}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+              <ListItem
+              key={6}
+              title={'Settings'}
+              leftIcon={{name: 'settings'}}
+              />
+            </TouchableOpacity>
+          </List>
+          <Text>
+            v0.0.1
+          </Text>
+        </View>]
+    })
+  }
+
+  toggleSideMenu () {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+
+  hideSideMenu () {
+    this.setState({
+      isOpen: false
+    })
+  }
+
+  Items() {
+
+  }
+
+  deactivateSideMenu() {
+    this.setState({
+      show: false
+    })
+  }
+
+  activateSideMenu() {
+    this.setState({
+      show: true
+    })
+  }
+
+  render(){
+    const Menu = this.state.list[0]
+
+    return (
+      <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
+        <Image source={require('./images/background.png')} style={styles.backgroundImage}>
+            <Router getSceneStyle={getScenceStyle}>
+                <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} initial hideSideMenu={this.deactivateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="login" component={Login} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="register" component={Register} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="dashboard" component={Dashboard} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="friends" component={Friends} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+            </Router>
+        </Image>
+      </SideMenu>
+    );
+  }
 }
 
 styles = StyleSheet.create ({
   backgroundImage: {
     flex: 1,
     height: null,
-    width: null
+    width: null,
+
   }
 })
