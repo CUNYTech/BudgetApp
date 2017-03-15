@@ -29,7 +29,6 @@ export default class Dashboard extends Component{
     };
   }
 
-
  render() {
        return (
           <View style={styles.container}>

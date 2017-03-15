@@ -93,7 +93,7 @@ export default class Menu extends Component{
  render() {
    var i = 1
    const goals = []
-   const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
+   const myGoals = ['Paris Trip', "Pixel", "Mac"]
    myGoals.forEach(function(element) {
      goals.push(
        <View key={i} style={{marginTop: 10}}>
@@ -111,7 +111,10 @@ export default class Menu extends Component{
           <View style={styles.container}>
             <View style={styles.header}>
               <TouchableOpacity>
-                <Icon name="bars" size={30} color="white" />
+                <Icon name="bars"
+                 size={30}
+                 color="white"
+                 onPress={this.props.sideMenu}/>
               </TouchableOpacity>
               <Text style={{
                 fontSize: 25,

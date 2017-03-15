@@ -5,7 +5,8 @@ import { Home, Login, Register, Dashboard, Friends, Goals, Budget} from './pages
 
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
-import {SideMenu, List, ListItem} from 'react-native-elements'
+import {SideMenu, List, ListItem} from 'react-native-elements';
+import Icon from 'react-native-elements';
 
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -23,13 +24,6 @@ const getScenceStyle = (scene) => {
     }
     return style;
 };
-
-
-
-
-
-
-
 
 export default class App extends Component {
 
@@ -52,32 +46,32 @@ export default class App extends Component {
     const list = [{
       title: 'Dashboard',
       icon: 'apps',
-      onPress: ""
+      onPress: 'this.props.dashboard'
     },
     {
       title: 'Daily Points',
-      icon: 'bubble chart',
-      onPress: ""
+      icon: 'timeline',
+      onPress: '' //future points page
     },
     {
       title: 'Friends',
       icon: 'people',
-      onPress: ""
+      onPress: 'this.props.friends'
     },
     {
       title: 'Goals',
       icon: 'stars',
-      onPress: ""
+      onPress: 'this.props.goals'
     },
     {
       title: 'Budget',
-      icon: 'attach money',
-      onPress: ""
+      icon: 'insert-chart',
+      onPress: 'this.props.budget'
     },
     {
       title: 'Settings',
       icon: 'settings',
-      onPress: ""
+      onPress: "" //for the future settings page
     }
   ]
 
@@ -87,7 +81,7 @@ export default class App extends Component {
        <ListItem
          key={i}
          title={item.title}
-         leftIcon={item.icon}
+         leftIcon={{name: item.icon}}
          onPressIcon={item.onPress}
        />);
    });
