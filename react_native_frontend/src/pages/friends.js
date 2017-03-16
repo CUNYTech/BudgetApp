@@ -51,7 +51,11 @@ export default class Friends extends Component{
       var ref = this.props.Firebase.database().ref();
       var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
 
-      userFriendsRef.once('value').then(function(snap){
+      userFriendsRef.child('1').orderByKey().once('value').then(function(snap){
+        var friendList=[]
+        snap.forEach(function(snapshot){
+          friendList.push({'name': snapshot.val().name })
+        })
         var friendList = snap.val().friends;
         return friendList
       }).then(function(value){
@@ -62,7 +66,7 @@ export default class Friends extends Component{
         } else {
           Alert.alert('Please add some friends!')
           _this.setState({
-            friends: ['billy']
+            friends: []
           })
         }
       })
