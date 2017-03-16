@@ -37,7 +37,7 @@ const styleButton = {
         paddingBottom: 16,
         paddingLeft: 47,
         paddingRight: 47,
-        backgroundColor: 'rgba(102, 205, 170, 0.6)',
+        backgroundColor: 'rgba(50, 50, 50, 0.6)',
         borderRadius: 30,
         alignItems: 'stretch',
         shadowColor: '#000000',
