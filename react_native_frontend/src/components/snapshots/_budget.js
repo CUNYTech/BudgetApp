@@ -313,7 +313,7 @@ export default class BudgetSnapshot extends Component{
         <Icon name="plus-circle" size={50} color="#a5d6a7" style={{bottom: 0, backgroundColor: 'white'}}/>
       </TouchableOpacity>
       <TouchableOpacity style={{position: 'absolute', bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}> 
-        <Icon name="pie-chart" size={50} color="red" style={{backgroundColor: 'transparent'}}/>
+        <Icon name="pie-chart" size={50} color="#a5d6a7" style={{backgroundColor: 'transparent'}}/>
       </TouchableOpacity>
       <View style={{
         position: 'absolute',
@@ -394,7 +394,7 @@ export default class BudgetSnapshot extends Component{
 
  const styles = StyleSheet.create({
      budgetSection: {
-         flex: 0,
+         flex: 1,
          borderColor: '#424242',
          marginTop: 2,
          paddingBottom: 10,

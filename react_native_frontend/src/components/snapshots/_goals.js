@@ -24,10 +24,10 @@ export default class GoalsSnapshot extends Component{
   render() {
     var i = 1
     const goals = []
-    const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
+    const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"]
     myGoals.forEach(function(element) {
       goals.push(
-        <View key={i} style={{marginTop: 10}}>
+        <View key={i} style={{marginTop: 5}}>
           <Text style={{backgroundColor: 'transparent', position: 'absolute', width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
             { element }
           </Text>
@@ -55,7 +55,8 @@ export default class GoalsSnapshot extends Component{
        borderColor: '#e0e0e0',
        marginTop: 2,
        borderBottomWidth: 1,
-       backgroundColor: 'white'
+       backgroundColor: 'white',
+       marginBottom: 1
    },
    goal: {
      height: 20,

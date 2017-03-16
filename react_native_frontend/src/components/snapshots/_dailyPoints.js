@@ -50,9 +50,9 @@ const options = {
   width: 601,
   height: 275,
   margin: {
-    top: 20,
+    top: 0,
     left: 0,
-    bottom: 90,
+    bottom: 0,
     right: 0
   },
   color: '#424242',
@@ -122,9 +122,9 @@ export default class PointsSnapshot extends Component{
 
  const styles = StyleSheet.create({
    section: {
-       flex: 1,
+       flex: 0,
        borderColor: 'red',
-       marginTop: 2,
+       marginTop: 0,
        borderWidth: 0,
        backgroundColor: 'white',
    }

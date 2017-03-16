@@ -33,6 +33,7 @@ export default class FriendsSnapshot extends Component{
        </View>
      )
     }
+    
   return (
     <View style={styles.friendsSection}>
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}} onPress={this.navFriend.bind(this)}>

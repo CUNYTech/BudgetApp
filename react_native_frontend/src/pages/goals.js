@@ -110,7 +110,7 @@ export default class Goals extends Component{
  render() {
    var i = 1
    const goals = []
-   const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
+   const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"]
    myGoals.forEach(function(element) {
      goals.push(
        <View key={i} style={{marginTop: 10}}>
