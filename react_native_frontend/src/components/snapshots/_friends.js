@@ -33,11 +33,11 @@ export default class FriendsSnapshot extends Component{
        </View>
      )
     }
-    
+
   return (
     <View style={styles.friendsSection}>
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}} onPress={this.navFriend.bind(this)}>
-        <Text style={{marginRight: 10, marginTop: 1,fontFamily: 'OpenSans', fontSize: 17, color: '#424242',}}>
+        <Text style={{marginLeft: 10, marginTop: 1,fontFamily: 'OpenSans', fontSize: 17, color: '#424242',}}>
           FRIENDS
         </Text>
       </TouchableOpacity>
