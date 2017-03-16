@@ -312,8 +312,8 @@ export default class BudgetSnapshot extends Component{
       <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
         <Icon name="plus-circle" size={50} color="#a5d6a7" style={{bottom: 0, backgroundColor: 'white'}}/>
       </TouchableOpacity>
-      <TouchableOpacity style={{position: 'absolute', bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}> 
-        <Icon name="pie-chart" size={50} color="#a5d6a7" style={{backgroundColor: 'transparent'}}/>
+      <TouchableOpacity style={{position: 'absolute', bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}>
+        <Icon name="pie-chart" size={40} color="#a5d6a7" style={{backgroundColor: 'transparent', marginLeft: 10}}/>
       </TouchableOpacity>
       <View style={{
         position: 'absolute',

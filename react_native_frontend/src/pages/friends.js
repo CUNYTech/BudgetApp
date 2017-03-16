@@ -109,9 +109,7 @@ export default class Friends extends Component{
             </Text>
             <Icon name="diamond" size={20} color="pink" />
           </View>
-          <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-            <Icon name='angle-left' size={0} />
-          </TouchableOpacity>
+
           <View style={{flex: 0, backgroundColor: '#a5d6a7', borderTopWidth: 1, borderColor: '#e0e0e0'}}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'transparent'}}>
               { friends_two }

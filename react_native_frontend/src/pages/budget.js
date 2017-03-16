@@ -124,46 +124,9 @@ render() {
         </Text>
         <Icon name="diamond" size={20} color="pink" />
       </View>
-      <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-        <Icon name='angle-left' size={0} />
-      </TouchableOpacity>
         <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
           <Icon name="plus-circle" size={50} color="#a5d6a7" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
         </TouchableOpacity>
-        <View style={{
-          position: 'relative',
-          bottom: this.state.addExpenseOffest,
-          width: 300,
-          height: 200,
-          left: 35,
-          borderWidth: 1,
-          borderRadius: 15,
-          borderColor: 'black',
-          backgroundColor: 'black',
-          justifyContent: 'center',
-        }}>
-          <Text style={{textAlign: 'center', color: '#FFFFFF' }}>
-            ADD AN EXPENSE
-          </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
-            <Text style={{color: 'white',fontSize: 35}}>
-              $
-            </Text>
-            <TextInput
-              style={{height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
-              onChangeText={(expenseTotalChange) => this.setState({expenseTotalChange})}
-              value={""+this.state.expenseTotalChange+""}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={this._updateExpenses.bind(this)}
-            style={styles.addExpenseButton}
-          >
-            <Text style={{textAlign: 'center', color: 'white' }}>
-              ADD
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
      )
    }
@@ -219,3 +182,42 @@ render() {
       backgroundColor: 'white'
     }
  });
+
+
+
+
+
+ // <View style={{
+ //   position: 'relative',
+ //   bottom: this.state.addExpenseOffest,
+ //   width: 300,
+ //   height: 200,
+ //   left: 35,
+ //   borderWidth: 1,
+ //   borderRadius: 15,
+ //   borderColor: 'black',
+ //   backgroundColor: 'black',
+ //   justifyContent: 'center',
+ // }}>
+ // <Text style={{textAlign: 'center', color: '#FFFFFF' }}>
+ //   ADD AN EXPENSE
+ // </Text>
+ // <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
+ //   <Text style={{color: 'white',fontSize: 35}}>
+ //     $
+ //   </Text>
+ //   <TextInput
+ //     style={{height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
+ //     onChangeText={(expenseTotalChange) => this.setState({expenseTotalChange})}
+ //     value={""+this.state.expenseTotalChange+""}
+ //   />
+ // </View>
+ // <TouchableOpacity
+ //   onPress={this._updateExpenses.bind(this)}
+ //   style={styles.addExpenseButton}
+ //   >
+ //     <Text style={{textAlign: 'center', color: 'white' }}>
+ //       ADD
+ //     </Text>
+ //   </TouchableOpacity>
+ // </View>

@@ -12,7 +12,9 @@ export default class GoalsSnapshot extends Component{
 
   constructor(){
     super();
-    this.state = {
+    this.state = { goal:'',
+    amount: 0,
+    goals:[]
 
     };
   }
@@ -21,7 +23,9 @@ export default class GoalsSnapshot extends Component{
     Actions.goals()
   }
 
+
   render() {
+
     var i = 1
     const goals = []
     const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"]
