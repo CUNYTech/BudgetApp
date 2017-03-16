@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity}  from 'react-native';
 import { Scene, Router, Actions, ActionConst  } from 'react-native-router-flux';
-import { Home, Login, Register, Dashboard, Friends, Goals, Budget} from './pages';
+import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points} from './pages';
 
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
@@ -51,7 +51,7 @@ export default class App extends Component {
                 leftIcon={{name: 'apps'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+            <TouchableOpacity onPress={Actions.points.bind(this)}>
               <ListItem
                 key={2}
                 title={'Daily Points'}
@@ -136,6 +136,7 @@ export default class App extends Component {
                 <Scene hideNavBar key="friends" component={Friends} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="points" component={Points} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
         </Image>
       </SideMenu>
