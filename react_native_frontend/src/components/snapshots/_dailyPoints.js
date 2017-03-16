@@ -47,8 +47,8 @@ const graphData = [
 
 
 const options = {
-  width: 601,
-  height: 275,
+  width: getPlatformValue('android', 601, 375),
+  height: getPlatformValue('android', 275, 175),
   margin: {
     top: 0,
     left: 0,
@@ -122,7 +122,7 @@ export default class PointsSnapshot extends Component{
 
  const styles = StyleSheet.create({
    section: {
-       flex: 0,
+       flex: 1,
        borderColor: 'red',
        marginTop: 0,
        borderWidth: 0,
