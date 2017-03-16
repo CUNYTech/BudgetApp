@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
+    Alert,View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
 } from 'react-native';
 import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
@@ -25,97 +25,128 @@ export default class Goals extends Component{
   constructor(){
     super();
     this.state = {
-      expenseTotal: 0,
-      friendChange: '',
-      addFriendOffset: -200,
+      addGoalOffset:-300,
+      goal: 'New Goal Title',
+      amount: 0,
+      goals: [],
     };
   }
-
-  componentDidMount() {
-    this.props.hideSideMenu()
-  }
-
 
   back() {
     Actions.pop()
   }
+  //function to be called upon users pressing of button component
+   _addGoal(){
+     var ref = this.props.Firebase.database().ref();
+     var userGoalsRef = ref.child('userReadable/userGoals');
+     var userGoal = this.state.goal;
+     var amount = this.state.amount;
+     var uid = this.props.Firebase.auth().currentUser.uid;
 
+     userGoalsRef.child(uid).push({
+      goal: userGoal,
+      amount: amount,
+    })
+    this._showAddGoal()
+    this._setGoals()
+     }
 
-  async _updateExpenses() {
+     back() {
+       Actions.pop()
+     }
 
-    try{
+     componentDidMount(){
+       this._setGoals();
+       this.props.hideSideMenu()
 
-      var ref = this.props.Firebase.database().ref();
-      var user = this.props.Firebase.auth().currentUser;
-      var uid = user.uid;
+     }
 
-      var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
+  _setGoals(){
+    var _this = this
+    var userGoals = [];
+    var ref = this.props.Firebase.database().ref();
+    var uid = this.props.Firebase.auth().currentUser.uid;
 
-    const newExpenseValue = +this.state.expenseTotalChange
-    const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal
-    const _this = this
-    const budgetTrackerWidth = 273
-    const fixedBudget = 1000
+    var userGoalsRef = ref.child('userReadable/userGoals');
+    userGoalsRef.child(uid).orderByKey().once('value').then(function(snap){
+      snap.forEach(function(snapshot){
+        console.log(snapshot.val().goal);
+        userGoals.push({"goal": snapshot.val().goal, "amount": snapshot.val().amount})
+      });
+      return Promise.all(userGoals)
+    }).then(function(userGoals) {
+      _this.setState({
+        goals: userGoals
+      });
+    })
 
-    if (newExpenseValue > 0) {
-      // var curentUser = this.props.Firebase.database().ref().child(uid);
-      userExpensesRef.update({ expenses: newExpensesTotal })
-      userExpensesRef.once('value').then(function(snap){
-        var updatedValue = snap.val().expenses;
-        return updatedValue
-      }).then(function(value){
-        if ((value/fixedBudget) < 1) {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
-          _this.setState({
-            expenseTotal: value,
-            budgetTracker: {
-              margin: (value/fixedBudget*budgetTrackerWidth)
-            }
-          })
-        }
-         else {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
-          _this.setState({
-            expenseTotal: value,
-            budgetTracker: {
-              margin: 273
-            }
-          })
-        }
-      })
-    }
-    this.showAddExpense()
-
+    userGoalsRef.child('1').orderByValue().once('value').then(function(snap){
+      console.log(userGoals);
+    });
   }
 
-    catch(e){
-      console.log(e);
-    }
+
+  handleChangeInput(stateName, text) {
+      this.setState({
+          [stateName]: text
+      });
   }
 
-  showAddExpense() {
+
+  _showAddGoal(){
     var offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation)
-    if (this.state.addExpenseOffest == -200) {
-      this.setState({ addExpenseOffest: offSet }) //Set to 0 for android
+    if (this.state.addGoalOffset == -300) {
+      this.setState({ addGoalOffset: offSet }) //Set to 0 for android
     } else {
       this.setState({
-        addExpenseOffest: -200,
+        addGoalOffset: -300,
         expenseTotalChange: 0
       })
     }
   }
 
+  _Test(){
+    Alert.alert(""+this.state.goal+"")
+  }
+
+
+  //
+  // var goal = "New Velocity";
+  // var amount = 900
+  //
+  // _setGoals(goal, amount);
+
 
  render() {
+
+{/* <View>
+   <TextInput label="Goal"
+     autoCorrect = {false}
+     value={this.state.goal}
+     marginTop={23}
+     onChange={this.handleChangeInput.bind(this, 'goal')}
+   />
+   <TextInput label="Amount"
+     autoCorrect = {false}
+     value={this.state.amount}
+     marginTop={23}
+     onChange={this.handleChangeInput.bind(this, 'amount')}
+   />
+
+   <TouchableOpacity style={styles.section}  onPress={this._addGoal.bind(this)}>
+     Add Goal
+   </TouchableOpacity>
+  </View> */}
+
    var i = 1
    const goals = []
-   const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
-   myGoals.forEach(function(element) {
+
+   this.state.goals.forEach(function(element) {
      goals.push(
-       <View key={i} style={{marginTop: 10}}>
-         <Text style={{backgroundColor: 'transparent', position: 'absolute', width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
-           { element }
+       <View style={{marginTop: 10}}>
+         <Text style={{backgroundColor: 'transparent', margin: 20, width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
+           { element.goal }
          </Text>
          <View style={styles.goal} >
          <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
@@ -145,23 +176,20 @@ export default class Goals extends Component{
               </Text>
               <Icon name="diamond" size={20} color="pink" />
             </View>
-            <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-              <Icon name='angle-left' size={25} />
-            </TouchableOpacity>
             <TouchableOpacity style={styles.section}>
               <Text style={{marginLeft: 6,fontFamily: 'OpenSans', fontSize: 17, color: '#424242', marginBottom: 10}}>
                 GOALS
               </Text>
               { goals }
             </TouchableOpacity>
-            <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
+            <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this._showAddGoal.bind(this)}>
               <Icon name="plus-circle" size={50} color="#a5d6a7" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
             </TouchableOpacity>
             <View style={{
               position: 'absolute',
-              bottom: this.state.addExpenseOffest,
+              bottom: this.state.addGoalOffset,
               width: 300,
-              height: 200,
+              height: 250,
               left: 35,
               borderWidth: 1,
               borderRadius: 15,
@@ -169,21 +197,30 @@ export default class Goals extends Component{
               backgroundColor: 'black',
               justifyContent: 'center',
             }}>
-              <Text style={{textAlign: 'center', color: '#424242' }}>
-                ADD AN EXPENSE
+              <Text style={{bottom:40,textAlign: 'center', color: '#424242' }}>
+                ADD NEW GOAL
               </Text>
               <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
-                <Text style={{color: 'white',fontSize: 35}}>
+                <Text style={{fontFamily:'OpenSans', left:120, color: 'white',fontSize: 25}}>
                   $
                 </Text>
                 <TextInput
-                  style={{height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
-                  onChangeText={(expenseTotalChange) => this.setState({expenseTotalChange})}
-                  value={""+this.state.expenseTotalChange+""}
+                  style={{left:130 ,height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
+                  onChangeText={this.handleChangeInput.bind(this, 'amount')}
+                  value={""+this.state.amount+""}
                 />
+
+                <TextInput
+                  style={{bottom: 50,right:70, height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center'}}
+                  onChangeText={this.handleChangeInput.bind(this, 'goal')}
+                  value={""+this.state.goal+""}
+                />
+                <Text style={{fontFamily:'OpenSans',bottom: 45,left:-327,textAlign:'left',color: 'white',fontSize: 22}}>
+                    Goal
+                </Text>
               </View>
               <TouchableOpacity
-                onPress={this._updateExpenses.bind(this)}
+                onPress={this._addGoal.bind(this)}
                 style={styles.addExpenseButton}
               >
                 <Text style={{textAlign: 'center', color: 'white' }}>

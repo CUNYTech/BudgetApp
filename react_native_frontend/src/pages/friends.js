@@ -62,8 +62,8 @@ export default class Friends extends Component{
    const friends = []
    for (var i = 0; i <= 10; i++) {
      friends.push(
-       <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: '#a5d6a7', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-         <Icon name="user" size={50} color="#e0e0e0" style={{ borderRadius: 25, borderColor: '#424242', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
+       <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+         <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
          <Text style={{flex: 3, textAlign: 'center', color: '#424242'}} >Name</Text>
          <View style={{flex: 1}}>
            <Text style={{flex: 1, textAlign: 'center', color: '#424242'}} >200pts</Text>
@@ -75,8 +75,8 @@ export default class Friends extends Component{
     const friends_two = []
     for (var x = 10; x <= 12; x++) {
       friends_two.push(
-        <View key={x} style={{alignItems: 'center', margin: 10, marginTop: 5, marginBottom: 0}}>
-            <Icon name="user" size={40} color="#e0e0e0" style={{overflow: 'hidden', borderRadius: 20, backgroundColor: 'rgba(0,0,0,.5)', width: 40, height: 40,}} />
+        <View key={x} style={{alignItems: 'center', margin: 10, marginTop: 5, marginBottom: 20}}>
+            <Icon name="user-circle-o" size={40} color="#e0e0e0" style={{overflow: 'hidden', borderRadius: 0, backgroundColor: 'transparent', width: 40, height: 43,}} />
           <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={{padding: 5}}>
             <Icon name='check-circle' color={'#424242'} size={25}/>
@@ -109,11 +109,9 @@ export default class Friends extends Component{
             </Text>
             <Icon name="diamond" size={20} color="pink" />
           </View>
-          <TouchableOpacity style={{flex: 0, paddingLeft: 10 }} onPress={this.back.bind(this)}>
-            <Icon name='angle-left' size={25} />
-          </TouchableOpacity>
+
           <View style={{flex: 0, backgroundColor: '#a5d6a7', borderTopWidth: 1, borderColor: '#e0e0e0'}}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: ''}}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'transparent'}}>
               { friends_two }
             </ScrollView>
           </View>
