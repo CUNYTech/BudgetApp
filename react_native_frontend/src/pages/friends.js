@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
+    View, Alert ,Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
 } from 'react-native';
 import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
@@ -25,19 +25,88 @@ export default class Friends extends Component{
   constructor(){
     super();
     this.state = {
-      expenseTotal: 0,
+      friends: [],
       friendChange: '',
       addFriendOffset: -200,
     };
   }
+
 
   componentDidMount() {
     this.props.hideSideMenu()
   }
 
 
-  back() {
-    Actions.pop()
+  componentWillMount(){
+    this.setFriends();
+
+  }
+
+  async setFriends(){
+    try{
+      const _this = this
+      await this.props.Firebase.auth().currentUser;
+
+      var uid =  this.props.Firebase.auth().currentUser.uid;
+      var ref = this.props.Firebase.database().ref();
+      var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      userFriendsRef.child('1').orderByKey().once('value').then(function(snap){
+        var friendList=[]
+        snap.forEach(function(snapshot){
+          friendList.push({'name': snapshot.val().name })
+        })
+        var friendList = snap.val().friends;
+        return friendList
+      }).then(function(value){
+        if((value.length > 0) ){
+          _this.setState({
+            friends: value
+          })
+        } else {
+          Alert.alert('Please add some friends!')
+          _this.setState({
+            friends: []
+          })
+        }
+      })
+    }
+    catch(e){
+      console.log(error);
+    }
+  }
+
+
+  async _updateFriends() {
+
+    try{
+      var ref = this.props.Firebase.database().ref();
+      var user = this.props.Firebase.auth().currentUser;
+      var uid = user.uid;
+      var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+
+      const newFriend = this.state.friendsChange
+      const newFriends = [...this.state.friends, newFriend]
+
+      const _this = this
+
+      if (newFriends.length > 0) {
+        // var curentUser = this.props.Firebase.database().ref().child(uid);
+        userFriendsRef.update({ friends: newFriends })
+        userFriendsRef.once('value').then(function(snap){
+          var updatedValue = snap.val().friends;
+          return updatedValue
+        }).then(function(value){
+          LayoutAnimation.configureNext(CustomLayoutAnimation)
+          _this.setState({
+            friends: value
+          })
+        })
+      }
+    }
+    catch(e){
+      console.log(e);
+    }
+    this.showAddFriend()
   }
 
   _addFriend() {
@@ -59,19 +128,22 @@ export default class Friends extends Component{
 
 
  render() {
+   var i = 1
    const friends = []
-   for (var i = 0; i <= 10; i++) {
+   this.state.friends.forEach(function(element) {
      friends.push(
        <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
          <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
-         <Text style={{flex: 3, textAlign: 'center', color: '#424242'}} >Name</Text>
+         <Text style={{flex: 3, textAlign: 'center', color: '#424242'}}>{ element }</Text>
          <View style={{flex: 1}}>
            <Text style={{flex: 1, textAlign: 'center', color: '#424242'}} >200pts</Text>
            <Text style={{flex: 1, textAlign: 'center', color: '#a5d6a7'}} >Level 1</Text>
          </View>
        </View>
      )
-    }
+     i+=1
+   })
+
     const friends_two = []
     for (var x = 10; x <= 12; x++) {
       friends_two.push(
@@ -109,7 +181,6 @@ export default class Friends extends Component{
             </Text>
             <Icon name="diamond" size={20} color="pink" />
           </View>
-
           <View style={{flex: 0, backgroundColor: '#a5d6a7', borderTopWidth: 1, borderColor: '#e0e0e0'}}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'transparent'}}>
               { friends_two }
@@ -121,7 +192,7 @@ export default class Friends extends Component{
             </ScrollView>
           </View>
 
-            <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddFriend.bind(this)}>
+            <TouchableOpacity style={styles.addFriend} activeOpacity={.7} onPress={this.showAddFriend.bind(this)}>
               <Icon name="plus-circle" size={50} color="white" style={{backgroundColor: 'transparent'}}/>
             </TouchableOpacity>
             <View style={{
@@ -153,10 +224,10 @@ export default class Friends extends Component{
               </View>
               <TouchableOpacity
                 onPress={this._addFriend.bind(this)}
-                style={styles.addExpenseButton}
+                style={styles.addFriendButton}
               >
                 <Text style={{textAlign: 'center', color: 'white' }}>
-                  SEND REQUEST
+                  ADD FRIEND
                 </Text>
               </TouchableOpacity>
             </View>
@@ -181,12 +252,12 @@ export default class Friends extends Component{
        borderBottomWidth: 1,
        borderColor: '#424242'
     },
-    addExpense: {
+    addFriend: {
        position: 'absolute',
-       top: 115,
+       top: 75,
        right: 20,
     },
-    addExpenseButton: {
+    addFriendButton: {
        height: 45,
        width: 200,
        backgroundColor: '#3949ab',

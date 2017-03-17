@@ -394,7 +394,7 @@ export default class BudgetSnapshot extends Component{
 
  const styles = StyleSheet.create({
      budgetSection: {
-         flex: 1,
+         flex: 0,
          borderColor: '#424242',
          marginTop: 2,
          paddingBottom: 10,

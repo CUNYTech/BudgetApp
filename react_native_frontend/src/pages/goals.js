@@ -58,7 +58,6 @@ export default class Goals extends Component{
      componentDidMount(){
        this._setGoals();
        this.props.hideSideMenu()
-
      }
 
   _setGoals(){
@@ -79,7 +78,6 @@ export default class Goals extends Component{
         goals: userGoals
       });
     })
-
     userGoalsRef.child('1').orderByValue().once('value').then(function(snap){
       console.log(userGoals);
     });
@@ -110,41 +108,13 @@ export default class Goals extends Component{
     Alert.alert(""+this.state.goal+"")
   }
 
-
-  //
-  // var goal = "New Velocity";
-  // var amount = 900
-  //
-  // _setGoals(goal, amount);
-
-
  render() {
-
-{/* <View>
-   <TextInput label="Goal"
-     autoCorrect = {false}
-     value={this.state.goal}
-     marginTop={23}
-     onChange={this.handleChangeInput.bind(this, 'goal')}
-   />
-   <TextInput label="Amount"
-     autoCorrect = {false}
-     value={this.state.amount}
-     marginTop={23}
-     onChange={this.handleChangeInput.bind(this, 'amount')}
-   />
-
-   <TouchableOpacity style={styles.section}  onPress={this._addGoal.bind(this)}>
-     Add Goal
-   </TouchableOpacity>
-  </View> */}
-
    var i = 1
    const goals = []
 
    this.state.goals.forEach(function(element) {
      goals.push(
-       <View style={{marginTop: 10}}>
+       <View key={i} style={{marginTop: 10}}>
          <Text style={{backgroundColor: 'transparent', margin: 20, width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
            { element.goal }
          </Text>
