@@ -7,7 +7,8 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts'
+import { Bar } from 'react-native-pathjs-charts';
+import * as firebase from 'firebase'
 
 var CustomLayoutAnimation = {
   duration: 200,
@@ -109,7 +110,7 @@ export default class Friends extends Component{
     this.showAddFriend()
   }
 
-  _addFriend() {
+  _buttonAddFriend() {
     this.showAddFriend()
   }
 
@@ -126,8 +127,43 @@ export default class Friends extends Component{
     }
   }
 
+//USERS FRIENDS TO BE RENDERED ON PAGE WILL BE QUERY OF THE SORT BELOW
+
+// var payload=[];  // RESULT OF SEARCH INDEX or USERS FRIENDS TO BE THROWN TO RENDER
+
+// _updateFriends = () => {
+//   userFriends.child('2/friends').once('value').then(function(snap) {
+//     snap.forEach(function(snapshot){
+//       payload.push([snapshot.val().displayName, snapshot.val().uid]);
+//     }); return Promise.all(payload);
+//   }).then(function(payload){
+//       return payload
+//     })
+   //  .then(function(payload){  //PAYLOAD WILL HOLD UIDS
+   //        console.log(payload);
+   //     })
+
+
+   //  });
+  // }
+
+  _addFriend (displayName, uid){
+    var _this = this
+    var ref = firebase.database().ref();
+    var currentUid = firebase.auth().currentUser.uid;
+    var userFriendsRef = ref.child('userReadable/userFriends');
+
+
+    userFriendsRef.child(currentUid+ '/'+uid).set({
+      displayName: displayName,
+      uid: uid
+    });
+  }
+
+
 
  render() {
+<<<<<<< HEAD
    var i = 1
    const friends = []
    this.state.friends.forEach(function(element) {
@@ -143,6 +179,45 @@ export default class Friends extends Component{
      )
      i+=1
    })
+=======
+
+   const people = [ { displayName: 'cjordan2', uid: '29gc030449ud' },
+   { displayName: 'anichols2', uid: 'UID2764789g4' },
+   { displayName: 'jbishop2', uid: 'UID294581934' },
+   { displayName: 'mbell2', uid: 'UID232391934' },
+   { displayName: 'aturner4', uid: 'UID231934' },
+   { displayName: 'jflores2', uid: 'UID563244' },
+   { displayName: 'athompson4', uid: 'UID22044' },
+   { displayName: 'aowens2', uid: 'UID22045' },
+   { displayName: 'twilliams2', uid: 'UID402644' },
+   { displayName: 'ahamilton2', uid: 'UID5832962' },
+   { displayName: 'bbradley2', uid: 'UID11004962' },
+   { displayName: 'JonnyIve', uid: 'UID13429932' },
+   { displayName: 'WashingtonBarker', UID: '13f39932' } ];
+
+    var _this = this;
+
+    users = [];
+
+
+    var i = 1
+
+      people.forEach(function(element){
+        users.push(
+          <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+            <TouchableOpacity onPress = {_this._addFriend.bind(this, element.displayName, element.uid)}>
+            <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
+            <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
+            <View style={{flex: 1}}>
+              {/* <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} >200pts</Text> */}
+              {/* <Text style={{flex: 1, textAlign: 'left', color: '#a5d6a7'}} >Level 1</Text> */}
+            </View>
+            </TouchableOpacity>
+          </View>
+        )
+      })
+
+>>>>>>> The displayed friends shown would actually be the results of the search bar or a separate perhaps of all users. Upon pressing a users icon that user is then thrown into the current users user friends list in the DB.
 
     const friends_two = []
     for (var x = 10; x <= 12; x++) {
@@ -188,7 +263,7 @@ export default class Friends extends Component{
           </View>
           <View style={{flex: 1}}>
             <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
-              { friends }
+              { users }
             </ScrollView>
           </View>
 
@@ -225,6 +300,7 @@ export default class Friends extends Component{
               <TouchableOpacity
                 onPress={this._addFriend.bind(this)}
                 style={styles.addFriendButton}
+
               >
                 <Text style={{textAlign: 'center', color: 'white' }}>
                   ADD FRIEND

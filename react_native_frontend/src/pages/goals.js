@@ -63,8 +63,8 @@ export default class Goals extends Component{
   _setGoals(){
     var _this = this
     var userGoals = [];
-    var ref = this.props.Firebase.database().ref();
-    var uid = this.props.Firebase.auth().currentUser.uid;
+    var ref = _this.props.Firebase.database().ref();
+    var uid = _this.props.Firebase.auth().currentUser.uid;
 
     var userGoalsRef = ref.child('userReadable/userGoals');
     userGoalsRef.child(uid).orderByKey().once('value').then(function(snap){
