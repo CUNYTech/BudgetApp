@@ -147,6 +147,23 @@ export default class Friends extends Component{
    //  });
   // }
 
+  _searchUsers = (searchString, maxResults) => {
+  var ref = firebase.database().ref('0');
+  var userRef = ref.child('userPoints');
+  var userFriends = ref.child('userFriends');
+  var peopleRef = ref.child('/people')
+  var people = []
+  ref.child('/people').orderByChild('displayName').startAt(searchString).limitToFirst(maxResults).once('value')
+    .then(function(snap){
+        snap.forEach(function(snapshot){
+            people.push({"displayName":  snapshot.val().displayName, "uid": snapshot.val().uid})
+        })
+        return Promise.all(people)
+      }).then(function(people){
+        console.log(people)
+      })
+    }
+
   _addFriend (displayName, uid){
     var _this = this
     var ref = firebase.database().ref();
@@ -198,7 +215,6 @@ export default class Friends extends Component{
     var _this = this;
 
     users = [];
-
 
     var i = 1
 
