@@ -160,6 +160,13 @@ export default class Friends extends Component{
         })
         return Promise.all(people)
       }).then(function(people){
+        const userId = Object.keys(people);
+        userId.forEach(userId => {
+          const name = people[userId].displayName;
+          if (!name.startsWith(searchString)){
+            delete people[userId];
+          }
+        })
         console.log(people)
       })
     }
