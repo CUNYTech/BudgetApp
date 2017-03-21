@@ -55,7 +55,7 @@ export default class Friends extends Component{
         snap.forEach(function(snapshot){
           friendList.push({'name': snapshot.val().name })
         });
-        let friendList = snap.val().friends;
+        friendList = snap.val().friends;
         return friendList
       }).then(function(value){
         if((value.length > 0) ){
@@ -236,11 +236,11 @@ showSearchBar() {
 
     users = [];
     let search = [];
-    let i = 1;
 
+    let i = 1;
       people.forEach(function(element){
         users.push(
-          <TouchableOpacity  onPress={_this._addFriend.bind(this, element.displayName, element.uid)} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: .5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+          <TouchableOpacity key={i} onPress={_this._addFriend.bind(this, element.displayName, element.uid)} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: .5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
             <Icon name='user-circle-o'
               size={50}
               color='#e0e0e0'
@@ -252,11 +252,14 @@ showSearchBar() {
             </View>
           </TouchableOpacity>
         )
+        i += 1
       });
+
+      i = 0
         console.log(this.state.searchResults);
         this.state.searchResults.forEach(function(element){
           search.push(
-            <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+            <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
                 <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent'}} />
                 <Text style={{ textAlign: 'left', color: '#42a5f5', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
                 <Text style={{ textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
@@ -265,6 +268,7 @@ showSearchBar() {
                 </TouchableOpacity>
             </View>
           )
+          i += 1
         });
 
     let friends_two = [];
