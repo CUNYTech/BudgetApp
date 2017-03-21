@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {
     View, Alert ,Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
 } from 'react-native';
+import { Container, Header, Item, Input, Button } from 'native-base';
+import SearchBar from 'react-native-elements'
 import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
@@ -29,6 +31,9 @@ export default class Friends extends Component{
       friends: [],
       friendChange: '',
       addFriendOffset: -200,
+      searchBarOffset: 0,
+      searchBarOffsetWrapper: 0,
+      searchResults: []
     };
   }
 
@@ -147,25 +152,35 @@ export default class Friends extends Component{
    //  });
   // }
 
-  _searchUsers = (searchString, maxResults) => {
+  _searchUsers(searchString) {
+    console.log(searchString)
   var ref = firebase.database().ref('0');
   var userRef = ref.child('userPoints');
   var userFriends = ref.child('userFriends');
   var peopleRef = ref.child('/people')
   var people = []
-  ref.child('/people').orderByChild('displayName').startAt(searchString).limitToFirst(maxResults).once('value')
+  var _this = this
+  ref.child('/people').orderByChild('displayName').startAt(searchString).limitToFirst(10).once('value')
     .then(function(snap){
+      console.log("here 1")
         snap.forEach(function(snapshot){
+          console.log("snapshot", snapshot)
             people.push({"displayName":  snapshot.val().displayName, "uid": snapshot.val().uid})
         })
+        console.log(people)
         return Promise.all(people)
       }).then(function(people){
+        console.log("here 2")
         const userId = Object.keys(people);
         userId.forEach(userId => {
           const name = people[userId].displayName;
+          console.log("here 3")
           if (!name.startsWith(searchString)){
             delete people[userId];
           }
+        })
+        _this.setState({
+          searchResults: people
         })
         console.log(people)
       })
@@ -184,27 +199,23 @@ export default class Friends extends Component{
     });
   }
 
+showSearchBar() {
+  LayoutAnimation.configureNext(CustomLayoutAnimation)
+  if (this.state.searchBarOffset != 0) {
+    this.setState({
+      searchBarOffset: 0,
+      searchBarOffsetWrapper: 0
+    })
+  } else {
+    this.setState({
+      searchBarOffset: 250,
+      searchBarOffsetWrapper: 300
+    })
+  }
 
+}
 
  render() {
-<<<<<<< HEAD
-   var i = 1
-   const friends = []
-   this.state.friends.forEach(function(element) {
-     friends.push(
-       <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-         <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
-         <Text style={{flex: 3, textAlign: 'center', color: '#424242'}}>{ element }</Text>
-         <View style={{flex: 1}}>
-           <Text style={{flex: 1, textAlign: 'center', color: '#424242'}} >200pts</Text>
-           <Text style={{flex: 1, textAlign: 'center', color: '#a5d6a7'}} >Level 1</Text>
-         </View>
-       </View>
-     )
-     i+=1
-   })
-=======
-
    const people = [ { displayName: 'cjordan2', uid: '29gc030449ud' },
    { displayName: 'anichols2', uid: 'UID2764789g4' },
    { displayName: 'jbishop2', uid: 'UID294581934' },
@@ -222,7 +233,7 @@ export default class Friends extends Component{
     var _this = this;
 
     users = [];
-
+    var search = []
     var i = 1
 
       people.forEach(function(element){
@@ -240,7 +251,21 @@ export default class Friends extends Component{
         )
       })
 
->>>>>>> The displayed friends shown would actually be the results of the search bar or a separate perhaps of all users. Upon pressing a users icon that user is then thrown into the current users user friends list in the DB.
+        console.log(snapshot)
+        this.state.searchResults.forEach(function(element){
+          search.push(
+            <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+              <TouchableOpacity onPress = {_this._addFriend.bind(this, element.displayName, element.uid)}>
+                <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
+                <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
+                <View style={{flex: 1}}>
+                  {/* <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} >200pts</Text> */}
+                  {/* <Text style={{flex: 1, textAlign: 'left', color: '#a5d6a7'}} >Level 1</Text> */}
+                </View>
+              </TouchableOpacity>
+            </View>
+          )
+        })
 
     const friends_two = []
     for (var x = 10; x <= 12; x++) {
@@ -277,7 +302,24 @@ export default class Friends extends Component{
             }}>
               FRIENDS
             </Text>
-            <Icon name="diamond" size={20} color="pink" />
+            <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
+              <Icon name="search" size={20} color="white" />
+            </TouchableOpacity>
+            <View style={{height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242'}}>
+              <TextInput
+                placeholder="Search for friends"
+                style={{backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12}}
+                onChangeText={this._searchUsers.bind(this)}/>
+              <TouchableOpacity activeOpacity={.7} onPress={this.showSearchBar.bind(this)} >
+                <Text style={{padding: 6, color: 'white', marginLeft: 2}}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999}}>
+            <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
+
+
+            </ScrollView>
           </View>
           <View style={{flex: 0, backgroundColor: '#a5d6a7', borderTopWidth: 1, borderColor: '#e0e0e0'}}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'transparent'}}>
