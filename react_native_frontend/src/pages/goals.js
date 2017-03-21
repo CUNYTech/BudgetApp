@@ -1,15 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    Alert,View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
-} from 'react-native';
-import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput,
+    LayoutAnimation, Platform} from 'react-native';
+import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts'
 
-var CustomLayoutAnimation = {
+let CustomLayoutAnimation = {
   duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
@@ -32,27 +28,20 @@ export default class Goals extends Component{
     };
   }
 
-  back() {
-    Actions.pop()
-  }
   //function to be called upon users pressing of button component
    _addGoal(){
-     var ref = this.props.Firebase.database().ref();
-     var userGoalsRef = ref.child('userReadable/userGoals');
-     var userGoal = this.state.goal;
-     var amount = this.state.amount;
-     var uid = this.props.Firebase.auth().currentUser.uid;
+     let ref = this.props.Firebase.database().ref();
+     let userGoalsRef = ref.child('userReadable/userGoals');
+     let userGoal = this.state.goal;
+     let amount = this.state.amount;
+     let uid = this.props.Firebase.auth().currentUser.uid;
 
      userGoalsRef.child(uid).push({
       goal: userGoal,
       amount: amount,
-    })
-    this._showAddGoal()
+    });
+    this._showAddGoal();
     this._setGoals()
-     }
-
-     back() {
-       Actions.pop()
      }
 
      componentDidMount(){
@@ -61,12 +50,12 @@ export default class Goals extends Component{
      }
 
   _setGoals(){
-    var _this = this
-    var userGoals = [];
-    var ref = _this.props.Firebase.database().ref();
-    var uid = _this.props.Firebase.auth().currentUser.uid;
+    let _this = this;
+    let userGoals = [];
+    const ref = _this.props.Firebase.database().ref();
+    const uid = _this.props.Firebase.auth().currentUser.uid;
 
-    var userGoalsRef = ref.child('userReadable/userGoals');
+    const userGoalsRef = ref.child('userReadable/userGoals');
     userGoalsRef.child(uid).orderByKey().once('value').then(function(snap){
       snap.forEach(function(snapshot){
         console.log(snapshot.val().goal);
@@ -77,7 +66,7 @@ export default class Goals extends Component{
       _this.setState({
         goals: userGoals
       });
-    })
+    });
     userGoalsRef.child('1').orderByValue().once('value').then(function(snap){
       console.log(userGoals);
     });
@@ -92,8 +81,8 @@ export default class Goals extends Component{
 
 
   _showAddGoal(){
-    var offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation)
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addGoalOffset == -300) {
       this.setState({ addGoalOffset: offSet }) //Set to 0 for android
     } else {
@@ -104,13 +93,9 @@ export default class Goals extends Component{
     }
   }
 
-  _Test(){
-    Alert.alert(""+this.state.goal+"")
-  }
-
  render() {
-   var i = 1
-   const goals = []
+   let i = 1;
+   const goals = [];
 
    this.state.goals.forEach(function(element) {
      goals.push(
@@ -122,7 +107,7 @@ export default class Goals extends Component{
          <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
      </View>
    </View>
-     )
+     );
      i+=1
    });
        return (
