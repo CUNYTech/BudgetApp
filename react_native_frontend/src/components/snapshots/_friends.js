@@ -1,20 +1,13 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
-} from 'react-native';
-import { Actions, ActionConst } from 'react-native-router-flux';
-import { getPlatformValue } from '../../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../../theme/'
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
 
 export default class FriendsSnapshot extends Component{
 
   constructor(){
     super();
     this.state = {
-
     };
   }
 
@@ -23,8 +16,8 @@ export default class FriendsSnapshot extends Component{
   }
 
  render() {
-   const friends = []
-   for (var i = 0; i <= 10; i++) {
+   const friends = [];
+   for (let i = 0; i <= 10; i++) {
      friends.push(
        <View key={i} style={{alignItems: 'center', margin: 10}}>
          <Icon name="user-circle-o" size={50} color="#e0e0e0" style={styles.icon} />

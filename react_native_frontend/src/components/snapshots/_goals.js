@@ -1,12 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
-} from 'react-native';
-import { Actions, ActionConst } from 'react-native-router-flux';
-import { getPlatformValue } from '../../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../../theme/'
-import Icon from 'react-native-vector-icons/FontAwesome';
-
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 export default class GoalsSnapshot extends Component{
 
@@ -15,7 +9,6 @@ export default class GoalsSnapshot extends Component{
     this.state = { goal:'',
     amount: 0,
     goals:[]
-
     };
   }
 
@@ -23,12 +16,11 @@ export default class GoalsSnapshot extends Component{
     Actions.goals()
   }
 
-
   render() {
 
-    var i = 1
-    const goals = []
-    const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"]
+    let i = 1;
+    const goals = [];
+    const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"];
     myGoals.forEach(function(element) {
       goals.push(
         <View key={i} style={{marginTop: 5}}>
@@ -39,7 +31,7 @@ export default class GoalsSnapshot extends Component{
             <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
           </View>
         </View>
-      )
+      );
       i+=1
     });
     return (

@@ -55,7 +55,6 @@ export default class Friends extends Component{
         snap.forEach(function(snapshot){
           friendList.push({'name': snapshot.val().name })
         });
-        let friendList = snap.val().friends;
         return friendList
       }).then(function(value){
         if((value.length > 0) ){
