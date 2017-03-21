@@ -1,15 +1,10 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
-} from 'react-native';
-import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, {Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { BackgroundWrapper, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
 import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts'
 
-var CustomLayoutAnimation = {
+let CustomLayoutAnimation = {
   duration: 50,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,

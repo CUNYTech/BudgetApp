@@ -1,8 +1,6 @@
-
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Animated, InteractionManager, Alert,} from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 
@@ -27,36 +25,36 @@ export default class Register extends Component {
     // Add new user to Firebase DB
     async _register(){
     try{
-        await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+        await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
-        var user = this.props.Firebase.auth().currentUser;
-        var ref = this.props.Firebase.database().ref();
-        var userRef = ref.child('users/');
+        let user = this.props.Firebase.auth().currentUser;
+        let ref = this.props.Firebase.database().ref();
+        let userRef = ref.child('users/');
 
         user.updateProfile({
           displayName: this.state.username,
-        })
+        });
         this._load(user);
         Actions.dashboard()
 
     }
     catch(error){
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      let errorCode = error.code;
+      let errorMessage = error.message;
       if (errorCode === 'auth/email-already-in-use') {
         this.setState({
           errors: 'Email is already in use.'
         })
       }
         // Handle exceptions
+    }
     };
-};
 
     _load(user){
-        var ref = this.props.Firebase.database().ref();
+        let ref = this.props.Firebase.database().ref();
 
         //Pull user profile
-        var name, email, photoUrl, uid, emailVerified;
+        let name, email, photoUrl, uid, emailVerified;
 
         if (user != null) {
           name = user.displayName;
@@ -66,12 +64,12 @@ export default class Register extends Component {
           uid = user.uid;
         }
         //Create UID nodes in DB
-        // var searchIndexRef = ref.child('people');
-        var userPointsRef = ref.child('userReadable/userPoints').child(uid);
-        var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-        var userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-        var userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-        var peopleRef = ref.child('/people');
+        // let searchIndexRef = ref.child('people');
+        let userPointsRef = ref.child('userReadable/userPoints').child(uid);
+        let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+        let userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+        let userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+        let peopleRef = ref.child('/people');
 
         setTimeout(()=> userPointsRef.set({
           displayName: this.state.username,
@@ -160,7 +158,7 @@ export default class Register extends Component {
     }
 
     render() {
-      const {errors} = this.props
+      const {errors} = this.props;
         return (
           <View style={loginStyle.container}>
             <BackButton

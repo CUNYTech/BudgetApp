@@ -1,9 +1,7 @@
-import React, {Component, PropTypes} from 'react';
-import { AppRegistry, View, Image, StyleSheet, Animated, InteractionManager, TouchableOpacity } from 'react-native';
-import { Logo, Heading, BackgroundWrapper, AlertStatus} from '../components';
-import { Container, Content, Header, Footer, FooterTab, Button, Text, Badge,
-          Left, transparent, Right, Body, Title, Card, CardItem, ListItem, Separator} from 'native-base';
-import { Actions} from 'react-native-router-flux';
+import React, {Component } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { BackgroundWrapper } from '../components';
+import { Container, Content, Text, Left, transparent, Right, Body, Card, CardItem, ListItem, Separator} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 

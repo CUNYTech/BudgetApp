@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity, Navigator}  from 'react-native';
-import { Scene, Router, Actions, ActionConst  } from 'react-native-router-flux';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points} from './pages';
-
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
 import {SideMenu, List, ListItem} from 'react-native-elements';
-import Icon from 'react-native-elements';
 
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -28,7 +26,7 @@ const getScenceStyle = (scene) => {
 export default class App extends Component {
 
   constructor () {
-    super()
+    super();
     this.state = {
       isOpen: false,
       show: true,
@@ -123,7 +121,7 @@ export default class App extends Component {
   }
 
   render(){
-    const Menu = this.state.list[0]
+    const Menu = this.state.list[0];
 
     return (
       <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
@@ -151,4 +149,4 @@ styles = StyleSheet.create ({
     width: null,
 
   }
-})
+});

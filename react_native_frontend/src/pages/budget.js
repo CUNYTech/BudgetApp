@@ -1,15 +1,11 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
-} from 'react-native';
-import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-var CustomLayoutAnimation = {
+let CustomLayoutAnimation = {
   duration: 500,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
@@ -37,27 +33,27 @@ export default class Budget extends Component {
 
     try{
 
-      var ref = this.props.Firebase.database().ref();
-      var user = this.props.Firebase.auth().currentUser;
-      var uid = user.uid;
+      let ref = this.props.Firebase.database().ref();
+      let user = this.props.Firebase.auth().currentUser;
+      let uid = user.uid;
 
-      var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
+      let userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
 
-    const newExpenseValue = +this.state.expenseTotalChange
-    const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal
-    const _this = this
-    const budgetTrackerWidth = 273
-    const fixedBudget = 1000
+    const newExpenseValue = +this.state.expenseTotalChange;
+    const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal;
+    const _this = this;
+    const budgetTrackerWidth = 273;
+    const fixedBudget = 1000;
 
     if (newExpenseValue > 0) {
-      // var curentUser = this.props.Firebase.database().ref().child(uid);
-      userExpensesRef.update({ expenses: newExpensesTotal })
+      // let curentUser = this.props.Firebase.database().ref().child(uid);
+      userExpensesRef.update({ expenses: newExpensesTotal });
       userExpensesRef.once('value').then(function(snap){
-        var updatedValue = snap.val().expenses;
+        let updatedValue = snap.val().expenses;
         return updatedValue
       }).then(function(value){
         if ((value/fixedBudget) < 1) {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
+          LayoutAnimation.configureNext(CustomLayoutAnimation);
           _this.setState({
             expenseTotal: value,
             budgetTracker: {
@@ -66,7 +62,7 @@ export default class Budget extends Component {
           })
         }
          else {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
+          LayoutAnimation.configureNext(CustomLayoutAnimation);
           _this.setState({
             expenseTotal: value,
             budgetTracker: {
@@ -86,8 +82,8 @@ export default class Budget extends Component {
   }
 
   showAddExpense() {
-    var offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation)
+    let offSet = (Platform.OS === 'ios') ? 220 : 0;
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addExpenseOffest == -200) {
       this.setState({ addExpenseOffest: offSet }) //Set to 0 for android
     } else {
@@ -96,10 +92,6 @@ export default class Budget extends Component {
         expenseTotalChange: 0
       })
     }
-  }
-
-  back() {
-    Actions.pop()
   }
 
 render() {

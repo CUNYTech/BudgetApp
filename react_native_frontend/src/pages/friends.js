@@ -1,18 +1,12 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Alert ,Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
-} from 'react-native';
-import { Container, Header, Item, Input, Button } from 'native-base';
-import SearchBar from 'react-native-elements'
-import {Logo, Heading, BackgroundWrapper, AlertStatus, BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot} from '../components';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { View, Alert ,Text, StyleSheet, ScrollView, TouchableOpacity,
+    TextInput, LayoutAnimation, Platform } from 'react-native';
+import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../theme/'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts';
 import * as firebase from 'firebase'
 
-var CustomLayoutAnimation = {
+let CustomLayoutAnimation = {
   duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
@@ -50,18 +44,18 @@ export default class Friends extends Component{
 
   async setFriends(){
     try{
-      const _this = this
+      const _this = this;
       await this.props.Firebase.auth().currentUser;
 
-      var uid =  this.props.Firebase.auth().currentUser.uid;
-      var ref = this.props.Firebase.database().ref();
-      var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      let uid =  this.props.Firebase.auth().currentUser.uid;
+      let ref = this.props.Firebase.database().ref();
+      let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
       userFriendsRef.child('1').orderByKey().once('value').then(function(snap){
-        var friendList=[]
+        let friendList=[];
         snap.forEach(function(snapshot){
           friendList.push({'name': snapshot.val().name })
-        })
-        var friendList = snap.val().friends;
+        });
+        let friendList = snap.val().friends;
         return friendList
       }).then(function(value){
         if((value.length > 0) ){
@@ -69,7 +63,7 @@ export default class Friends extends Component{
             friends: value
           })
         } else {
-          Alert.alert('Please add some friends!')
+          Alert.alert('Please add some friends!');
           _this.setState({
             friends: []
           })
@@ -85,24 +79,24 @@ export default class Friends extends Component{
   async _updateFriends() {
 
     try{
-      var ref = this.props.Firebase.database().ref();
-      var user = this.props.Firebase.auth().currentUser;
-      var uid = user.uid;
-      var userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      let ref = this.props.Firebase.database().ref();
+      let user = this.props.Firebase.auth().currentUser;
+      let uid = user.uid;
+      let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
 
-      const newFriend = this.state.friendsChange
-      const newFriends = [...this.state.friends, newFriend]
+      let newFriend = this.state.friendsChange;
+      let newFriends = [...this.state.friends, newFriend];
 
-      const _this = this
+      let _this = this;
 
       if (newFriends.length > 0) {
-        // var curentUser = this.props.Firebase.database().ref().child(uid);
-        userFriendsRef.update({ friends: newFriends })
+        // let curentUser = this.props.Firebase.database().ref().child(uid);
+        userFriendsRef.update({ friends: newFriends });
         userFriendsRef.once('value').then(function(snap){
-          var updatedValue = snap.val().friends;
+          let updatedValue = snap.val().friends;
           return updatedValue
         }).then(function(value){
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
+          LayoutAnimation.configureNext(CustomLayoutAnimation);
           _this.setState({
             friends: value
           })
@@ -120,8 +114,8 @@ export default class Friends extends Component{
   }
 
   showAddFriend() {
-    var offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation)
+    let offSet = (Platform.OS === 'ios') ? 220 : 0;
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addFriendOffset == -200) {
       this.setState({ addFriendOffset: offSet }) //Set to 0 for android
     } else {
@@ -134,7 +128,7 @@ export default class Friends extends Component{
 
 //USERS FRIENDS TO BE RENDERED ON PAGE WILL BE QUERY OF THE SORT BELOW
 
-// var payload=[];  // RESULT OF SEARCH INDEX or USERS FRIENDS TO BE THROWN TO RENDER
+// let payload=[];  // RESULT OF SEARCH INDEX or USERS FRIENDS TO BE THROWN TO RENDER
 
 // _updateFriends = () => {
 //   userFriends.child('2/friends').once('value').then(function(snap) {
@@ -153,13 +147,13 @@ export default class Friends extends Component{
   // }
 
   _searchUsers(searchString) {
-    console.log(searchString)
-    var ref = firebase.database().ref('/people');
-    var userRef = ref.child('userPoints');
-    var userFriends = ref.child('userFriends');
-    var peopleRef = ref.child('/people')
-    var people = []
-    var _this = this
+    console.log(searchString);
+    let ref = firebase.database().ref('/people');
+    let userRef = ref.child('userPoints');
+    let userFriends = ref.child('userFriends');
+    let peopleRef = ref.child('/people');
+    let people = [];
+    let _this = this;
 
     if (searchString == '') {
       this.setState({
@@ -170,22 +164,22 @@ export default class Friends extends Component{
         .then(function(snap){
           snap.forEach(function(snapshot){
               people.push({'displayName':  snapshot.val().displayName, 'uid': snapshot.val().uid})
-          })
+          });
           return Promise.all(people)
         }).then(function(people){
-          const userId = Object.keys(people);
+          let userId = Object.keys(people);
           userId.forEach(userId => {
-            var name = people[userId].displayName;
+            let name = people[userId].displayName;
             if (!name.startsWith(searchString)){
               delete people[userId];
             }
-          })
-          var results_without_empties = []
+          });
+          let results_without_empties = [];
           people.forEach( item => {
             if (item != '') {
               results_without_empties.push(item)
             }
-          })
+          });
           _this.setState({
             searchResults: results_without_empties
           })
@@ -194,10 +188,10 @@ export default class Friends extends Component{
     }
 
   _addFriend (displayName, uid){
-    var _this = this
-    var ref = firebase.database().ref();
-    var currentUid = firebase.auth().currentUser.uid;
-    var userFriendsRef = ref.child('userReadable/userFriends');
+    let _this = this;
+    let ref = firebase.database().ref();
+    let currentUid = firebase.auth().currentUser.uid;
+    let userFriendsRef = ref.child('userReadable/userFriends');
 
 
     userFriendsRef.child(currentUid+ '/'+uid).set({
@@ -207,7 +201,7 @@ export default class Friends extends Component{
   }
 
 showSearchBar() {
-  LayoutAnimation.configureNext(CustomLayoutAnimation)
+  LayoutAnimation.configureNext(CustomLayoutAnimation);
   if (this.state.searchBarOffset != 0) {
     this.setState({
       searchBarOffset: 0,
@@ -223,7 +217,7 @@ showSearchBar() {
 }
 
  render() {
-   const people = [ { displayName: 'cjordan2', uid: '29gc030449ud' },
+   let people = [ { displayName: 'cjordan2', uid: '29gc030449ud' },
    { displayName: 'anichols2', uid: 'UID2764789g4' },
    { displayName: 'jbishop2', uid: 'UID294581934' },
    { displayName: 'mbell2', uid: 'UID232391934' },
@@ -237,11 +231,11 @@ showSearchBar() {
    { displayName: 'JonnyIve', uid: 'UID13429932' },
    { displayName: 'WashingtonBarker', UID: '13f39932' } ];
 
-    var _this = this;
+    let _this = this;
 
     users = [];
-    var search = []
-    var i = 1
+    let search = [];
+    let i = 1;
 
       people.forEach(function(element){
         users.push(
@@ -256,8 +250,8 @@ showSearchBar() {
             </TouchableOpacity>
           </View>
         )
-      })
-        console.log(this.state.searchResults)
+      });
+        console.log(this.state.searchResults);
         this.state.searchResults.forEach(function(element){
           search.push(
             <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
@@ -271,10 +265,10 @@ showSearchBar() {
               </TouchableOpacity>
             </View>
           )
-        })
+        });
 
-    const friends_two = []
-    for (var x = 10; x <= 12; x++) {
+    let friends_two = [];
+    for (let x = 10; x <= 12; x++) {
       friends_two.push(
         <View key={x} style={{alignItems: 'center', margin: 10, marginTop: 5, marginBottom: 20}}>
             <Icon name='user-circle-o' size={40} color='#e0e0e0' style={{overflow: 'hidden', borderRadius: 0, backgroundColor: 'transparent', width: 40, height: 43,}} />
@@ -383,7 +377,7 @@ showSearchBar() {
        }
      }
 
- const styles = StyleSheet.create({
+ let styles = StyleSheet.create({
    container: {
      flex: 1,
      backgroundColor: 'white',
