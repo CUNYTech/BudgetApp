@@ -96,10 +96,13 @@ export default class PointsSnapshot extends Component{
     };
   }
 
+    navPoints() {
+      Actions.points()
+    }
   render() {
     return (
       <View style={styles.section}>
-        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+        <TouchableOpacity onPress={this.navPoints.bind(this)} style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Text style={{textAlign: 'left',marginLeft: 10,fontFamily: 'OpenSans', fontSize: 17, color: '#424242'}}>
             DAILY POINTS
           </Text>

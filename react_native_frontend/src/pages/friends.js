@@ -55,6 +55,7 @@ export default class Friends extends Component{
         snap.forEach(function(snapshot){
           friendList.push({'name': snapshot.val().name })
         });
+        friendList = snap.val().friends;
         return friendList
       }).then(function(value){
         if((value.length > 0) ){
@@ -204,7 +205,8 @@ showSearchBar() {
   if (this.state.searchBarOffset != 0) {
     this.setState({
       searchBarOffset: 0,
-      searchBarOffsetWrapper: 0
+      searchBarOffsetWrapper: 0,
+      searchResults: []
     })
   } else {
     this.setState({
@@ -234,36 +236,39 @@ showSearchBar() {
 
     users = [];
     let search = [];
-    let i = 1;
 
+    let i = 1;
       people.forEach(function(element){
         users.push(
-          <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-            <TouchableOpacity onPress = {_this._addFriend.bind(this, element.displayName, element.uid)}>
-            <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
-            <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
+          <TouchableOpacity key={i} onPress={_this._addFriend.bind(this, element.displayName, element.uid)} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: .5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+            <Icon name='user-circle-o'
+              size={50}
+              color='#e0e0e0'
+              style={{flex: 0, alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
+            <Text style={{flex: 2, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
             <View style={{flex: 1}}>
-              {/* <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} >200pts</Text> */}
-              {/* <Text style={{flex: 1, textAlign: 'left', color: '#a5d6a7'}} >Level 1</Text> */}
+               <Text style={{flex: 1, textAlign: 'right', color: '#424242'}} >200pts</Text>
+               <Text style={{flex: 1, textAlign: 'right', color: '#a5d6a7'}} >Level 1</Text>
             </View>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         )
+        i += 1
       });
+
+      i = 0
         console.log(this.state.searchResults);
         this.state.searchResults.forEach(function(element){
           search.push(
-            <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-              <TouchableOpacity onPress = {_this._addFriend.bind(this, element.displayName, element.uid)} style={{alignItems: 'flex-start'}}>
-                <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
-                <Text style={{flex: 1, textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
-                <View style={{flex: 1}}>
-                  {/* <Text style={{flex: 1, textAlign: 'left', color: '#424242'}} >200pts</Text> */}
-                  {/* <Text style={{flex: 1, textAlign: 'left', color: '#a5d6a7'}} >Level 1</Text> */}
-                </View>
-              </TouchableOpacity>
+            <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
+                <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent'}} />
+                <Text style={{ textAlign: 'left', color: '#42a5f5', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
+                <Text style={{ textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
+                <TouchableOpacity onPress={_this._addFriend.bind(this, element.displayName, element.uid)} style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
+                  <Icon name='plus-circle' size={25} color='white' style={{backgroundColor: 'transparent'}}/>
+                </TouchableOpacity>
             </View>
           )
+          i += 1
         });
 
     let friends_two = [];
@@ -284,92 +289,46 @@ showSearchBar() {
      }
        return (
           <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity>
-              <Icon name='bars'
-              size={30}
-              color='white'
-              onPress={this.props.sideMenu}/>
-            </TouchableOpacity>
-            <Text style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5
-            }}>
-              FRIENDS
-            </Text>
-            <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
-              <Icon name='search' size={20} color='white' />
-            </TouchableOpacity>
-            <View style={{height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242'}}>
-              <TextInput
-                placeholder='Search for friends'
-                autoCapitalize='none'
-                style={{backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12}}
-                onChangeText={this._searchUsers.bind(this)}/>
-              <TouchableOpacity activeOpacity={.7} onPress={this.showSearchBar.bind(this)} >
-                <Text style={{padding: 6, color: 'white', marginLeft: 2}}>Cancel</Text>
+            <View style={styles.header}>
+              <TouchableOpacity>
+                <Icon name='bars'
+                size={30}
+                color='white'
+                onPress={this.props.sideMenu}/>
               </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)'}}>
-            <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
-              { search }
-            </ScrollView>
-          </View>
-          <View style={{flex: 0, backgroundColor: '#a5d6a7', borderTopWidth: 1, borderColor: '#e0e0e0'}}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'transparent'}}>
-              { friends_two }
-            </ScrollView>
-          </View>
-          <View style={{flex: 1}}>
-            <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
-              { users }
-            </ScrollView>
-          </View>
-
-            <TouchableOpacity style={styles.addFriend} activeOpacity={.7} onPress={this.showAddFriend.bind(this)}>
-              <Icon name='plus-circle' size={50} color='white' style={{backgroundColor: 'transparent'}}/>
-            </TouchableOpacity>
-            <View style={{
-              position: 'absolute',
-              bottom: this.state.addFriendOffset,
-              width: 300,
-              height: 200,
-              left: 35,
-              borderWidth: 1,
-              borderRadius: 15,
-              borderColor: 'black',
-              backgroundColor: 'white',
-              justifyContent: 'center',
-            }}>
-              <Text style={{textAlign: 'center', color: 'black', fontFamily: 'OpenSans' }}>
-                ADD FRIENDS
+              <Text style={{
+                fontSize: 25,
+                textAlign: 'center',
+                width: 250,
+                color: 'white',
+                fontWeight: '300',
+                marginBottom: 5
+              }}>
+                FRIENDS
               </Text>
-              <Text style={{color: 'red', fontSize: 10, textAlign: 'center'}}>user not found</Text>
-              <View style={{flexDirection: 'row', justifyContent: 'center', padding: 20}}>
-                <Text style={{color: 'white',fontSize: 35}}>
-                </Text>
-                <View style={{borderBottomWidth: 1, borderColor: '#e0e0e0'}}>
-                  <TextInput
-                    style={{height: 40, width: 150, borderColor: 'white', backgroundColor: 'white', borderWidth: 1, textAlign: 'left'}}
-                    onChangeText={(friendChange) => this.setState({friendChange})}
-                    value={''+this.state.friendChange+''}
-                  />
-                </View>
-              </View>
-              <TouchableOpacity
-                onPress={this._addFriend.bind(this)}
-                style={styles.addFriendButton}
-
-              >
-                <Text style={{textAlign: 'center', color: 'white' }}>
-                  ADD FRIEND
-                </Text>
+              <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
+                <Icon name='search' size={20} color='white' />
               </TouchableOpacity>
+              <View style={{height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242'}}>
+                <TextInput
+                  placeholder='Search for friends'
+                  autoCapitalize='none'
+                  style={{backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12}}
+                  onChangeText={this._searchUsers.bind(this)}/>
+                <TouchableOpacity activeOpacity={.7} onPress={this.showSearchBar.bind(this)} >
+                  <Text style={{padding: 6, color: 'white', marginLeft: 2}}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={{position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)'}}>
+              <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
+                { search }
+              </ScrollView>
+            </View>
+            <View style={{flex: 1}}>
+              <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
+                { users }
+              </ScrollView>
             </View>
           </View>
          )
