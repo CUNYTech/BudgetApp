@@ -251,7 +251,7 @@ showSearchBar() {
         )
       })
 
-        console.log(snapshot)
+        console.log(this.state.searchResults)
         this.state.searchResults.forEach(function(element){
           search.push(
             <View  style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: 'transparent', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
