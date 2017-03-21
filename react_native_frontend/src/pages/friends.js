@@ -251,11 +251,11 @@ showSearchBar() {
                <Text style={{flex: 1, textAlign: 'right', color: '#a5d6a7'}} >Level 1</Text>
             </View>
           </TouchableOpacity>
-        )
+        );
         i += 1
       });
 
-      i = 0
+      i = 0;
         console.log(this.state.searchResults);
         this.state.searchResults.forEach(function(element){
           search.push(
@@ -267,7 +267,7 @@ showSearchBar() {
                   <Icon name='plus-circle' size={25} color='white' style={{backgroundColor: 'transparent'}}/>
                 </TouchableOpacity>
             </View>
-          )
+          );
           i += 1
         });
 
