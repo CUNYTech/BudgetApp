@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {View, StyleSheet} from 'react-native';
 import {getStyleFromProps} from '../../utils';
 import TextFont from './TextFont';
 
@@ -8,7 +7,7 @@ export default class Heading extends Component {
         const style = {
             ...headingStyle[this.props.element],
             ...getStyleFromProps(['color', 'textAlign', 'marginTop', 'letterSpacing'], this.props)
-        }
+        };
         return <TextFont {...this.props} style={style}>
             {this.props.children}
         </TextFont>
@@ -18,7 +17,7 @@ export default class Heading extends Component {
 Heading.defaultProps = {
     element: "h1",
     letterSpacing: 2
-}
+};
 
 Heading.propTypes = {
     element: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4']),
@@ -26,7 +25,7 @@ Heading.propTypes = {
     letterSpacing: PropTypes.number,
     textAlign: PropTypes.string,
     marginTop: PropTypes.number
-}
+};
 
 const headingStyle = {
     h1: {
@@ -41,4 +40,4 @@ const headingStyle = {
     h4: {
         fontSize: 18
     }
-}
+};

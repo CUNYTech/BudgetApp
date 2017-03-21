@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { getStyleFromProps } from '../../utils';
 
 export default class Logo extends Component {
@@ -12,7 +12,6 @@ export default class Logo extends Component {
             <View style={style}>
                 <Image
                     source={require('../../images/Hoola_Small.png')}
-                    //style={logoStyle.image}
                     resizeMode="cover"
                 />
             </View>
