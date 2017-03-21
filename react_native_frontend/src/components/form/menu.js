@@ -1,12 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform
-} from 'react-native';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet,TouchableOpacity, TextInput, LayoutAnimation } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Bar } from 'react-native-pathjs-charts'
 
-var CustomLayoutAnimation = {
+let CustomLayoutAnimation = {
   duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
@@ -32,53 +29,49 @@ export default class Menu extends Component{
     Actions.pop()
   }
 
-
   async _updateExpenses() {
-
     try{
+        let ref = this.props.Firebase.database().ref();
+        let user = this.props.Firebase.auth().currentUser;
+        let uid = user.uid;
+        let userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
 
-      var ref = this.props.Firebase.database().ref();
-      var user = this.props.Firebase.auth().currentUser;
-      var uid = user.uid;
+        const newExpenseValue = +this.state.expenseTotalChange;
+        const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal;
+        const _this = this;
+        const budgetTrackerWidth = 273;
+        const fixedBudget = 1000;
 
-      var userExpensesRef = ref.child('userReadable/userExpenses').child(uid);
-
-    const newExpenseValue = +this.state.expenseTotalChange
-    const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal
-    const _this = this
-    const budgetTrackerWidth = 273
-    const fixedBudget = 1000
-
-    if (newExpenseValue > 0) {
-      // var curentUser = this.props.Firebase.database().ref().child(uid);
-      userExpensesRef.update({ expenses: newExpensesTotal })
-      userExpensesRef.once('value').then(function(snap){
-        var updatedValue = snap.val().expenses;
-        return updatedValue
-      }).then(function(value){
-        if ((value/fixedBudget) < 1) {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
-          _this.setState({
-            expenseTotal: value,
-            budgetTracker: {
-              margin: (value/fixedBudget*budgetTrackerWidth)
+        if (newExpenseValue > 0) {
+          // let curentUser = this.props.Firebase.database().ref().child(uid);
+          userExpensesRef.update({ expenses: newExpensesTotal });
+          userExpensesRef.once('value').then(function(snap){
+            let updatedValue = snap.val().expenses;
+            return updatedValue
+          }).then(function(value){
+            if ((value/fixedBudget) < 1) {
+              LayoutAnimation.configureNext(CustomLayoutAnimation);
+              _this.setState({
+                expenseTotal: value,
+                budgetTracker: {
+                  margin: (value/fixedBudget*budgetTrackerWidth)
+                }
+              })
             }
-          })
+             else {
+                  LayoutAnimation.configureNext(CustomLayoutAnimation);
+                  _this.setState({
+                    expenseTotal: value,
+                    budgetTracker: {
+                      margin: 273
+                    }
+                })
+             }
+            })
         }
-         else {
-          LayoutAnimation.configureNext(CustomLayoutAnimation)
-          _this.setState({
-            expenseTotal: value,
-            budgetTracker: {
-              margin: 273
-            }
-          })
-        }
-      })
+        this.showAddExpense()
+
     }
-    this.showAddExpense()
-
-  }
 
     catch(e){
       console.log(e);
@@ -90,9 +83,9 @@ export default class Menu extends Component{
   }
 
  render() {
-   var i = 1
-   const goals = []
-   const myGoals = ['Paris Trip', "Yeezy's", "Mac"]
+   let i = 1;
+   const goals = [];
+   const myGoals = ['Paris Trip', "Yeezy's", "Mac"];
    myGoals.forEach(function(element) {
      goals.push(
        <View key={i} style={{marginTop: 10}}>
@@ -103,7 +96,7 @@ export default class Menu extends Component{
          <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
      </View>
    </View>
-     )
+     );
      i+=1
    });
        return (

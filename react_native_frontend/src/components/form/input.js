@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { View, TextInput, StyleSheet, Animated } from 'react-native';
+import { View, TextInput, Animated } from 'react-native';
 import { getStyleFromProps } from '../../utils';
 import { TextFont } from '../text'
 
@@ -15,7 +15,7 @@ export default class Input extends Component {
     state = {
       _labelPositionTop: new Animated.Value(LABEL_DEFAULT_TOP),
       _labelFontSize: new Animated.Value(14)
-    }
+    };
 
     handleFocus() {
         Animated.timing(this.state._labelPositionTop, {
@@ -115,7 +115,6 @@ export default class Input extends Component {
             </View>
         );
      }
-
 
     render() {
         if (this.props.icon) return this.renderInputWithIcon();
