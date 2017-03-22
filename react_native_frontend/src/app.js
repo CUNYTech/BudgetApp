@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity, Navigator}  from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings} from './pages';
+import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile} from './pages';
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
 import {SideMenu, List, ListItem} from 'react-native-elements';
-
 const firebaseConfig= require('../firebaseconfig.json');
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export {firebaseApp};
@@ -77,15 +76,22 @@ export default class App extends Component {
                 leftIcon={{name: 'insert-chart'}}
               />
             </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.profile.bind(this)}>
+              <ListItem
+              key={6}
+              title={'Profile'}
+              leftIcon={{name: 'account-circle'}}
+              />
+            </TouchableOpacity>
             <TouchableOpacity onPress={Actions.settings.bind(this)}>
               <ListItem
-                key={6}
-                title={'Settings'}
-                leftIcon={{name: 'settings'}}
+              key={7}
+              title={'Settings'}
+              leftIcon={{name: 'settings'}}
               />
             </TouchableOpacity>
           </List>
-          <Text>
+          <Text style={{fontSize: 8}}>
             v0.0.1
           </Text>
         </View>]
@@ -130,12 +136,13 @@ export default class App extends Component {
                 <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} initial hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="login" component={Login} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="register" component={Register} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="dashboard" sceneConfig={Navigator.SceneConfigs.FloatFromRight} component={Dashboard} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="dashboard" component={Dashboard} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="friends" component={Friends} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="points" component={Points} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="settings" component={Settings} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="profile" component={Profile} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
         </Image>
       </SideMenu>
