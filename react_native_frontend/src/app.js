@@ -134,7 +134,7 @@ export default class App extends Component {
       <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
         <Image source={require('./images/background.png')} style={styles.backgroundImage}>
             <Router getSceneStyle={getScenceStyle}>
-                <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} initial hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="login" component={Login} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="register" component={Register} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="dashboard" sceneConfig={Navigator.SceneConfigs.FloatFromRight} component={Dashboard} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
@@ -142,7 +142,7 @@ export default class App extends Component {
                 <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="points" component={Points} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
-                <Scene hideNavBar key="profile" component={Profile} Firebase={firebaseApp} initial hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="profile" component={Profile} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
         </Image>
       </SideMenu>

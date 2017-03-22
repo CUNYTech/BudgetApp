@@ -96,49 +96,7 @@ export default class Points extends Component {
           </Right>
         </Card>
         <Content>
-          <ListItem>
-            <Text>+2 Pts  </Text>
-            <Right>
-              <Text>Checking In</Text>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Text>+10 Pts  </Text>
-            <Right>
-              <Text>Under Budget</Text>
-            </Right>
-          </ListItem>
-          <ListItem>
-            <Text>+5 Pts  </Text>
-            <Right>
-              <Text>New Goal</Text>
-            </Right>
-          </ListItem>
-          <Separator bordered>
-            <Text style={{fontSize: 20, textAlign: 'center'}}>Ranking</Text>
-          </Separator>
-          <ListItem icon>
-            <Left>
-              <Icon name="medal" />
-            </Left>
-            <Body>
-              <Text>Local Rank</Text>
-            </Body>
-            <Right>
-              <Text>5 th</Text>
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Icon name="medal" />
-            </Left>
-            <Body>
-              <Text>World Rank</Text>
-            </Body>
-            <Right>
-              <Text>105 th</Text>
-            </Right>
-          </ListItem>
+          
         </Content>
       </Container>
     );
