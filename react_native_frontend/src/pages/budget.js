@@ -72,8 +72,7 @@ export default class Budget extends Component {
         }
       })
     }
-    this.showAddExpense()
-
+    this.showAddExpense();
   }
 
     catch(e){
