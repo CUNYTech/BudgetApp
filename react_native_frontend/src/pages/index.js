@@ -6,9 +6,10 @@ import Friends from './friends';
 import Goals from './goals';
 import Budget from './budget';
 import Points from './points';
+import Settings from './settings';
 
 
 
 
-export { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points };
-export default { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points  };
+export { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings };
+export default { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings };
