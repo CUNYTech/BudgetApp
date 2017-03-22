@@ -34,14 +34,14 @@ export default class Friends extends Component{
 
   componentDidMount() {
     this.props.hideSideMenu();
-    this._setFriends();
+    this.setFriends();
   }
 
 
   componentWillMount(){
   }
 
-  async _setFriends(){
+  async setFriends(){
     try{
       const _this = this;
       await this.props.Firebase.auth().currentUser;
@@ -185,18 +185,16 @@ export default class Friends extends Component{
       }
     }
 
-  _addFriend (displayName, uid){
-    let _this = this
+  _addFriend(displayName, uid) {
     let ref = firebase.database().ref();
     let currentUid = firebase.auth().currentUser.uid;
     let userFriendsRef = ref.child('userReadable/userFriends');
-
 
     userFriendsRef.child(currentUid+ '/'+uid).set({
       displayName: displayName,
       uid: uid
     });
-    _this._setFriends;
+    this.setFriends();
   }
 
   showSearchBar() {
@@ -247,7 +245,7 @@ export default class Friends extends Component{
           <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent'}} />
           <Text style={{ textAlign: 'left', color: '#42a5f5', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
           <Text style={{ textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
-          <TouchableOpacity onPress={_this._addFriend.bind(this, element.displayName, element.uid)} style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
+          <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
             <Icon name='plus-circle' size={25} color='white' style={{backgroundColor: 'transparent'}}/>
           </TouchableOpacity>
         </View>
@@ -259,8 +257,8 @@ export default class Friends extends Component{
 
   render() {
     let refresh = true
-    const search = this.renderSearchResults();
-    const users = this.renderFriends();
+    const search = this.renderSearchResults.bind(this)();
+    const users = this.renderFriends.bind(this)();
 
     return (
       <View style={styles.container}>
