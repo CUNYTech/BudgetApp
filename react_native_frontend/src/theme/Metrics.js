@@ -2,7 +2,7 @@
 
 import {Dimensions, Platform} from 'react-native'
 
-const { width, height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window');
 
 
 const metrics = {
@@ -31,6 +31,6 @@ const metrics = {
     large: 60,
     logo: 300
   }
-}
+};
 
 export default metrics

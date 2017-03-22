@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { View, Text, Image, StyleSheet, Alert, Animated} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Animated} from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import * as firebase from "firebase";
@@ -20,16 +19,16 @@ export default class Login extends Component {
             statusPositionTop: new Animated.Value(1542)
         },
         errors: ''
-    }
+    };
 
 
     //User Login Authentication
     async _login(){
       try{
-          await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+          await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 
-          var user = this.props.Firebase.auth().currentUser;
-          var name, email, photoUrl, uid, emailVerified
+          let user = this.props.Firebase.auth().currentUser;
+          let name, email, photoUrl, uid, emailVerified;
 
             if (user) {
               uid = user.uid;
@@ -37,7 +36,7 @@ export default class Login extends Component {
               // No user is signed in.
             }
 
-          event_10 = '10'
+          event_10 = '10';
           _updatePoints(event_10, uid);
 
           setTimeout(() => Actions.dashboard(), 0);
@@ -46,12 +45,12 @@ export default class Login extends Component {
 
       }
       catch(error){
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        let errorCode = error.code;
+        let errorMessage = error.message;
         if(errorCode === 'auth/user-not-found') {
           this.setState({
             errors: ""
-          })
+          });
           Actions.register({errors: "Email has not been registered. Please sign up."});
         }
         else {

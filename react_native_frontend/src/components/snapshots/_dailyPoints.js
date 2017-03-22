@@ -1,11 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {
-    View, Text, Image, StyleSheet, Animated, InteractionManager, ScrollView, TouchableOpacity, TextInput, LayoutAnimation
-} from 'react-native';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { getPlatformValue } from '../../utils';
-import { Colors, Metrics, Fonts, ApplicationStyles } from '../../theme/'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { StockLine } from 'react-native-pathjs-charts'
 
 const graphData = [
@@ -43,7 +38,7 @@ const graphData = [
       "x": 10,
       "y": 88592
     }]
-  ]
+  ];
 
 
 const options = {
@@ -91,23 +86,23 @@ const options = {
       fill: 'white'
     }
   }
-}
-
-
+};
 
 export default class PointsSnapshot extends Component{
 
   constructor(){
     super();
     this.state = {
-
     };
   }
 
+    navPoints() {
+      Actions.points()
+    }
   render() {
     return (
       <View style={styles.section}>
-        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+        <TouchableOpacity onPress={this.navPoints.bind(this)} style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Text style={{textAlign: 'left',marginLeft: 10,fontFamily: 'OpenSans', fontSize: 17, color: '#424242'}}>
             DAILY POINTS
           </Text>
