@@ -15,7 +15,7 @@ TextFont.defaultProps = {
     fontFamily: 'Arial',
     fontWeight: '400',
     color: '#ffffff'
-}
+};
 
 TextFont.propTypes = {
     fontFamily: PropTypes.string,
@@ -23,5 +23,5 @@ TextFont.propTypes = {
     fontSize: PropTypes.number,
     marginTop: PropTypes.number,
     color: PropTypes.string
-}
+};
 

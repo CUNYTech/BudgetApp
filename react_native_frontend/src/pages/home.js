@@ -33,7 +33,7 @@ export default class Home extends Component {
                 toValue: 0,
                 duration: 700
             }
-        )
+        );
         Animated.sequence([
             Animated.delay(20),
             Animated.parallel([

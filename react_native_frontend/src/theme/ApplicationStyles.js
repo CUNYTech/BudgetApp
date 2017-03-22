@@ -69,7 +69,7 @@ const ApplicationStyles = {
     alignItems: 'center',
     textAlign: 'center'
   }
-}
+};
 
 
 export default ApplicationStyles
