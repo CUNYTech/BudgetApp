@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity, Navigator}  from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points} from './pages';
+import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings} from './pages';
 import {pointHelpers} from './utils/pointHelpers';
 import * as firebase from "firebase";
 import {SideMenu, List, ListItem} from 'react-native-elements';
@@ -77,11 +77,11 @@ export default class App extends Component {
                 leftIcon={{name: 'insert-chart'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
+            <TouchableOpacity onPress={Actions.settings.bind(this)}>
               <ListItem
-              key={6}
-              title={'Settings'}
-              leftIcon={{name: 'settings'}}
+                key={6}
+                title={'Settings'}
+                leftIcon={{name: 'settings'}}
               />
             </TouchableOpacity>
           </List>
@@ -135,6 +135,7 @@ export default class App extends Component {
                 <Scene hideNavBar key="goals" component={Goals} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="budget" component={Budget} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="points" component={Points} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
+                <Scene hideNavBar key="settings" component={Settings} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
         </Image>
       </SideMenu>
