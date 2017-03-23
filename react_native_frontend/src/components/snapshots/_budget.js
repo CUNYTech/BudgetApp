@@ -287,7 +287,7 @@ export default class BudgetSnapshot extends Component{
         BUDGET
       </Text>
       <View style={{ backgroundColor: 'white', height: 16, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0'}}>
-          <View style={{flex: 1, backgroundColor: '#a5d6a7', width: this.state.budgetTracker.margin }}></View>
+          <View style={{flex: 1, backgroundColor: '#0d47a1', width: this.state.budgetTracker.margin }}></View>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5}}>
         <Text style={{color:'#424242',marginLeft: this.state.budgetTracker.margin}}>
@@ -298,10 +298,10 @@ export default class BudgetSnapshot extends Component{
         </Text>
       </View>
       <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
-        <Icon name="plus-circle" size={50} color="#a5d6a7" style={{bottom: 0, backgroundColor: 'white'}}/>
+        <Icon name="plus-circle" size={50} color="#0d47a1" style={{bottom: 0, backgroundColor: 'white'}}/>
       </TouchableOpacity>
       <TouchableOpacity style={{position: 'absolute', bottom:3}} activeOpacity={.7} onPress={this.showAddBudget.bind(this)}>
-        <Icon name="pie-chart" size={40} color="#a5d6a7" style={{backgroundColor: 'transparent', marginLeft: 10}}/>
+        <Icon name="pie-chart" size={40} color="#0d47a1" style={{backgroundColor: 'transparent', marginLeft: 10}}/>
       </TouchableOpacity>
       <View style={{
         position: 'absolute',

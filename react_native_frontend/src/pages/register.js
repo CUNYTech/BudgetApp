@@ -66,7 +66,7 @@ export default class Register extends Component {
         //Create UID nodes in DB
         // let searchIndexRef = ref.child('people');
         let userPointsRef = ref.child('userReadable/userPoints').child(uid);
-        let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+        // let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
         let userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
         let userBudgetRef = ref.child('userReadable/userBudget').child(uid);
         let peopleRef = ref.child('/people');
@@ -76,10 +76,10 @@ export default class Register extends Component {
           points:''
         }),0);
 
-        setTimeout(()=> userFriendsRef.set({
-          displayName: this.state.username,
-          friends:''
-        }),0);
+        // setTimeout(()=> userFriendsRef.set({
+        //   displayName: this.state.username,
+        //   friends:''
+        // }),0);
 
         setTimeout(()=> userTotalExpensesRef.set({
           displayName: this.state.username,

@@ -35,6 +35,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.toggleSideMenu();
     this.setState({
       list: [<View style={
           {flex: 1,
@@ -90,9 +91,16 @@ export default class App extends Component {
               leftIcon={{name: 'settings'}}
               />
             </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.home.bind(this)}>
+              <ListItem
+              key={8}
+              title={'Logout'}
+              leftIcon={{name: 'close'}}
+              />
+            </TouchableOpacity>
           </List>
           <Text style={{fontSize: 8}}>
-            v0.0.1
+            v0.0.2
           </Text>
         </View>]
     })
@@ -131,7 +139,7 @@ export default class App extends Component {
 
     return (
       <SideMenu isOpen={this.state.isOpen} menu={Menu} disableGestures={this.state.show}>
-        <Image source={require('./images/background.png')} style={styles.backgroundImage}>
+        <View style={styles.backgroundImage}>
             <Router getSceneStyle={getScenceStyle}>
                 <Scene hideNavBar key="home" component={Home} Firebase={firebaseApp} initial hideSideMenu={this.deactivateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="login" component={Login} Firebase={firebaseApp} hideSideMenu={this.deactivateSideMenu.bind(this)}/>
@@ -144,7 +152,7 @@ export default class App extends Component {
                 <Scene hideNavBar key="settings" component={Settings} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
                 <Scene hideNavBar key="profile" component={Profile} Firebase={firebaseApp} hideSideMenu={this.hideSideMenu.bind(this)} sideMenu={this.toggleSideMenu.bind(this)} showSideMenu={this.activateSideMenu.bind(this)}/>
             </Router>
-        </Image>
+        </View>
       </SideMenu>
     );
   }
@@ -155,7 +163,7 @@ styles = StyleSheet.create ({
     flex: 1,
     height: null,
     width: null,
-    backgroundColor: 'white'
+    backgroundColor: '#2196f3'
 
   }
 });

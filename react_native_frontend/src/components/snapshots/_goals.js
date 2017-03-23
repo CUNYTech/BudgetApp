@@ -28,7 +28,7 @@ export default class GoalsSnapshot extends Component{
             { element }
           </Text>
           <View style={styles.goal} >
-            <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
+            <View style={{flex: 1, backgroundColor: '#0d47a1', borderRadius: 0, width: 100}}></View>
           </View>
         </View>
       );

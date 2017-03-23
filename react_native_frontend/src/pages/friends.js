@@ -195,6 +195,8 @@ export default class Friends extends Component{
       uid: uid
     });
     this.setFriends();
+    this.showSearchBar();
+
   }
 
   showSearchBar() {
@@ -226,7 +228,7 @@ export default class Friends extends Component{
           <Text style={{flex: 2, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
           <View style={{flex: 1}}>
             <Text style={{flex: 1, textAlign: 'right', color: '#424242'}} >200pts</Text>
-            <Text style={{flex: 1, textAlign: 'right', color: '#a5d6a7'}} >Level 1</Text>
+            <Text style={{flex: 1, textAlign: 'right', color: '#0d47a1'}} >Level 1</Text>
           </View>
         </TouchableOpacity>
       )
@@ -243,7 +245,7 @@ export default class Friends extends Component{
       search.push(
         <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
           <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent'}} />
-          <Text style={{ textAlign: 'left', color: '#42a5f5', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
+          <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
           <Text style={{ textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
           <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
             <Icon name='plus-circle' size={25} color='white' style={{backgroundColor: 'transparent'}}/>
