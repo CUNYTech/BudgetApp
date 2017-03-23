@@ -13,4 +13,4 @@ import Profile from './profile';
 
 
 export { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile };
-export default { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile  };
+export default { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile };
