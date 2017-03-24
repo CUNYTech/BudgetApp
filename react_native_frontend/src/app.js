@@ -35,7 +35,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.toggleSideMenu();
     this.setState({
       list: [<View style={
           {flex: 1,
@@ -91,7 +90,7 @@ export default class App extends Component {
               leftIcon={{name: 'settings'}}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.home.bind(this)}>
+            <TouchableOpacity onPress={this.logout.bind(this)}>
               <ListItem
               key={8}
               title={'Logout'}
@@ -104,6 +103,11 @@ export default class App extends Component {
           </Text>
         </View>]
     })
+  }
+
+  logout() {
+    Actions.home();
+    this.toggleSideMenu();
   }
 
   toggleSideMenu () {
