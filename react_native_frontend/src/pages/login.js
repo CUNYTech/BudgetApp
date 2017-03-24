@@ -54,6 +54,8 @@ export default class Login extends Component {
           Actions.register({errors: "Email has not been registered. Please sign up."});
         }
         else {
+          console.log(errorCode)
+          console.log(errorMessage)
           this.setState({
             errors: "Invalid email or password"
           })
