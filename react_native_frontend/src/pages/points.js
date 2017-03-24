@@ -78,7 +78,7 @@ export default class Points extends Component {
           </Separator>
           <ListItem icon>
             <Left>
-              <Icon name="medal" />
+              <Icon name="certificate" />
             </Left>
             <Body>
               <Text>Local Rank</Text>
@@ -89,7 +89,7 @@ export default class Points extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon name="medal" />
+              <Icon name="certificate" />
             </Left>
             <Body>
               <Text>World Rank</Text>

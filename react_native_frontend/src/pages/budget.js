@@ -116,7 +116,7 @@ render() {
         <Icon name="diamond" size={20} color="pink" />
       </View>
         <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this.showAddExpense.bind(this)}>
-          <Icon name="plus-circle" size={50} color="#a5d6a7" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
+          <Icon name="plus-circle" size={50} color="#0d47a1" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
         </TouchableOpacity>
       </View>
      )

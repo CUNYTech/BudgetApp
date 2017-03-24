@@ -1,9 +1,9 @@
 import React, {Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { BackgroundWrapper } from '../components';
+import { BackgroundWrapper } from '../../components';
 import { Container, Content, Text, Left, transparent, Right, Body, ListItem, Switch, Badge, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getPlatformValue } from '../utils';
+import { getPlatformValue } from '../../utils';
 
 
 export default class AccountSettings extends Component {
@@ -78,4 +78,3 @@ const styles = StyleSheet.create({
         borderColor: '#424242'
     },
 });
-

@@ -104,7 +104,7 @@ export default class Goals extends Component{
            { element.goal }
          </Text>
          <View style={styles.goal} >
-         <View style={{flex: 1, backgroundColor: '#a5d6a7', borderRadius: 0, width: 100}}></View>
+         <View style={{flex: 1, backgroundColor: '#0d47a1', borderRadius: 0, width: 100}}></View>
      </View>
    </View>
      );
@@ -138,7 +138,7 @@ export default class Goals extends Component{
               { goals }
             </TouchableOpacity>
             <TouchableOpacity style={styles.addExpense} activeOpacity={.7} onPress={this._showAddGoal.bind(this)}>
-              <Icon name="plus-circle" size={50} color="#a5d6a7" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
+              <Icon name="plus-circle" size={50} color="#0d47a1" style={{backgroundColor: 'white', overflow: 'hidden', borderRadius: 20}}/>
             </TouchableOpacity>
             <View style={{
               position: 'absolute',
