@@ -8,8 +8,8 @@ import { getPlatformValue } from '../utils';
 
 export default class Points extends Component {
 
-  componentDidMount(){
-    this.props.hideSideMenu()
+  componentDidMount() {
+
   }
 
   render() {
@@ -96,7 +96,7 @@ export default class Points extends Component {
           </Right>
         </Card>
         <Content>
-          
+
         </Content>
       </Container>
     );

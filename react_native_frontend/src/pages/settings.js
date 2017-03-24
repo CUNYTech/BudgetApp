@@ -10,9 +10,9 @@ import AccountSettings from "./settings-pages/accountsettings";
 
 export default class Settings extends Component {
 
-    componentDidMount(){
-        this.props.hideSideMenu()
-    }
+  componentDidMount() {
+
+  }
 
     render() {
         return (
@@ -42,7 +42,7 @@ export default class Settings extends Component {
                         <Text>General</Text>
                     </ListItem>
                   <ListItem icon>
-                     <TouchableOpacity onPress={Actions.AccountSettings()}>
+                     <TouchableOpacity>
                          <Left>
                           <Icon name="user-circle-o" />
                       </Left>

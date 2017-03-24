@@ -46,7 +46,6 @@ export default class Goals extends Component{
 
      componentDidMount(){
        this._setGoals();
-       this.props.hideSideMenu()
      }
 
   _setGoals(){

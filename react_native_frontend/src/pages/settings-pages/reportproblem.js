@@ -9,7 +9,7 @@ import { getPlatformValue } from '../utils';
 export default class ReportProblem extends Component {
 
     componentDidMount(){
-        this.props.hideSideMenu()
+        this.props.sideMenu()
     }
 
     render() {

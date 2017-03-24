@@ -8,8 +8,8 @@ import { getPlatformValue } from '../utils';
 
 export default class Points extends Component {
 
-  componentDidMount(){
-    this.props.hideSideMenu()
+  componentDidMount() {
+
   }
 
   render() {

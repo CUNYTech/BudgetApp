@@ -25,7 +25,7 @@ export default class Budget extends Component {
   }
 
   componentDidMount() {
-    this.props.hideSideMenu()
+
   }
 
 

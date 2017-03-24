@@ -33,12 +33,7 @@ export default class Friends extends Component{
 
 
   componentDidMount() {
-    this.props.hideSideMenu();
     this.setFriends();
-  }
-
-
-  componentWillMount(){
   }
 
   async setFriends(){

@@ -22,10 +22,10 @@ export default class Dashboard extends Component{
     this.state = {
 
     };
-
   }
+
   componentDidMount() {
-    this.props.hideSideMenu()
+
   }
 
  render() {

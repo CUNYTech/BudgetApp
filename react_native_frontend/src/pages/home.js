@@ -14,7 +14,7 @@ export default class Home extends Component {
     };
 
     componentWillMount() {
-      // this.props.hideSideMenu();
+      // this.props.sideMenu();
     }
 
     handePressSignIn() {
