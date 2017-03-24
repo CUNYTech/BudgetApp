@@ -35,68 +35,34 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    const menuDesc = [
+      { id: 1, title: 'Dashboard', icon: 'apps', nav: Actions.dashboard.bind(this) },
+      { id: 2, title: 'Daily Points', icon: 'timeline', nav: Actions.points.bind(this) },
+      { id: 3, title: 'Friends', icon: 'people', nav: Actions.friends.bind(this)},
+      { id: 4, title: 'Goals', icon: 'stars', nav: Actions.goals.bind(this) },
+      { id: 5, title: 'Budget', icon: 'insert-chart', nav: Actions.budget.bind(this) },
+      { id: 6, title: 'Profile', icon: 'account-circle', nav: Actions.profile.bind(this) },
+      { id: 7, title: 'Settings', icon: 'settings', nav: Actions.settings.bind(this) },
+      { id: 8, title: 'Logout', icon: 'close', nav: Actions.home.bind(this) }
+    ]
+    const menuItems = menuDesc.map(function(item) {
+      return (<TouchableOpacity onPress={item.nav}>
+                <ListItem
+                  key={item.id}
+                  title={item.title}
+                  leftIcon={{name: item.icon}}
+                />
+              </TouchableOpacity>);
+    })
+
     this.setState({
-      list: [<View style={
-          {flex: 1,
-          backgroundColor: 'white',
-          paddingTop: 40}}>
+      list: [<View style={{
+                flex: 1,
+                backgroundColor: 'white',
+                paddingTop: 40
+              }}>
           <List>
-            <TouchableOpacity onPress={Actions.dashboard.bind(this)}>
-            <ListItem
-                key={1}
-                title={'Dashboard'}
-                leftIcon={{name: 'apps'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.points.bind(this)}>
-              <ListItem
-                key={2}
-                title={'Daily Points'}
-                leftIcon={{name: 'timeline'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.friends.bind(this)}>
-              <ListItem
-                key={3}
-                title={'Friends'}
-                leftIcon={{name: 'people'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.goals.bind(this)}>
-              <ListItem
-                key={4}
-                title={'Goals'}
-                leftIcon={{name: 'stars'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.budget.bind(this)}>
-              <ListItem
-                key={5}
-                title={'Budget'}
-                leftIcon={{name: 'insert-chart'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.profile.bind(this)}>
-              <ListItem
-              key={6}
-              title={'Profile'}
-              leftIcon={{name: 'account-circle'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Actions.settings.bind(this)}>
-              <ListItem
-              key={7}
-              title={'Settings'}
-              leftIcon={{name: 'settings'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.logout.bind(this)}>
-              <ListItem
-              key={8}
-              title={'Logout'}
-              leftIcon={{name: 'close'}}
-              />
-            </TouchableOpacity>
+            { menuItems }
           </List>
           <Text style={{fontSize: 8}}>
             v0.0.2
