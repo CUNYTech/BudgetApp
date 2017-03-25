@@ -1,6 +1,5 @@
-import AppRouter from './appSideMenu';
-import AppSideMenu from './appRouter';
-
+import AppRouter from './appRouter';
+import AppSideMenu from './appSideMenu';
 
 export { AppSideMenu, AppRouter };
 export default { AppSideMenu, AppRouter };
