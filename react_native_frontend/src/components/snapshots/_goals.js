@@ -2,66 +2,65 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-export default class GoalsSnapshot extends Component{
+export default class GoalsSnapshot extends Component {
 
-  constructor(){
+  constructor() {
     super();
-    this.state = { goal:'',
-    amount: 0,
-    goals:[]
+    this.state = { goal: '',
+      amount: 0,
+      goals: [],
     };
   }
 
-  handlePress(){
-    Actions.goals()
+  handlePress() {
+    Actions.goals();
   }
 
   render() {
-
     let i = 1;
     const goals = [];
     const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"];
-    myGoals.forEach(function(element) {
+    myGoals.forEach((element) => {
       goals.push(
-        <View key={i} style={{marginTop: 5}}>
-          <Text style={{backgroundColor: 'transparent', position: 'absolute', width: 335, textAlign: 'center', fontSize: 15, color: '#424242'}}>
+        <View key={i} style={{ marginTop: 5 }}>
+          <Text style={{ backgroundColor: 'transparent', position: 'absolute', width: 335, textAlign: 'center', fontSize: 15, color: '#424242' }}>
             { element }
           </Text>
           <View style={styles.goal} >
-            <View style={{flex: 1, backgroundColor: '#0d47a1', borderRadius: 0, width: 100}}></View>
+            <View style={{ flex: 1, backgroundColor: '#0d47a1', borderRadius: 0, width: 100 }} />
           </View>
-        </View>
+        </View>,
       );
-      i+=1
+      i += 1;
     });
     return (
       <TouchableOpacity style={styles.section} onPress={this.handlePress.bind(this)}>
-        <Text style={{marginLeft: 6,fontFamily: 'OpenSans', fontSize: 17, color: '#424242', marginBottom: 10}}>
+        <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#424242', marginBottom: 10 }}>
           GOALS
         </Text>
         { goals }
       </TouchableOpacity>
-    )
+    );
   }
 }
 
- const styles = StyleSheet.create({
-   section: {
-       flex: 1,
-       borderColor: '#e0e0e0',
-       marginTop: 2,
-       borderBottomWidth: 1,
-       backgroundColor: 'white',
-       marginBottom: 1
-   },
-   goal: {
-     height: 20,
-     marginRight: 20,
-     marginLeft: 20,
-     marginTop: 20,
-     borderWidth: 1,
-     borderColor: '#e0e0e0',
-     borderRadius: 0,
-     backgroundColor: 'white'
-   }
- });
+const styles = StyleSheet.create({
+  section: {
+    flex: 1,
+    borderColor: '#e0e0e0',
+    marginTop: 2,
+    borderBottomWidth: 1,
+    backgroundColor: 'white',
+    marginBottom: 1,
+  },
+  goal: {
+    height: 20,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 0,
+    backgroundColor: 'white',
+  },
+});

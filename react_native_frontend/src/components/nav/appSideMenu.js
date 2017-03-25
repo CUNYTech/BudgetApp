@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity }  from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 
 export default class AppSideMenu extends Component {
 
-  handleNavPress(action){
+  handleNavPress(action) {
     action();
     this.props.toggleSideMenu();
   }
@@ -20,27 +20,26 @@ export default class AppSideMenu extends Component {
       { id: 5, title: 'Budget', icon: 'insert-chart', nav: this.handleNavPress.bind(this, Actions.budget) },
       { id: 6, title: 'Profile', icon: 'account-circle', nav: this.handleNavPress.bind(this, Actions.profile) },
       { id: 7, title: 'Settings', icon: 'settings', nav: this.handleNavPress.bind(this, Actions.settings) },
-      { id: 8, title: 'Logout', icon: 'close', nav: this.handleNavPress.bind(this, Actions.home) }
-    ]
+      { id: 8, title: 'Logout', icon: 'close', nav: this.handleNavPress.bind(this, Actions.home) },
+    ];
 
-    const menuItems = menuDesc.map(function(item) {
-      return (<TouchableOpacity key={item.id} onPress={item.nav}>
-                <ListItem
-                  title={item.title}
-                  leftIcon={{name: item.icon}}
-                />
-              </TouchableOpacity>);
-    })
-    return menuItems
+    const menuItems = menuDesc.map(item => (
+      <TouchableOpacity key={item.id} onPress={item.nav}>
+        <ListItem
+          title={item.title}
+          leftIcon={{ name: item.icon }}
+        />
+      </TouchableOpacity>));
+    return menuItems;
   }
 
-  render(){
+  render() {
     const sideMenuItems = this.renderMenuItems();
 
     return (
-        <List>
-          { sideMenuItems }
-        </List>
+      <List>
+        { sideMenuItems }
+      </List>
     );
   }
 }

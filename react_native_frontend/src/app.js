@@ -5,8 +5,8 @@ import { SideMenu } from 'react-native-elements';
 import { AppSideMenu, AppRouter } from './components';
 
 const firebaseConfig = require('../firebaseconfig.json');
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export { firebaseApp };
 
@@ -51,7 +51,7 @@ export default class App extends Component {
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     height: null,

@@ -13,10 +13,6 @@ export default class Home extends Component {
         statusPositionTop: new Animated.Value(1200)
     };
 
-    componentWillMount() {
-      // this.props.sideMenu();
-    }
-
     handePressSignIn() {
         Actions.login();
     }

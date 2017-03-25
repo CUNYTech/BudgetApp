@@ -9,223 +9,230 @@ import { getPlatformValue } from '../utils';
 // const itemsRef = rootRef.child('items');
 
 export default class Register extends Component {
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        animation: {
-            headerPositionTop: new Animated.Value(-148),
-            formPositionLeft: new Animated.Value(614),
-            buttonPositionTop: new Animated.Value(1354)
-        },
-        errors: ''
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+      animation: {
+        headerPositionTop: new Animated.Value(-148),
+        formPositionLeft: new Animated.Value(614),
+        buttonPositionTop: new Animated.Value(1354),
+      },
+      errors: '',
     };
+  }
 
 
     // Add new user to Firebase DB
-    async _register(){
-    try{
-        await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+  async _register() {
+    try {
+      await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
-        let user = this.props.Firebase.auth().currentUser;
-        let ref = this.props.Firebase.database().ref();
-        let userRef = ref.child('users/');
+      const user = this.props.Firebase.auth().currentUser;
+      const ref = this.props.Firebase.database().ref();
+      const userRef = ref.child('users/');
 
-        user.updateProfile({
-          displayName: this.state.username,
-        });
-        this._load(user);
-        Actions.dashboard()
-
-    }
-    catch(error){
-      let errorCode = error.code;
-      let errorMessage = error.message;
+      user.updateProfile({
+        displayName: this.state.username,
+      });
+      this._load(user);
+      Actions.dashboard();
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
       if (errorCode === 'auth/email-already-in-use') {
         this.setState({
-          errors: 'Email is already in use.'
-        })
+          errors: 'Email is already in use.',
+        });
       }
         // Handle exceptions
     }
-    };
+  }
 
-    _load(user){
-        let ref = this.props.Firebase.database().ref();
+  _load(user) {
+    const ref = this.props.Firebase.database().ref();
 
-        //Pull user profile
-        let name, email, photoUrl, uid, emailVerified;
+        // Pull user profile
+    let name,
+      email,
+      photoUrl,
+      uid,
+      emailVerified;
 
-        if (user != null) {
-          name = user.displayName;
-          email = user.email;
-          photoUrl = user.photoURL;
-          emailVerified = user.emailVerified;
-          uid = user.uid;
-        }
-        //Create UID nodes in DB
+    if (user != null) {
+      name = user.displayName;
+      email = user.email;
+      photoUrl = user.photoURL;
+      emailVerified = user.emailVerified;
+      uid = user.uid;
+    }
+        // Create UID nodes in DB
         // let searchIndexRef = ref.child('people');
-        let userPointsRef = ref.child('userReadable/userPoints').child(uid);
+    const userPointsRef = ref.child('userReadable/userPoints').child(uid);
         // let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-        let userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-        let userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-        let peopleRef = ref.child('/people');
+    const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+    const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+    const peopleRef = ref.child('/people');
 
-        setTimeout(()=> userPointsRef.set({
-          displayName: this.state.username,
-          points:''
-        }),0);
+    setTimeout(() => userPointsRef.set({
+      displayName: this.state.username,
+      points: '',
+    }), 0);
 
         // setTimeout(()=> userFriendsRef.set({
         //   displayName: this.state.username,
         //   friends:''
         // }),0);
 
-        setTimeout(()=> userTotalExpensesRef.set({
-          displayName: this.state.username,
-          expenses: 0,
-        }),0);
+    setTimeout(() => userTotalExpensesRef.set({
+      displayName: this.state.username,
+      expenses: 0,
+    }), 0);
 
-        setTimeout(()=> userBudgetRef.set({
-          displayName: this.state.username,
-          budget: 0,
-        }),0);
+    setTimeout(() => userBudgetRef.set({
+      displayName: this.state.username,
+      budget: 0,
+    }), 0);
 
-        setTimeout(()=> peopleRef.child(this.state.username).set({
-          displayName: this.state.username,
-          uid: uid,
-        }),0);
-
-
-    }
+    setTimeout(() => peopleRef.child(this.state.username).set({
+      displayName: this.state.username,
+      uid,
+    }), 0);
+  }
 
 
-    componentDidMount() {
-        Animated.timing(this.state.animation.headerPositionTop, {
-            toValue: 0,
-            duration: 725,
-            delay: 100
-        }).start();
-        Animated.timing(this.state.animation.formPositionLeft, {
-            toValue: 0,
-            duration: 700,
-            delay: 120
-        }).start();
-        Animated.timing(this.state.animation.buttonPositionTop, {
-            toValue: 0,
-            duration: 600,
-            delay: 130
-        }).start();
-    }
+  componentDidMount() {
+    Animated.timing(this.state.animation.headerPositionTop, {
+      toValue: 0,
+      duration: 725,
+      delay: 100,
+    }).start();
+    Animated.timing(this.state.animation.formPositionLeft, {
+      toValue: 0,
+      duration: 700,
+      delay: 120,
+    }).start();
+    Animated.timing(this.state.animation.buttonPositionTop, {
+      toValue: 0,
+      duration: 600,
+      delay: 130,
+    }).start();
+  }
 
-    handleChangeInput(stateName, text) {
-        this.setState({
-            [stateName]: text
-        });
-    }
+  handleChangeInput(stateName, text) {
+    this.setState({
+      [stateName]: text,
+    });
+  }
 
-    unmountComponent(callback) {
-        const timing = Animated.timing;
-        Animated.parallel([
-            timing(this.state.animation.headerPositionTop, {
-                toValue: -148,
-                duration: 400,
-                delay: 100
-            }),
-            timing(this.state.animation.formPositionLeft, {
-                toValue: 614,
-                duration: 500,
-                delay: 120
-            }),
-            timing(this.state.animation.buttonPositionTop, {
-                toValue: 1354,
-                duration: 400,
-                delay: 130
-            })
-        ]).start(callback);
-    }
+  unmountComponent(callback) {
+    const timing = Animated.timing;
+    Animated.parallel([
+      timing(this.state.animation.headerPositionTop, {
+        toValue: -148,
+        duration: 400,
+        delay: 100,
+      }),
+      timing(this.state.animation.formPositionLeft, {
+        toValue: 614,
+        duration: 500,
+        delay: 120,
+      }),
+      timing(this.state.animation.buttonPositionTop, {
+        toValue: 1354,
+        duration: 400,
+        delay: 130,
+      }),
+    ]).start(callback);
+  }
 
-    handleBack() {
-        this.unmountComponent(() => {
-            Actions.pop();
-        });
-    }
+  handleBack() {
+    this.unmountComponent(() => {
+      Actions.pop();
+    });
+  }
 
-    handleLogin() {
-        this.unmountComponent(() => {
-            Actions.login();
-        });
-    }
+  handleLogin() {
+    this.unmountComponent(() => {
+      Actions.login();
+    });
+  }
 
-    render() {
-      const {errors} = this.props;
-        return (
-          <View style={loginStyle.container}>
-            <BackButton
-              transparent iconLeft="arrow-left-circle"
-              onPressIcon={this.handleBack.bind(this)}
-            />
-            <View style={loginStyle.loginContainer}>
-              <Animated.View style={{position: 'relative', top: this.state.animation.headerPositionTop}}>
-                <Heading color="#ffffff" textAlign="center">
-                  {/* {'Sign up'} */}
-                </Heading>
-              </Animated.View>
-              <Logo marginTop={25}/>
-                <View style={loginStyle.formContainer}>
-                <Animated.View style={{position: 'relative', left: this.state.animation.formPositionLeft}}>
-                  <Text style={{color: 'red', fontSize: 12}}>{this.state.errors}</Text>
-                  <Input label="Username"
-                    autoCorrect = {false}
-                    value={this.state.username}
-                    onChange={this.handleChangeInput.bind(this, 'username')}
-                  />
-                  <Input label="Email"
-                    autoCorrect = {false}
-                    value={this.state.email}
-                    marginTop={23}
-                    onChange={this.handleChangeInput.bind(this, 'email')}
-                  />
-                  <Input label="Password"
-                    autoCorrect = {false}
-                    value={this.state.password}
-                    marginTop={23}
-                    onChange={this.handleChangeInput.bind(this, 'password')}
-                    secureTextEntry
-                  />
-                </Animated.View>
-                <Animated.View style={{position: 'relative', top: this.state.animation.buttonPositionTop}}>
-                  <Button marginTop={getPlatformValue('android',25, 38)} width={200} onPress={this._register.bind(this)}>
+  render() {
+    const { errors } = this.props;
+    return (
+      <View style={loginStyle.container}>
+        <BackButton
+          transparent iconLeft="arrow-left-circle"
+          onPressIcon={this.handleBack.bind(this)}
+        />
+        <View style={loginStyle.loginContainer}>
+          <Animated.View style={{ position: 'relative', top: this.state.animation.headerPositionTop }}>
+            <Heading color="#ffffff" textAlign="center">
+              {/* {'Sign up'} */}
+            </Heading>
+          </Animated.View>
+          <Logo marginTop={25} />
+          <View style={loginStyle.formContainer}>
+            <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
+              <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>
+              <Input
+                label="Username"
+                autoCorrect={false}
+                value={this.state.username}
+                onChange={this.handleChangeInput.bind(this, 'username')}
+              />
+              <Input
+                label="Email"
+                autoCorrect={false}
+                value={this.state.email}
+                marginTop={23}
+                onChange={this.handleChangeInput.bind(this, 'email')}
+              />
+              <Input
+                label="Password"
+                autoCorrect={false}
+                value={this.state.password}
+                marginTop={23}
+                onChange={this.handleChangeInput.bind(this, 'password')}
+                secureTextEntry
+              />
+            </Animated.View>
+            <Animated.View style={{ position: 'relative', top: this.state.animation.buttonPositionTop }}>
+              <Button marginTop={getPlatformValue('android', 25, 38)} width={200} onPress={this._register.bind(this)}>
                     Create
                   </Button>
-                </Animated.View>
-              </View>
-            </View>
-            <AlertStatus style={{fontFamily:'OpenSans'}}
-              textHelper="Have an account? "
-              textAction="Login"
-              onPressAction={this.handleLogin.bind(this)}
-            />
+            </Animated.View>
           </View>
-        );
-    }
+        </View>
+        <AlertStatus
+          style={{ fontFamily: 'OpenSans' }}
+          textHelper="Have an account? "
+          textAction="Login"
+          onPressAction={this.handleLogin.bind(this)}
+        />
+      </View>
+    );
+  }
 }
 
 const loginStyle = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: 'transparent',
-    },
-    loginContainer: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        paddingTop: getPlatformValue('android', 10, 30),
-    },
-    formContainer: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: getPlatformValue('android', 5, 34),
-        backgroundColor: 'transparent'
-    }
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  loginContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    paddingTop: getPlatformValue('android', 10, 30),
+  },
+  formContainer: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginTop: getPlatformValue('android', 5, 34),
+    backgroundColor: 'transparent',
+  },
 });

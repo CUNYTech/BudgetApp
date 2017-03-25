@@ -2,9 +2,9 @@ import Heading from './heading';
 import TextFont from './TextFont';
 
 export {
-    Heading, TextFont
-}
+    Heading, TextFont,
+};
 
 export default {
-    Heading, TextFont
-}
+  Heading, TextFont,
+};
