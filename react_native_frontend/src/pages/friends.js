@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { View, Alert ,Text, StyleSheet, ScrollView, TouchableOpacity,
-    TextInput, LayoutAnimation, Platform } from 'react-native';
-import { BackgroundWrapper } from '../components';
-import { getPlatformValue } from '../utils';
+import { View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
+import { getPlatformValue } from '../utils';
 
-let CustomLayoutAnimation = {
+const CustomLayoutAnimation = {
   duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
@@ -17,9 +15,9 @@ let CustomLayoutAnimation = {
   },
 };
 
-export default class Friends extends Component{
+export default class Friends extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
       friends: [],
@@ -27,104 +25,96 @@ export default class Friends extends Component{
       addFriendOffset: -200,
       searchBarOffset: 0,
       searchBarOffsetWrapper: 0,
-      searchResults: []
+      searchResults: [],
     };
   }
 
 
   componentDidMount() {
-    this.props.hideSideMenu();
     this.setFriends();
   }
 
-
-  componentWillMount(){
-  }
-
-  async setFriends(){
-    try{
+  async setFriends() {
+    try {
       const _this = this;
       await this.props.Firebase.auth().currentUser;
 
-      let uid =  this.props.Firebase.auth().currentUser.uid;
-      let ref = this.props.Firebase.database().ref();
-      let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-      userFriendsRef.orderByKey().once('value').then(function(snap){
-        let friendList = [];
-        snap.forEach(function(snapshot){
-          friendList.push({'displayName': snapshot.val().displayName, 'uid': snapshot.val().uid })
+      const uid = this.props.Firebase.auth().currentUser.uid;
+      const ref = this.props.Firebase.database().ref();
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
         });
-        return friendList
-      }).then(function(value){
-        if((value.length > 0) ){
+        return friendList;
+      }).then((value) => {
+        if ((value.length > 0)) {
           _this.setState({
-            friends: value
-          })
+            friends: value,
+          });
         } else {
           Alert.alert('Please add some friends!');
           _this.setState({
-            friends: []
-          })
+            friends: [],
+          });
         }
-      })
-    }
-    catch(e){
-      console.log(error);
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 
 
   async _updateFriends() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
 
-    try{
-      let ref = this.props.Firebase.database().ref();
-      let user = this.props.Firebase.auth().currentUser;
-      let uid = user.uid;
-      let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      const newFriend = this.state.friendsChange;
+      const newFriends = [...this.state.friends, newFriend];
 
-      let newFriend = this.state.friendsChange;
-      let newFriends = [...this.state.friends, newFriend];
-
-      let _this = this;
+      const _this = this;
 
       if (newFriends.length > 0) {
         // let curentUser = this.props.Firebase.database().ref().child(uid);
         userFriendsRef.update({ friends: newFriends });
-        userFriendsRef.once('value').then(function(snap){
-          let updatedValue = snap.val().friends;
-          return updatedValue
-        }).then(function(value){
+        userFriendsRef.once('value').then((snap) => {
+          const updatedValue = snap.val().friends;
+          return updatedValue;
+        }).then((value) => {
           LayoutAnimation.configureNext(CustomLayoutAnimation);
           _this.setState({
-            friends: value
-          })
-        })
+            friends: value,
+          });
+        });
       }
-    }
-    catch(e){
+    } catch (e) {
       console.log(e);
     }
-    this.showAddFriend()
+    this.showAddFriend();
   }
 
   _buttonAddFriend() {
-    this.showAddFriend()
+    this.showAddFriend();
   }
 
   showAddFriend() {
-    let offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addFriendOffset == -200) {
-      this.setState({ addFriendOffset: offSet }) //Set to 0 for android
+    if (this.state.addFriendOffset === -200) {
+      this.setState({ addFriendOffset: offSet }); // Set to 0 for android
     } else {
       this.setState({
         addFriendOffset: -200,
-        friendChange: ''
-      })
+        friendChange: '',
+      });
     }
   }
 
-//USERS FRIENDS TO BE RENDERED ON PAGE WILL BE QUERY OF THE SORT BELOW
+// USERS FRIENDS TO BE RENDERED ON PAGE WILL BE QUERY OF THE SORT BELOW
 
 // let payload=[];  // RESULT OF SEARCH INDEX or USERS FRIENDS TO BE THROWN TO RENDER
 
@@ -146,119 +136,120 @@ export default class Friends extends Component{
 
   _searchUsers(searchString) {
     console.log(searchString);
-    let ref = firebase.database().ref('/people');
-    let userRef = ref.child('userPoints');
-    let userFriends = ref.child('userFriends');
-    let peopleRef = ref.child('/people');
-    let people = [];
-    let _this = this;
+    const ref = firebase.database().ref('/people');
+    const userRef = ref.child('userPoints');
+    const userFriends = ref.child('userFriends');
+    const peopleRef = ref.child('/people');
+    const people = [];
+    const _this = this;
 
-    if (searchString == '') {
+    if (searchString === '') {
       this.setState({
-        searchResults: []
-      })
+        searchResults: [],
+      });
     } else {
       ref.orderByChild('displayName').startAt(searchString).limitToFirst(10).once('value')
-        .then(function(snap){
-          snap.forEach(function(snapshot){
-              people.push({'displayName':  snapshot.val().displayName, 'uid': snapshot.val().uid})
+        .then((snap) => {
+          snap.forEach((snapshot) => {
+            people.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
           });
-          return Promise.all(people)
-        }).then(function(people){
-          let userId = Object.keys(people);
-          userId.forEach(userId => {
-            let name = people[userId].displayName;
-            if (!name.startsWith(searchString)){
+          return Promise.all(people);
+        }).then((people) => {
+          const userId = Object.keys(people);
+          userId.forEach((userId) => {
+            const name = people[userId].displayName;
+            if (!name.startsWith(searchString)) {
               delete people[userId];
             }
           });
-          let results_without_empties = [];
-          people.forEach( item => {
+          const resultsWithoutEmpties = [];
+          people.forEach((item) => {
             if (item != '') {
-              results_without_empties.push(item)
+              resultsWithoutEmpties.push(item);
             }
           });
           _this.setState({
-            searchResults: results_without_empties
-          })
-        })
-      }
+            searchResults: resultsWithoutEmpties,
+          });
+        });
     }
+  }
 
   _addFriend(displayName, uid) {
-    let ref = firebase.database().ref();
-    let currentUid = firebase.auth().currentUser.uid;
-    let userFriendsRef = ref.child('userReadable/userFriends');
+    const ref = firebase.database().ref();
+    const currentUid = firebase.auth().currentUser.uid;
+    const userFriendsRef = ref.child('userReadable/userFriends');
 
-    userFriendsRef.child(currentUid+ '/'+uid).set({
-      displayName: displayName,
-      uid: uid
+    userFriendsRef.child(`${currentUid}/${uid}`).set({
+      displayName,
+      uid,
     });
     this.setFriends();
     this.showSearchBar();
-
   }
 
   showSearchBar() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.searchBarOffset != 0) {
+    if (this.state.searchBarOffset !== 0) {
       this.setState({
         searchBarOffset: 0,
         searchBarOffsetWrapper: 0,
-        searchResults: []
-      })
+        searchResults: [],
+      });
     } else {
       this.setState({
         searchBarOffset: 250,
-        searchBarOffsetWrapper: 300
-      })
+        searchBarOffsetWrapper: 300,
+      });
     }
   }
 
   renderFriends() {
-    let users = [];
+    const users = [];
     let i = 1;
-    this.state.friends.forEach(function(element){
+    this.state.friends.forEach((element) => {
       users.push(
-        <TouchableOpacity key={i} activeOpacity={.8} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: .5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-          <Icon name='user-circle-o'
+        <TouchableOpacity key={i} activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+          <Icon
+            name="user-circle-o"
             size={50}
-            color='#e0e0e0'
-            style={{flex: 0, alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white'}} />
-          <Text style={{flex: 2, textAlign: 'left', color: '#424242'}} > {element.displayName} </Text>
-          <View style={{flex: 1}}>
-            <Text style={{flex: 1, textAlign: 'right', color: '#424242'}} >200pts</Text>
-            <Text style={{flex: 1, textAlign: 'right', color: '#0d47a1'}} >Level 1</Text>
+            color="#e0e0e0"
+            style={{ flex: 0, alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white' }}
+          />
+          <Text style={{ flex: 2, textAlign: 'left', color: '#424242' }} > {element.displayName} </Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ flex: 1, textAlign: 'right', color: '#424242' }} >200pts</Text>
+            <Text style={{ flex: 1, textAlign: 'right', color: '#0d47a1' }} >Level 1</Text>
           </View>
-        </TouchableOpacity>
-      )
-      i += 1
+        </TouchableOpacity>,
+      );
+      i += 1;
     });
-    return users
+    return users;
   }
 
   renderSearchResults() {
-    let _this = this
-    let search = [];
-    let i = 0
-    this.state.searchResults.forEach(function(element){
+    const _this = this;
+    const search = [];
+    let i = 0;
+    this.state.searchResults.forEach((element) => {
       search.push(
-        <View key={i} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5}}>
-          <Icon name='user-circle-o' size={50} color='#e0e0e0' style={{ alignItems:'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent'}} />
-          <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50}}> (pending)</Text>
-          <Text style={{ textAlign: 'left', color: 'white'}} > {element.displayName} </Text>
-          <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Icon name='plus-circle' size={25} color='white' style={{backgroundColor: 'transparent'}}/>
+        <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+          <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
+          <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
+          <Text style={{ textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
+          <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Icon name="plus-circle" size={25} color="white" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
-        </View>
-      )
-      i += 1
+        </View>,
+      );
+      i += 1;
     });
     return search;
   }
 
   render() {
-    let refresh = true
+    const refresh = true;
     const search = this.renderSearchResults.bind(this)();
     const users = this.renderFriends.bind(this)();
 
@@ -266,78 +257,83 @@ export default class Friends extends Component{
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity>
-            <Icon name='bars'
-            size={30}
-            color='white'
-            onPress={this.props.sideMenu}/>
+            <Icon
+              name="bars"
+              size={30}
+              color="white"
+              onPress={this.props.sideMenu}
+            />
           </TouchableOpacity>
-          <Text style={{
-            fontSize: 25,
-            textAlign: 'center',
-            width: 250,
-            color: 'white',
-            fontWeight: '300',
-            marginBottom: 5
-          }}>
+          <Text
+            style={{
+              fontSize: 25,
+              textAlign: 'center',
+              width: 250,
+              color: 'white',
+              fontWeight: '300',
+              marginBottom: 5,
+            }}
+          >
             FRIENDS
           </Text>
           <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
-            <Icon name='search' size={20} color='white' />
+            <Icon name="search" size={20} color="white" />
           </TouchableOpacity>
-          <View style={{height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242'}}>
+          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242' }}>
             <TextInput
-              placeholder='Search for friends'
-              autoCapitalize='none'
-              style={{backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12}}
-              onChangeText={this._searchUsers.bind(this)} />
-            <TouchableOpacity activeOpacity={.7} onPress={this.showSearchBar.bind(this)} >
-              <Text style={{padding: 6, color: 'white', marginLeft: 2}}>Cancel</Text>
+              placeholder="Search for friends"
+              autoCapitalize="none"
+              style={{ backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12 }}
+              onChangeText={this._searchUsers.bind(this)}
+            />
+            <TouchableOpacity activeOpacity={0.7} onPress={this.showSearchBar.bind(this)} >
+              <Text style={{ padding: 6, color: 'white', marginLeft: 2 }}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)'}}>
+        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)' }}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
             { search }
           </ScrollView>
         </View>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
             { users }
           </ScrollView>
         </View>
       </View>
-    )
+    );
   }
 }
 
- const styles = StyleSheet.create({
-   container: {
-     flex: 1,
-     backgroundColor: 'white',
-   },
-   header: {
-       paddingTop: getPlatformValue('android', 25, 20),
-       flex: 0,
-       flexDirection: 'row',
-       height: 60,
-       backgroundColor: '#424242',
-       justifyContent: 'space-around',
-       alignItems: 'center',
-       borderBottomWidth: 1,
-       borderColor: '#424242'
-    },
-    addFriend: {
-       position: 'absolute',
-       top: 75,
-       right: 20,
-    },
-    addFriendButton: {
-       height: 45,
-       width: 200,
-       backgroundColor: '#3949ab',
-       borderRadius: 10,
-       marginLeft: 55,
-       overflow: 'hidden',
-       justifyContent: 'center'
-    }
- });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  header: {
+    paddingTop: getPlatformValue('android', 25, 20),
+    flex: 0,
+    flexDirection: 'row',
+    height: 60,
+    backgroundColor: '#424242',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#424242',
+  },
+  addFriend: {
+    position: 'absolute',
+    top: 75,
+    right: 20,
+  },
+  addFriendButton: {
+    height: 45,
+    width: 200,
+    backgroundColor: '#3949ab',
+    borderRadius: 10,
+    marginLeft: 55,
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+});
