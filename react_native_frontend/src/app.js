@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as firebase from 'firebase';
-import { SideMenu } from 'react-native-elements';
+import { Drawer } from 'native-base';
 import { AppSideMenu, AppRouter } from './components';
 
 const firebaseConfig = require('../firebaseconfig.json');
@@ -16,7 +16,6 @@ export default class App extends Component {
     super();
     this.state = {
       isOpen: false,
-      show: true,
     };
     this.toggleSideMenu = this.toggleSideMenu.bind(this);
   }
@@ -25,20 +24,16 @@ export default class App extends Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  renderSideMenu() {
-    return (
-      <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 40 }}>
-        <AppSideMenu toggleSideMenu={this.toggleSideMenu} />
-        <Text style={{ fontSize: 8 }}> v0.0.2 </Text>
-      </View>
-    );
-  }
-
   render() {
-    const menu = this.renderSideMenu();
-
     return (
-      <SideMenu isOpen={this.state.isOpen} menu={menu} disableGestures={this.state.show}>
+      <Drawer
+        type="overlay"
+        tapToClose
+        ref={(ref) => { this._drawer = ref; }}
+        content={<AppSideMenu toggleSideMenu={this.toggleSideMenu} />}
+        open={this.state.isOpen}
+        style={{ backgroundColor: 'transparent' }}
+      >
         <View style={styles.backgroundImage}>
           <AppRouter
             toggleSideMenu={this.toggleSideMenu}
@@ -46,7 +41,7 @@ export default class App extends Component {
             firebaseApp={firebaseApp}
           />
         </View>
-      </SideMenu>
+      </Drawer>
     );
   }
 }

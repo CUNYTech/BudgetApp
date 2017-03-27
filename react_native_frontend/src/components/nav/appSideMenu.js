@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
@@ -37,9 +37,12 @@ export default class AppSideMenu extends Component {
     const sideMenuItems = this.renderMenuItems();
 
     return (
-      <List>
-        { sideMenuItems }
-      </List>
+      <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 40 }}>
+        <List>
+          { sideMenuItems }
+        </List>
+        <Text style={{ fontSize: 8 }}> v0.0.2 </Text>
+      </View>
     );
   }
 }
