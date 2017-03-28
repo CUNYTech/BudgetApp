@@ -39,7 +39,7 @@ export default class ReportProblem extends Component {
               <Text>Work In Progress</Text>
             </Left>
             <Right>
-              <Spinner color="red" />
+              <Spinner color="green" />
             </Right>
           </ListItem>
         </ScrollView>

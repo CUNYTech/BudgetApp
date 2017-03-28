@@ -157,6 +157,7 @@ export default class Settings extends Component {
               <Text>Support</Text>
             </ListItem>
             <ListItem icon>
+                <TouchableOpacity onPress={Actions.reportproblem}>
               <Left>
                 <Icon name="inbox" />
               </Left>
@@ -166,6 +167,7 @@ export default class Settings extends Component {
               <Right>
                 <Icon name="angle-right" />
               </Right>
+                </TouchableOpacity>
             </ListItem>
             <ListItem icon>
                 <TouchableOpacity onPress={Actions.privacy}>
