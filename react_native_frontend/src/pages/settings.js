@@ -168,6 +168,7 @@ export default class Settings extends Component {
               </Right>
             </ListItem>
             <ListItem icon>
+                <TouchableOpacity onPress={Actions.privacy}>
               <Left>
                 <Icon name="user-secret" />
               </Left>
@@ -177,6 +178,7 @@ export default class Settings extends Component {
               <Right>
                 <Icon name="angle-right" />
               </Right>
+                </TouchableOpacity>
             </ListItem>
             <ListItem icon>
                 <TouchableOpacity onPress={Actions.accountdelete}>

@@ -7,6 +7,12 @@ import { getPlatformValue } from '../utils';
 
 export default class AccountDelete extends Component {
 
+    /*Delete data
+    The simplest way to delete data is to call remove() on a reference to the location of that data.
+    You can also delete by specifying null as the value for another write operation such as set() or update().
+    You can use this technique with update() to delete multiple children in a single API call.*/
+    //TODO implement account deletion async function
+
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
@@ -33,11 +39,7 @@ export default class AccountDelete extends Component {
           </Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
-        <ScrollView
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{}}
-        >
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <ListItem>
             <Left>
               <Text>Stealing Your Data...Mwahaha</Text>
