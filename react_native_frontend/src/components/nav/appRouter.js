@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
-import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile } from '../../pages';
+import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile, AccountSettings } from '../../pages';
+import { AccountDelete } from '../../pages'
 
 const getScenceStyle = (scene) => {
   let style = { backgroundColor: 'transparent' };
@@ -31,6 +32,7 @@ export default class AppRouter extends Component {
         <Scene hideNavBar key="points" component={Points} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="settings" component={Settings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="profile" component={Profile} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
+        <Scene hideNavBar key="accountsettings" component={AccountSettings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
       </Router>
     );
   }

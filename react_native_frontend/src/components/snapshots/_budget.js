@@ -232,7 +232,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddExpense() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 220 : 220;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addExpenseOffest === -200) {
       this.setState({ addExpenseOffest: offSet }); // Set to 0 for android
@@ -245,7 +245,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddBudget() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 220 : 220;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addBudgetOffset === -200) {
       this.setState({ addBudgetOffset: offSet }); // Set to 0 for android

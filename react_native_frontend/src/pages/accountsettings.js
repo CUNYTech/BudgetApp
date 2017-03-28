@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Text, Left, Right, ListItem, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getPlatformValue } from '../../utils';
+import { getPlatformValue } from '../utils';
 
 
 export default class AccountSettings extends Component {
-
-  componentDidMount() {
-    this.props.sideMenu();
-  }
 
   render() {
     return (

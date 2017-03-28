@@ -8,9 +8,8 @@ import Budget from './budget';
 import Points from './points';
 import Settings from './settings';
 import Profile from './profile';
+import AccountSettings from './accountsettings';
 
 
-export { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile };
-export default {
-  Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile,
-};
+export { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile, AccountSettings };
+export default { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile, AccountSettings };

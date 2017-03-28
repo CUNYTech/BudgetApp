@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../../utils';
 
 
-export default class DeleteAccount extends Component {
+export default class AccountDelete extends Component {
 
   componentDidMount() {
     this.props.sideMenu();

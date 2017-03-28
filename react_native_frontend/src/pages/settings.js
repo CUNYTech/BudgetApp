@@ -4,7 +4,6 @@ import { Container, Content, Text, Left, Right, Body, ListItem, Switch, Badge } 
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
-import AccountSettings from './settings-pages/accountsettings';
 
 
 export default class Settings extends Component {
@@ -40,16 +39,10 @@ export default class Settings extends Component {
               <Text>General</Text>
             </ListItem>
             <ListItem icon>
-              <TouchableOpacity>
-                <Left>
-                  <Icon name="user-circle-o" />
-                </Left>
+              <TouchableOpacity onPress={Actions.accountsettings}>
                 <Body>
                   <Text>Account Settings</Text>
                 </Body>
-                <Right>
-                  <Icon name="angle-right" />
-                </Right>
               </TouchableOpacity>
             </ListItem>
             <ListItem icon>
