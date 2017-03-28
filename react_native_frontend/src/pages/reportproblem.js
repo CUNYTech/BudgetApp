@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { BackgroundWrapper } from '../components';
-import { Container, Content, Text, Left, transparent, Right, Body, ListItem, Switch, Badge, Spinner } from 'native-base';
+import { Container, Text, Left, Right, ListItem, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 
 
-export default class Privacy extends Component {
-
-  componentDidMount() {
-    this.props.sideMenu();
-  }
+export default class ReportProblem extends Component {
 
   render() {
     return (
@@ -34,15 +29,11 @@ export default class Privacy extends Component {
               marginBottom: 5,
             }}
           >
-              Privacy Settings
+              Report A Problem
           </Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
-        <ScrollView
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{}}
-        >
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <ListItem>
             <Left>
               <Text>Work In Progress</Text>

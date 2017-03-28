@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Text, Left, Right, ListItem, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getPlatformValue } from '../../utils';
+import { getPlatformValue } from '../utils';
 
 
-export default class AccountDelete extends Component {
-
-  componentDidMount() {
-    this.props.sideMenu();
-  }
+export default class ChangePassword extends Component {
 
   render() {
     return (
@@ -33,7 +29,7 @@ export default class AccountDelete extends Component {
               marginBottom: 5,
             }}
           >
-            Delete Account
+              Change Password
           </Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
@@ -44,7 +40,7 @@ export default class AccountDelete extends Component {
         >
           <ListItem>
             <Left>
-              <Text>Stealing Your Data...Mwahaha</Text>
+              <Text>Work In Progress</Text>
             </Left>
             <Right>
               <Spinner color="red" />
