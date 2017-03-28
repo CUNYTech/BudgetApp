@@ -45,7 +45,7 @@ export default class AccountDelete extends Component {
               <Text>Stealing Your Data...Mwahaha</Text>
             </Left>
             <Right>
-              <Spinner color="red" />
+              <Spinner />
             </Right>
           </ListItem>
         </ScrollView>
