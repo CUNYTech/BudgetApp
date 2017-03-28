@@ -143,6 +143,7 @@ export default class Settings extends Component {
               </Right>
             </ListItem>
             <ListItem icon>
+                <TouchableOpacity onPress={Actions.changepassword}>
               <Left>
                 <Icon name="unlock" />
               </Left>
@@ -152,6 +153,7 @@ export default class Settings extends Component {
               <Right>
                 <Icon name="angle-right" />
               </Right>
+                </TouchableOpacity>
             </ListItem>
             <ListItem itemDivider>
               <Text>Support</Text>
