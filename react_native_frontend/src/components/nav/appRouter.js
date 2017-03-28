@@ -33,6 +33,7 @@ export default class AppRouter extends Component {
         <Scene hideNavBar key="settings" component={Settings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="profile" component={Profile} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="accountsettings" component={AccountSettings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
+        <Scene hideNavBar key="privacy" component={Privacy} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
       </Router>
     );
   }
