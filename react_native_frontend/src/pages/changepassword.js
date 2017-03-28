@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#424242',
   },
-   title: {
-       fontSize: 25,
-       textAlign: 'center',
-       width: 250,
-       color: 'white',
-       fontWeight: '300',
-       marginBottom: 5,
-   },
+  title: {
+   fontSize: 25,
+   textAlign: 'center',
+   width: 250,
+   color: 'white',
+   fontWeight: '300',
+   marginBottom: 5,
+  },
 });

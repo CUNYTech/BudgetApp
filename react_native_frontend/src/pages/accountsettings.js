@@ -19,18 +19,7 @@ export default class AccountSettings extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5,
-            }}
-          >
-              Account Settings
-          </Text>
+          <Text style={styles.title}>Account Settings</Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
@@ -75,5 +64,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
+  },
+  title: {
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
   },
 });
