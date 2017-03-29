@@ -234,7 +234,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddExpense() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 220 : 220;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addExpenseOffest === -200) {
       this.setState({ addExpenseOffest: offSet }); // Set to 0 for android
@@ -247,7 +247,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddBudget() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 220 : 220;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addBudgetOffset === -200) {
       this.setState({ addBudgetOffset: offSet }); // Set to 0 for android
@@ -266,10 +266,10 @@ export default class BudgetSnapshot extends Component {
   render() {
     return (
       <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
-        <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#212121' }}>
+        <Text style={styles.titleText}>
         BUDGET
       </Text>
-        <View style={{ backgroundColor: 'white', height: 16, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0' }}>
+        <View style={styles.budgetSnap}>
           <View style={{ flex: 1, backgroundColor: '#0d47a1', width: this.state.budgetTracker.margin }} />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
@@ -281,34 +281,21 @@ export default class BudgetSnapshot extends Component {
           </Text>
         </View>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
-          <Icon name="plus-circle" size={50} color="#0d47a1" style={{ bottom: 0, backgroundColor: 'white' }} />
+          <Icon name="plus-circle" size={50} style={styles.iconStyle} />
         </TouchableOpacity>
         <TouchableOpacity style={{ position: 'absolute', bottom: 3 }} activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
-          <Icon name="pie-chart" size={40} color="#0d47a1" style={{ backgroundColor: 'transparent', marginLeft: 10 }} />
+          <Icon name="pie-chart" size={40} style={styles.iconStyle} />
         </TouchableOpacity>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: this.state.addBudgetOffset,
-            width: 300,
-            height: 200,
-            left: 35,
-            borderWidth: 1,
-            borderRadius: 15,
-            borderColor: 'black',
-            backgroundColor: 'black',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ textAlign: 'center', color: 'white' }}>
+        <View style={styles.modalBody} bottom={this.state.addBudgetOffset}>
+          <Text style={styles.modalHeader}>
           ADD A MONTHLY BUDGET
         </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20, width }}>
-            <Text style={{ color: 'white', fontSize: 35 }}>
-            $
-          </Text>
+          <View style={styles.inputSection}>
+            <Text style={styles.emphasized}>
+              $
+              </Text>
             <TextInput
-              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+              style={styles.modalInput}
               onChangeText={budgetValueChange => this.setState({ budgetValueChange })}
               value={`${this.state.budgetValueChange}`}
             />
@@ -317,34 +304,21 @@ export default class BudgetSnapshot extends Component {
             onPress={this._updateBudget.bind(this)}
             style={styles.addExpenseButton}
           >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
+            <Text style={styles.modalHeader}>
             SET
           </Text>
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: this.state.addExpenseOffest,
-            width: 300,
-            height: 200,
-            left: 35,
-            borderWidth: 1,
-            borderRadius: 15,
-            borderColor: 'black',
-            backgroundColor: 'black',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ textAlign: 'center', color: '#212121' }}>
+        <View style={styles.modalBody} bottom={this.state.addExpenseOffest} >
+          <Text style={styles.modalHeader}>
           ADD AN EXPENSE
         </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
-            <Text style={{ color: 'white', fontSize: 35 }}>
+          <View style={styles.inputSection}>
+            <Text style={styles.emphasized}>
             $
           </Text>
             <TextInput
-              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+              style={styles.modalInput}
               onChangeText={expenseTotalChange => this.setState({ expenseTotalChange })}
               value={`${this.state.expenseTotalChange}`}
             />
@@ -353,7 +327,7 @@ export default class BudgetSnapshot extends Component {
             onPress={this._updateExpenses.bind(this)}
             style={styles.addExpenseButton}
           >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
+            <Text style={styles.modalHeader}>
             ADD
           </Text>
           </TouchableOpacity>
@@ -372,6 +346,25 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     backgroundColor: 'white',
   },
+  budgetSnap: {
+    backgroundColor: 'white',
+    height: 16,
+    marginRight: 80,
+    marginLeft: 20,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  emphasized: {
+    color: 'white',
+    fontSize: 35,
+  },
+  titleText: {
+    marginLeft: 6,
+    fontFamily: 'OpenSans',
+    fontSize: 17,
+    color: '#424242',
+  },
   addExpense: {
     position: 'absolute',
     bottom: 25,
@@ -384,6 +377,39 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginLeft: 55,
     overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  modalHeader: {
+    textAlign: 'center',
+    color: 'white',
+  },
+  inputSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  modalInput: {
+    height: 40,
+    width: 100,
+    borderColor: '#e0e0e0',
+    backgroundColor: '#e0e0e0',
+    borderWidth: 1,
+    textAlign: 'center',
+  },
+  iconStyle: {
+    backgroundColor: 'transparent',
+    marginLeft: 10,
+    color: '#0d47a1',
+  },
+  modalBody: {
+    position: 'absolute',
+    width: 300,
+    height: 200,
+    left: 35,
+    borderWidth: 1,
+    borderRadius: 15,
+    borderColor: 'black',
+    backgroundColor: 'black',
     justifyContent: 'center',
   },
 });
