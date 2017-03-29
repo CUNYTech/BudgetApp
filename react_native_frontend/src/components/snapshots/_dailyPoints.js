@@ -103,9 +103,9 @@ export default class PointsSnapshot extends Component {
 
   render() {
     return (
-      <View style={styles.section}>
-        <TouchableOpacity onPress={this.navPoints.bind(this)} style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <Text style={{ textAlign: 'left', marginLeft: 10, fontFamily: 'OpenSans', fontSize: 17, color: '#424242' }}>
+      <View style={styles.pointSection}>
+        <TouchableOpacity onPress={this.navPoints.bind(this)} style={styles.button}>
+          <Text style={styles.headerText}>
             DAILY POINTS
           </Text>
         </TouchableOpacity>
@@ -118,11 +118,22 @@ export default class PointsSnapshot extends Component {
 }
 
 const styles = StyleSheet.create({
-  section: {
+  pointSection: {
     flex: 1,
     borderColor: 'red',
     marginTop: 0,
     borderWidth: 0,
     backgroundColor: 'white',
   },
+  button {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  headerText: {
+    textAlign: 'left',
+    marginLeft: 10,
+    fontFamily: 'OpenSans',
+    fontSize: 17,
+    color: '#424242'
+  }
 });
