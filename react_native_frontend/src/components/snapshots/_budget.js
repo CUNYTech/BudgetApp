@@ -85,7 +85,6 @@ export default class BudgetSnapshot extends Component {
   }
 
   async _updateBudget() {
-    const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
     try {
       const ref = this.props.Firebase.database().ref();
       const user = this.props.Firebase.auth().currentUser;
