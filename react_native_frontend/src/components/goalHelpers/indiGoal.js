@@ -3,6 +3,7 @@ import {
     Alert, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 const { height, width } = Dimensions.get('window');
 
 
@@ -17,14 +18,20 @@ const CustomLayoutAnimation = {
   },
 };
 
-export default class BudgetSnapshot extends Component {
+export default class IndiGoal extends Component {
 
   constructor() {
     super();
     this.state = {
+      addGoalOffset: -300,
+      goal: 'New Goal Title',
+      amount: 0,
+      saved: 0,
+      goals: [],
+      progress: 0,
       expenseTotal: 0,
       expenseTotalChange: '0',
-      addExpenseOffest: -200,
+      addExpenseOffest: -1000,
       addBudgetOffset: -200,
       budgetValue: 0,
       budgetValueChange: '0',
@@ -38,6 +45,8 @@ export default class BudgetSnapshot extends Component {
     this.setBudget();
     this.setExpense();
   }
+  componentDidMount() {
+  }
 
   async setBudget() {
     try {
@@ -50,10 +59,11 @@ export default class BudgetSnapshot extends Component {
 
       const uid = this.props.Firebase.auth().currentUser.uid;
       const ref = this.props.Firebase.database().ref();
-      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+      // const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+      const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
 
-      userBudgetRef.once('value').then((snap) => {
-        const currentValue = snap.val().budget;
+      userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
+        const currentValue = snap.val().amount;
         return currentValue;
       }).then((value) => {
         if ((expenses / value) < 1) {
@@ -80,12 +90,24 @@ export default class BudgetSnapshot extends Component {
         }
       });
     } catch (e) {
-      console.log(error);
+      console.log(e);
+    }
+  }
+
+  _showAddGoal() {
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
+    if (this.state.addGoalOffset == -300) {
+      this.setState({ addGoalOffset: offSet }); // Set to 0 for android
+    } else {
+      this.setState({
+        addGoalOffset: -300,
+        expenseTotalChange: 0,
+      });
     }
   }
 
   async _updateBudget() {
-    const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
     try {
       const ref = this.props.Firebase.database().ref();
       const user = this.props.Firebase.auth().currentUser;
@@ -132,14 +154,18 @@ export default class BudgetSnapshot extends Component {
 
   async setExpense() {
     try {
-      const _this = this;
-      const uid = this.props.Firebase.auth().currentUser.uid;
+      _this.setState({ progress: 0 });
+      console.log(this.props.element.goalKey);
       const ref = this.props.Firebase.database().ref();
-      const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+      const uid = this.props.Firebase.auth().currentUser.uid;
+      const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
+      const _this = this;
 
-      await userBudgetRef.once('value').then((snap) => {
-        const updatedValue = snap.val().budget;
+      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      // const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+
+      await userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
+        const updatedValue = snap.val().amount;
         return updatedValue;
       }).then((updatedValue) => {
         _this.setState({
@@ -150,13 +176,14 @@ export default class BudgetSnapshot extends Component {
       const fixedBudget = this.state.budgetValue;
       const budgetTrackerWidth = 273;
 
-      userTotalExpensesRef.once('value').then((snap) => {
-        const currentValue = snap.val().expenses;
+      userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
+        const currentValue = snap.val().progress;
+        _this.setState({ progress: currentValue });
         return currentValue;
       }).then((currentValue) => {
-        if (((currentValue / fixedBudget) < 1) && (fixedBudget != 0)) {
+        if (((currentValue / fixedBudget) < 1) && (fixedBudget != 0) && (currentValue != 0)) {
           _this.setState({
-            expenseTotal: currentValue,
+            progress: currentValue,
             budgetTracker: {
               margin: ((currentValue / fixedBudget) * budgetTrackerWidth),
             },
@@ -177,29 +204,34 @@ export default class BudgetSnapshot extends Component {
         }
       });
     } catch (e) {
-      console.log(error);
+      console.log(e);
     }
   }
+
 
   async _updateExpenses() {
     try {
       const ref = this.props.Firebase.database().ref();
       const user = this.props.Firebase.auth().currentUser;
       const uid = user.uid;
-
-      const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      const _this = this;
+      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      const userGoalsProgressRef = ref.child(`userReadable/userGoals/${uid}/`);
 
       const newExpenseValue = +this.state.expenseTotalChange;
       const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal;
-      const _this = this;
+
       const budgetTrackerWidth = 273;
       const fixedBudget = _this.state.budgetValue;
 
+      this.setState({ progress: newExpensesTotal });
       if (newExpenseValue > 0) {
+        console.log(this.props.element.goalKey);
       // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userTotalExpensesRef.update({ expenses: newExpensesTotal });
-        userTotalExpensesRef.once('value').then((snap) => {
-          const updatedValue = snap.val().expenses;
+        userGoalsProgressRef.child(this.props.element.goalKey).update({ progress: `${newExpensesTotal}` });
+
+        userGoalsProfressRef.once('value').then((snap) => {
+          const updatedValue = snap.val().progress;
           return updatedValue;
         }).then((value) => {
           if (((value / fixedBudget) < 1) && (fixedBudget != 0)) {
@@ -247,6 +279,10 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddBudget() {
+    const ref = this.props.Firebase.database().ref();
+    const uid = this.props.Firebase.auth().currentUser.uid;
+    const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
+    userGoalsRef.child(this.props.element.goalKey).remove();
     const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addBudgetOffset === -200) {
@@ -257,6 +293,7 @@ export default class BudgetSnapshot extends Component {
         budgetValueChange: 0,
       });
     }
+    this.props.updateGoals();
   }
 
   handlePress() {
@@ -265,63 +302,24 @@ export default class BudgetSnapshot extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
-        <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#212121' }}>
-        BUDGET
-      </Text>
-        <View style={{ backgroundColor: 'white', height: 16, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0' }}>
-          <View style={{ flex: 1, backgroundColor: '#0d47a1', width: this.state.budgetTracker.margin }} />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
-          <Text style={{ color: '#212121', marginLeft: this.state.budgetTracker.margin }}>
-          ${ this.state.expenseTotal }
-          </Text>
-          <Text style={{ right: 20, color: '#212121' }}>
-          ${ this.state.budgetValue }
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
-          <Icon name="plus-circle" size={50} color="#0d47a1" style={{ bottom: 0, backgroundColor: 'white' }} />
-        </TouchableOpacity>
-        <TouchableOpacity style={{ position: 'absolute', bottom: 3 }} activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
-          <Icon name="pie-chart" size={40} color="#0d47a1" style={{ backgroundColor: 'transparent', marginLeft: 10 }} />
-        </TouchableOpacity>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: this.state.addBudgetOffset,
-            width: 300,
-            height: 200,
-            left: 35,
-            borderWidth: 1,
-            borderRadius: 15,
-            borderColor: 'black',
-            backgroundColor: 'black',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ textAlign: 'center', color: 'white' }}>
-          ADD A MONTHLY BUDGET
+      <View style={{ marginTop: 10 }}>
+        <Text style={{ backgroundColor: 'transparent', width, textAlign: 'center', fontSize: 15, color: '#424242' }}>
+          { this.props.element.goal }
         </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20, width }}>
-            <Text style={{ color: 'white', fontSize: 35 }}>
-            $
-          </Text>
-            <TextInput
-              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
-              onChangeText={budgetValueChange => this.setState({ budgetValueChange })}
-              value={`${this.state.budgetValueChange}`}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={this._updateBudget.bind(this)}
-            style={styles.addExpenseButton}
-          >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
-            SET
-          </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', right: 10 }}>
+          <TouchableOpacity activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
+            <Icon name="remove" size={27} color="#0d47a1" style={{ margin: 3, backgroundColor: 'white', overflow: 'hidden', borderRadius: 20 }} />
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
+            <Icon name="pencil" size={27} color="#0d47a1" style={{ margin: 3, backgroundColor: 'white', overflow: 'hidden', borderRadius: 20 }} />
           </TouchableOpacity>
         </View>
+        <View style={styles.goal} >
+          <View style={{ flex: 1, backgroundColor: '#0d47a1', width: 273 * (+this.state.progress / +this.props.element.amount) }} />
+        </View>
+        <Text style={{ flexDirection: 'row', textAlign: 'right', right: 20 }}>
+        ${this.props.element.amount}  ${this.state.progress}
+        </Text>
         <View
           style={{
             position: 'absolute',
@@ -336,7 +334,7 @@ export default class BudgetSnapshot extends Component {
             justifyContent: 'center',
           }}
         >
-          <Text style={{ textAlign: 'center', color: '#212121' }}>
+          <Text style={{ textAlign: 'center', color: '#424242' }}>
           ADD AN EXPENSE
         </Text>
           <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
@@ -358,19 +356,25 @@ export default class BudgetSnapshot extends Component {
           </Text>
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  budgetSection: {
-    flex: 0,
-    borderColor: '#212121',
-    marginTop: 2,
-    paddingBottom: 10,
-    borderWidth: 0,
+  container: {
+    flex: 1,
     backgroundColor: 'white',
+  },
+  header: {
+    flex: 0,
+    flexDirection: 'row',
+    height: 60,
+    backgroundColor: '#424242',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#424242',
   },
   addExpense: {
     position: 'absolute',
@@ -380,10 +384,28 @@ const styles = StyleSheet.create({
   addExpenseButton: {
     height: 45,
     width: 200,
-    backgroundColor: '#086788',
+    backgroundColor: '#3949ab',
     borderRadius: 10,
     marginLeft: 55,
     overflow: 'hidden',
     justifyContent: 'center',
+  },
+  section: {
+    flex: 1,
+    borderColor: '#e0e0e0',
+    marginTop: 2,
+
+    borderBottomWidth: 1,
+    backgroundColor: 'white',
+  },
+  goal: {
+    height: 20,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 0,
+    backgroundColor: 'white',
   },
 });
