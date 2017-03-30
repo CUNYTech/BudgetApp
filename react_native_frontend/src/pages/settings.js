@@ -28,11 +28,17 @@ export default class Settings extends Component {
               <Text>General</Text>
             </ListItem>
             <ListItem icon>
-              <TouchableOpacity onPress={Actions.accountsettings}>
-                <Body>
+              <Left>
+                <Icon name="user-o" />
+              </Left>
+              <Body>
+                <TouchableOpacity onPress={Actions.accountsettings}>
                   <Text>Account Settings</Text>
-                </Body>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </Body>
+              <Right>
+                <Icon name="angle-right" />
+              </Right>
             </ListItem>
             <ListItem icon>
               <Left>
@@ -143,59 +149,59 @@ export default class Settings extends Component {
               </Right>
             </ListItem>
             <ListItem icon>
-                <TouchableOpacity onPress={Actions.changepassword}>
               <Left>
                 <Icon name="unlock" />
               </Left>
               <Body>
-                <Text>Change Password</Text>
+                <TouchableOpacity onPress={Actions.changepassword}>
+                  <Text>Change Password</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
               </Right>
-                </TouchableOpacity>
             </ListItem>
             <ListItem itemDivider>
               <Text>Support</Text>
             </ListItem>
             <ListItem icon>
-                <TouchableOpacity onPress={Actions.reportproblem}>
               <Left>
                 <Icon name="inbox" />
               </Left>
               <Body>
-                <Text>Report A Problem</Text>
+                <TouchableOpacity onPress={Actions.reportproblem}>
+                  <Text>Report A Problem</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
               </Right>
-                </TouchableOpacity>
             </ListItem>
             <ListItem icon>
-                <TouchableOpacity onPress={Actions.privacy}>
               <Left>
                 <Icon name="user-secret" />
               </Left>
               <Body>
-                <Text>Privacy Settings</Text>
+                <TouchableOpacity onPress={Actions.privacy}>
+                  <Text>Privacy Settings</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
               </Right>
-                </TouchableOpacity>
             </ListItem>
             <ListItem icon>
-                <TouchableOpacity onPress={Actions.accountdelete}>
               <Left>
                 <Icon name="trash" />
               </Left>
               <Body>
-                <Text>Delete Account</Text>
+                <TouchableOpacity onPress={Actions.accountdelete}>
+                  <Text>Delete Account</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
               </Right>
-                </TouchableOpacity>
             </ListItem>
           </Content>
         </ScrollView>
@@ -233,11 +239,11 @@ const styles = StyleSheet.create({
     borderColor: '#424242',
   },
   textSeparators: {
-      fontSize: 25,
-      textAlign: 'center',
-      width: 250,
-      color: 'white',
-      fontWeight: '300',
-      marginBottom: 5,
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
   },
 });

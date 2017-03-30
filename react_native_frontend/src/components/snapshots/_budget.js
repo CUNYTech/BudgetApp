@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    Alert, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
+    Alert, View, Text, Dimensions, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+const { height, width } = Dimensions.get('window');
 
 const CustomLayoutAnimation = {
   duration: 500,
@@ -84,6 +84,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   async _updateBudget() {
+    const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
     try {
       const ref = this.props.Firebase.database().ref();
       const user = this.props.Firebase.auth().currentUser;
@@ -232,7 +233,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddExpense() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 220;
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addExpenseOffest === -200) {
       this.setState({ addExpenseOffest: offSet }); // Set to 0 for android
@@ -245,7 +246,7 @@ export default class BudgetSnapshot extends Component {
   }
 
   showAddBudget() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 220;
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.addBudgetOffset === -200) {
       this.setState({ addBudgetOffset: offSet }); // Set to 0 for android
@@ -264,17 +265,17 @@ export default class BudgetSnapshot extends Component {
   render() {
     return (
       <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
-        <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#424242' }}>
+        <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#212121' }}>
         BUDGET
       </Text>
         <View style={{ backgroundColor: 'white', height: 16, marginRight: 80, marginLeft: 20, marginTop: 10, borderWidth: 1, borderColor: '#e0e0e0' }}>
           <View style={{ flex: 1, backgroundColor: '#0d47a1', width: this.state.budgetTracker.margin }} />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
-          <Text style={{ color: '#424242', marginLeft: this.state.budgetTracker.margin }}>
+          <Text style={{ color: '#212121', marginLeft: this.state.budgetTracker.margin }}>
           ${ this.state.expenseTotal }
           </Text>
-          <Text style={{ right: 20, color: '#424242' }}>
+          <Text style={{ right: 20, color: '#212121' }}>
           ${ this.state.budgetValue }
           </Text>
         </View>
@@ -301,7 +302,7 @@ export default class BudgetSnapshot extends Component {
           <Text style={{ textAlign: 'center', color: 'white' }}>
           ADD A MONTHLY BUDGET
         </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20, width }}>
             <Text style={{ color: 'white', fontSize: 35 }}>
             $
           </Text>
@@ -334,7 +335,7 @@ export default class BudgetSnapshot extends Component {
             justifyContent: 'center',
           }}
         >
-          <Text style={{ textAlign: 'center', color: '#424242' }}>
+          <Text style={{ textAlign: 'center', color: '#212121' }}>
           ADD AN EXPENSE
         </Text>
           <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
@@ -364,7 +365,7 @@ export default class BudgetSnapshot extends Component {
 const styles = StyleSheet.create({
   budgetSection: {
     flex: 0,
-    borderColor: '#424242',
+    borderColor: '#212121',
     marginTop: 2,
     paddingBottom: 10,
     borderWidth: 0,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
-import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile, AccountSettings } from '../../pages';
-import { AccountDelete } from '../../pages'
+import { Home, Login, Register, Dashboard, Friends, Goals, Budget, Points, Settings, Profile, AccountSettings,
+  AccountDelete, ChangePassword, Privacy, ReportProblem } from '../../pages';
 
 const getScenceStyle = (scene) => {
   let style = { backgroundColor: 'transparent' };
@@ -33,7 +33,10 @@ export default class AppRouter extends Component {
         <Scene hideNavBar key="settings" component={Settings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="profile" component={Profile} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="accountsettings" component={AccountSettings} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
+        <Scene hideNavBar key="accountdelete" component={AccountDelete} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
         <Scene hideNavBar key="privacy" component={Privacy} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
+        <Scene hideNavBar key="changepassword" component={ChangePassword} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
+        <Scene hideNavBar key="reportproblem" component={ReportProblem} type="reset" Firebase={this.firebaseApp} sideMenu={this.toggleSideMenu} />
       </Router>
     );
   }
