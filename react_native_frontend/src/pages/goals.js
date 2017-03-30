@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput,
-    LayoutAnimation, Platform } from 'react-native';
+    LayoutAnimation, Platform, Dimensions, Alert } from 'react-native';
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
+import IndiGoal from '../components/goalHelpers/indiGoal.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const { height, width } = Dimensions.get('window');
 
 const CustomLayoutAnimation = {
   duration: 200,
@@ -24,7 +27,9 @@ export default class Goals extends Component {
       addGoalOffset: -300,
       goal: 'New Goal Title',
       amount: 0,
+      saved: 0,
       goals: [],
+      goalKey: '',
     };
   }
 
@@ -32,6 +37,7 @@ export default class Goals extends Component {
   _addGoal() {
     const ref = this.props.Firebase.database().ref();
     const userGoalsRef = ref.child('userReadable/userGoals');
+    const user = this.props.Firebase.auth().currentUser;
     const userGoal = this.state.goal;
     const amount = this.state.amount;
     const uid = this.props.Firebase.auth().currentUser.uid;
@@ -39,7 +45,14 @@ export default class Goals extends Component {
     userGoalsRef.child(uid).push({
       goal: userGoal,
       amount,
+    }).then((snap) => {
+      console.log(snap.key);
+      userGoalsRef.child(`${uid}/${snap.key}`).update({
+        goalKey: snap.key,
+      });
     });
+
+
     this._showAddGoal();
     this._setGoals();
   }
@@ -57,17 +70,14 @@ export default class Goals extends Component {
     const userGoalsRef = ref.child('userReadable/userGoals');
     userGoalsRef.child(uid).orderByKey().once('value').then((snap) => {
       snap.forEach((snapshot) => {
-        console.log(snapshot.val().goal);
-        userGoals.push({ goal: snapshot.val().goal, amount: snapshot.val().amount });
+        console.log(snapshot.val().goalKey);
+        userGoals.push({ goalKey: snapshot.val().goalKey, goal: snapshot.val().goal, amount: snapshot.val().amount });
       });
       return Promise.all(userGoals);
     }).then((userGoals) => {
       _this.setState({
         goals: userGoals,
       });
-    });
-    userGoalsRef.child('1').orderByValue().once('value').then((snap) => {
-      console.log(userGoals);
     });
   }
 
@@ -98,14 +108,7 @@ export default class Goals extends Component {
 
     this.state.goals.forEach((element) => {
       goals.push(
-        <View key={i} style={{ marginTop: 10 }}>
-          <Text style={{ backgroundColor: 'transparent', margin: 20, width: 335, textAlign: 'center', fontSize: 15, color: '#424242' }}>
-            { element.goal }
-          </Text>
-          <View style={styles.goal} >
-            <View style={{ flex: 1, backgroundColor: '#0d47a1', borderRadius: 0, width: 100 }} />
-          </View>
-        </View>,
+        <IndiGoal updateGoals={this._setGoals.bind(this)} element={element} Firebase={this.props.Firebase} />,
      );
       i += 1;
     });
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 20,
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: '#e0e0e0',
     borderRadius: 0,
