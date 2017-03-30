@@ -209,12 +209,12 @@ export default class Friends extends Component {
     let i = 1;
     this.state.friends.forEach((element) => {
       users.push(
-        <TouchableOpacity key={i} activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+        <TouchableOpacity key={i} activeOpacity={0.8} style={styles.friendIconButton}>
           <Icon
             name="user-circle-o"
             size={50}
             color="#e0e0e0"
-            style={{ flex: 0, alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white' }}
+            style={ styles.friendIcon }
           />
           <Text style={{ flex: 2, textAlign: 'left', color: '#424242' }} > {element.displayName} </Text>
           <View style={{ flex: 1 }}>
@@ -234,11 +234,14 @@ export default class Friends extends Component {
     let i = 0;
     this.state.searchResults.forEach((element) => {
       search.push(
-        <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
-          <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
-          <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
+        <View key={i} style={ styles.friendIconButton} borderBottomWidth = {1} >
+          <Icon name="user-circle-o" size={50} style={ styles.friendIcon } />
+          <Text style={styles.friendInfo}> (pending)</Text>
           <Text style={{ textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
-          <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity
+            onPress={_this._addFriend.bind(_this, element.displayName, element.uid)}
+            style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}
+           >
             <Icon name="plus-circle" size={25} color="white" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
         </View>,
@@ -264,22 +267,13 @@ export default class Friends extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5,
-            }}
-          >
+          <Text style={ styles.headerText }>
             FRIENDS
           </Text>
           <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
             <Icon name="search" size={20} color="white" />
           </TouchableOpacity>
-          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242' }}>
+          <View style={ styles.searchBar} width= {this.state.searchBarOffsetWrapper}>
             <TextInput
               placeholder="Search for friends"
               autoCapitalize="none"
@@ -291,7 +285,7 @@ export default class Friends extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)' }}>
+        <View style={styles.scrollView}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
             { search }
           </ScrollView>
@@ -322,6 +316,30 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#424242',
   },
+  headerText: {
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
+  },
+  searchBar: { height: 30,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 10,
+    top: 22,
+    flexDirection: 'row',
+    backgroundColor: '#424242',
+  },
+  scrollView: {
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    right: 0,
+    zIndex: 999999,
+    backgroundColor: 'rgba(0,0,0,.8)'
+  },
   addFriend: {
     position: 'absolute',
     top: 75,
@@ -335,5 +353,36 @@ const styles = StyleSheet.create({
     marginLeft: 55,
     overflow: 'hidden',
     justifyContent: 'center',
+  },
+  friendIconButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderBottomWidth: 0.5,
+    borderColor: '#e0e0e0',
+    marginLeft: 10,
+    marginRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  friendIcon : {
+    flex: 0,
+    alignItems: 'flex-end',
+    borderRadius: 25,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    width: 50,
+    height: 50,
+    overflow: 'hidden',
+    backgroundColor: 'white',
+    color:"#e0e0e0",
+  },
+  friendInfo: {
+    textAlign: 'left',
+    color: 'transparent',
+    fontSize: 12,
+    position: 'absolute',
+    top: 23,
+    left: 50,
   },
 });
