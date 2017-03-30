@@ -8,10 +8,6 @@ import { getPlatformValue } from '../utils';
 
 export default class Privacy extends Component {
 
-  componentDidMount() {
-    this.props.sideMenu();
-  }
-
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
@@ -24,18 +20,7 @@ export default class Privacy extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5,
-            }}
-          >
-              Privacy Settings
-          </Text>
+          <Text style={styles.title}>Privacy Settings</Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
         <ScrollView
@@ -84,5 +69,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
+  },
+  title: {
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
   },
 });

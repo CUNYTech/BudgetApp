@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Container, Text, Left, Right, ListItem, Spinner } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getPlatformValue } from '../../utils';
+import { getPlatformValue } from '../utils';
 
 
-export default class DeleteAccount extends Component {
+export default class AccountDelete extends Component {
 
-  componentDidMount() {
-    this.props.sideMenu();
-  }
+    /*Delete data
+    The simplest way to delete data is to call remove() on a reference to the location of that data.
+    You can also delete by specifying null as the value for another write operation such as set() or update().
+    You can use this technique with update() to delete multiple children in a single API call.*/
+    //TODO implement account deletion async function
 
   render() {
     return (
@@ -23,31 +25,16 @@ export default class DeleteAccount extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5,
-            }}
-          >
-            Delete Account
-          </Text>
+          <Text style={styles.title}>Delete Account</Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
-        <ScrollView
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{}}
-        >
+        <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <ListItem>
             <Left>
               <Text>Stealing Your Data...Mwahaha</Text>
             </Left>
             <Right>
-              <Spinner color="red" />
+              <Spinner />
             </Right>
           </ListItem>
         </ScrollView>
@@ -83,5 +70,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
+  },
+  title: {
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
   },
 });

@@ -4,7 +4,6 @@ import { Container, Content, Text, Left, Right, Body, ListItem, Switch, Badge } 
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
-import AccountSettings from './settings-pages/accountsettings';
 
 
 export default class Settings extends Component {
@@ -20,18 +19,7 @@ export default class Settings extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: 'center',
-              width: 250,
-              color: 'white',
-              fontWeight: '300',
-              marginBottom: 5,
-            }}
-          >
-                        SETTINGS
-                    </Text>
+          <Text style={styles.textSeparators}>Settings</Text>
           <Icon name="diamond" size={20} color="pink" />
         </View>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
@@ -40,17 +28,17 @@ export default class Settings extends Component {
               <Text>General</Text>
             </ListItem>
             <ListItem icon>
-              <TouchableOpacity>
-                <Left>
-                  <Icon name="user-circle-o" />
-                </Left>
-                <Body>
+              <Left>
+                <Icon name="user-o" />
+              </Left>
+              <Body>
+                <TouchableOpacity onPress={Actions.accountsettings}>
                   <Text>Account Settings</Text>
-                </Body>
-                <Right>
-                  <Icon name="angle-right" />
-                </Right>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </Body>
+              <Right>
+                <Icon name="angle-right" />
+              </Right>
             </ListItem>
             <ListItem icon>
               <Left>
@@ -165,7 +153,9 @@ export default class Settings extends Component {
                 <Icon name="unlock" />
               </Left>
               <Body>
-                <Text>Change Password</Text>
+                <TouchableOpacity onPress={Actions.changepassword}>
+                  <Text>Change Password</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
@@ -179,7 +169,9 @@ export default class Settings extends Component {
                 <Icon name="inbox" />
               </Left>
               <Body>
-                <Text>Report A Problem</Text>
+                <TouchableOpacity onPress={Actions.reportproblem}>
+                  <Text>Report A Problem</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
@@ -190,7 +182,9 @@ export default class Settings extends Component {
                 <Icon name="user-secret" />
               </Left>
               <Body>
-                <Text>Privacy Settings</Text>
+                <TouchableOpacity onPress={Actions.privacy}>
+                  <Text>Privacy Settings</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
@@ -201,7 +195,9 @@ export default class Settings extends Component {
                 <Icon name="trash" />
               </Left>
               <Body>
-                <Text>Delete Account</Text>
+                <TouchableOpacity onPress={Actions.accountdelete}>
+                  <Text>Delete Account</Text>
+                </TouchableOpacity>
               </Body>
               <Right>
                 <Icon name="angle-right" />
@@ -241,5 +237,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
+  },
+  textSeparators: {
+    fontSize: 25,
+    textAlign: 'center',
+    width: 250,
+    color: 'white',
+    fontWeight: '300',
+    marginBottom: 5,
   },
 });
