@@ -18,6 +18,13 @@ const CustomLayoutAnimation = {
   },
 };
 
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class Budget extends Component {
 
   constructor() {
@@ -288,15 +295,12 @@ export default class Budget extends Component {
           >
           BUDGET
         </Text>
-          <Icon name="diamond" size={20} color="#f48fb1" />
+          <Icon name="diamond" size={20} color={theme.accent} />
         </View>
-
-        <View style={{ backgroundColor: '#e0e0e0' }}>
-
+        <View style={{ backgroundColor: theme.bg }}>
           <BudgetSection Firebase={this.props.Firebase} />
           <Savings Firebase={this.props.Firebase} />
           <Expenses Firebase={this.props.Firebase} />
-
         </View>
       </View>
     );
@@ -313,43 +317,9 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#212121',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#212121',
-  },
-  addExpense: {
-    position: 'absolute',
-    bottom: 25,
-    right: 20,
-    zIndex: 99999,
-  },
-  addExpenseButton: {
-    height: 45,
-    width: 200,
-    backgroundColor: '#3949ab',
-    borderRadius: 10,
-    marginLeft: 55,
-    overflow: 'hidden',
-    justifyContent: 'center',
-  },
-  section: {
-    flex: 1,
-    borderColor: '#e0e0e0',
-    marginTop: 2,
-
-    borderBottomWidth: 1,
-    backgroundColor: 'white',
-  },
-  goal: {
-    height: 20,
-    marginRight: 20,
-    marginLeft: 20,
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 0,
-    backgroundColor: 'white',
+    borderColor: theme.bg,
   },
 });

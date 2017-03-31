@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { StockLine } from 'react-native-pathjs-charts';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../../utils';
+
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
 
 const graphData = [
   [{
@@ -51,7 +58,7 @@ const options = {
     bottom: 0,
     right: 0,
   },
-  color: '#424242',
+  color: theme.accent,
   gutter: -0.5,
   animate: {
     type: 'twoByTwo',
@@ -70,7 +77,7 @@ const options = {
       fontFamily: 'OpenSans',
       fontSize: 12,
       fontWeight: true,
-      fill: 'white',
+      fill: 'black',
     },
   },
   axisY: {
@@ -84,7 +91,7 @@ const options = {
       fontFamily: 'OpenSans',
       fontSize: 8,
       fontWeight: true,
-      fill: 'white',
+      fill: 'black',
     },
   },
 };
@@ -104,6 +111,12 @@ export default class PointsSnapshot extends Component {
   render() {
     return (
       <View style={styles.pointSection}>
+        <Image
+          style={styles.bg}
+          source={{ uri: 'http://www.ilikewallpaper.net/ipad-wallpapers/download/7702/Circle-Pattern-ipad-wallpaper-ilikewallpaper_com.jpg' }}
+        >
+          <View style={styles.bgFilter} />
+        </Image>
         <TouchableOpacity onPress={this.navPoints.bind(this)} style={styles.button}>
           <Text style={styles.headerText}>
             DAILY POINTS
@@ -120,10 +133,9 @@ export default class PointsSnapshot extends Component {
 const styles = StyleSheet.create({
   pointSection: {
     flex: 1,
-    borderColor: 'red',
     marginTop: 0,
     borderWidth: 0,
-    backgroundColor: 'white',
+    backgroundColor: '#424242',
   },
   button: {
     flexDirection: 'row',
@@ -134,6 +146,20 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#424242',
+    color: '#bdbdbd',
+    backgroundColor: 'transparent',
+  },
+  bg: {
+    position: 'absolute',
+    width: null,
+    height: null,
+    right: 0,
+    left: 0,
+    top: 0,
+    bottom: 0,
+  },
+  bgFilter: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,.5)',
   },
 });

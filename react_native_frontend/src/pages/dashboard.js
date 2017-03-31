@@ -6,6 +6,13 @@ import { getPlatformValue } from '../utils';
 
 const { height, width } = Dimensions.get('window');
 
+const theme = {
+  accent: '#ffc107',
+  bg: 'black',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class Dashboard extends Component {
 
   constructor() {
@@ -65,7 +72,7 @@ export default class Dashboard extends Component {
             >
                 HOME
               </Text>
-            <Icon name="diamond" size={20} color="pink" />
+            <Icon name="diamond" size={20} color={theme.accent} />
           </View>
           <PointsSnapshot Firebase={this.props.Firebase} />
           <FriendsSnapshot Firebase={this.props.Firebase} />
@@ -80,17 +87,16 @@ export default class Dashboard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.bg,
   },
   header: {
     paddingTop: getPlatformValue('android', 25, 20),
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: theme.bg,
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderBottomWidth: 1,
     borderColor: '#e0e0e0',
   },
 });

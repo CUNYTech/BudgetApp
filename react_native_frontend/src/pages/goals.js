@@ -19,6 +19,13 @@ const CustomLayoutAnimation = {
   },
 };
 
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class Goals extends Component {
 
   constructor() {
@@ -135,16 +142,13 @@ export default class Goals extends Component {
           >
                 GOALS
               </Text>
-          <Icon name="diamond" size={20} color="pink" />
+          <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <TouchableOpacity style={styles.section}>
-          <Text style={{ marginLeft: 6, fontFamily: 'OpenSans', fontSize: 17, color: '#424242', marginBottom: 10 }}>
-                GOALS
-              </Text>
+        <View style={styles.section}>
           { goals }
-        </TouchableOpacity>
+        </View>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this._showAddGoal.bind(this)}>
-          <Icon name="plus-circle" size={50} color="#0d47a1" style={{ backgroundColor: 'white', overflow: 'hidden', borderRadius: 20 }} />
+          <Icon name="plus-circle" size={50} color="#ffc107" style={{ backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
         </TouchableOpacity>
         <View
           style={{
@@ -199,14 +203,14 @@ export default class Goals extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
   },
   header: {
     paddingTop: getPlatformValue('android', 25, 20),
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -232,7 +236,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
 
     borderBottomWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
   },
   goal: {
     height: 20,

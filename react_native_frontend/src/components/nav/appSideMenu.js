@@ -24,10 +24,12 @@ export default class AppSideMenu extends Component {
     ];
 
     const menuItems = menuDesc.map(item => (
-      <TouchableOpacity key={item.id} onPress={item.nav}>
+      <TouchableOpacity key={item.id} onPress={item.nav} >
         <ListItem
           title={item.title}
           leftIcon={{ name: item.icon }}
+          titleStyle={{ color: 'white' }}
+          containerStyle={{ backgroundColor: 'rgba(33, 33, 33, .1)' }}
         />
       </TouchableOpacity>));
     return menuItems;
@@ -37,8 +39,9 @@ export default class AppSideMenu extends Component {
     const sideMenuItems = this.renderMenuItems();
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 40 }}>
-        <List>
+      <View style={{ flex: 1, backgroundColor: 'rgba(255, 193, 7, .8)', paddingTop: 40 }}>
+        <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,.5)' }} />
+        <List containerStyle={{ backgroundColor: 'transparent', margin: 0, borderWidth: 0 }}>
           { sideMenuItems }
         </List>
         <Text style={{ fontSize: 8 }}> v0.0.2 </Text>

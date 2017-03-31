@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { View, Image, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 
@@ -13,6 +13,13 @@ const CustomLayoutAnimation = {
   update: {
     type: LayoutAnimation.Types.easeInEaseOut,
   },
+};
+
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
 };
 
 export default class BudgetSection extends Component {
@@ -91,43 +98,123 @@ export default class BudgetSection extends Component {
 
   render() {
     return (
-      <View style={{ height: height * 0.30, backgroundColor: 'transparent' }}>
+      <View style={styles.container}>
         <Image
-          style={{ position: 'absolute', width: null, height: null, right: 0, left: 0, top: 0, bottom: 0 }}
+          style={styles.bg}
           source={{ uri: 'https://static.pexels.com/photos/248921/pexels-photo-248921.jpeg' }}
         >
-          <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,.5)' }} />
+          <View style={styles.bgFilter} />
         </Image>
-        <View style={{ top: 10, backgroundColor: 'transparent', position: 'relative', height: 100 }}>
-          <View style={{ position: 'absolute', top: 30, right: width * 0.35 }}>
+        <View style={styles.body}>
+          <View style={styles.progressCircle}>
             <Progress.Circle
               size={120}
               progress={this.state.totalExpenses / this.state.budget}
-              color="#f48fb1"
+              color={theme.accent}
               unfilledColor={'rgba(255,255,255,.3)'}
               borderWidth={0}
             />
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', textAlign: 'center' }}>
+          <View style={styles.textContainer}>
             <View style={{ top: 100 }}>
-              <Text style={{ color: 'white', fontSize: 10, left: 5, color: '#f48fb1' }}>Total Expenses</Text>
-              <Text style={{ color: 'white', fontSize: 40, fontFamily: 'OpenSans' }} >
+              <Text style={styles.expenseLabel}>
+                Total Expenses
+              </Text>
+              <Text style={styles.value} >
                 ${this.state.totalExpenses}
               </Text>
             </View>
             <View style={{ top: 0 }}>
-              <Text style={{ color: 'white', fontSize: 40, fontFamily: 'OpenSans' }} >
+              <Text style={styles.value} >
                 ${this.state.budget}
               </Text>
-              <Text style={{ color: 'white', fontSize: 10, textAlign: 'right', right: 5, color: '#f48fb1' }}>Budget</Text>
+              <Text style={styles.budgetLabel}>
+                Budget
+              </Text>
             </View>
           </View>
         </View>
-        <View style={{ position: 'absolute', bottom: 10, right: 10, flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: 'white', margin: 10, fontSize: 10 }}>update budget</Text>
-          <TouchableOpacity onPress={this.showUpdateBudget.bind(this)}><Icon name="plus-circle" size={40} color="rgba(255,255,255,1)" style={{ bottom: 0 }} /></TouchableOpacity>
+        <View style={styles.button}>
+          <Text style={styles.buttonLabel}>
+            update budget
+          </Text>
+          <TouchableOpacity onPress={this.showUpdateBudget.bind(this)}>
+            <Icon
+              name="plus-circle"
+              size={40}
+              color="rgba(255,255,255,1)"
+              style={{ bottom: 0 }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    height: height * 0.30,
+    backgroundColor: 'transparent',
+  },
+  bg: {
+    position: 'absolute',
+    width: null,
+    height: null,
+    right: 0,
+    left: 0,
+    top: 0,
+    bottom: 0,
+  },
+  bgFilter: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,.5)',
+  },
+  body: {
+    top: 10,
+    backgroundColor: 'transparent',
+    position: 'relative',
+    height: 100,
+  },
+  progressCircle: {
+    position: 'absolute',
+    top: 30,
+    right: width * 0.35,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'center',
+  },
+  expenseLabel: {
+    color: theme.text,
+    fontSize: 10,
+    left: 5,
+    color: theme.accent,
+  },
+  budgetLabel: {
+    color: theme.text,
+    fontSize: 10,
+    textAlign: 'right',
+    right: 5,
+    color: theme.accent,
+  },
+  value: {
+    color: theme.text,
+    fontSize: 40,
+    fontFamily: 'OpenSans',
+  },
+  button: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonLabel: {
+    color: theme.text,
+    margin: 10,
+    fontSize: 10,
+  },
+});

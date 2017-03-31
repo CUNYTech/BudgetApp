@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
 
 export default class FriendsSnapshot extends Component {
 
@@ -57,9 +64,12 @@ export default class FriendsSnapshot extends Component {
     this.state.friends.forEach((element) => {
       friends.push(
         <View key={i} style={{ alignItems: 'center', margin: 10 }}>
-          <Icon name="user-circle-o" size={50} style={styles.icon} />
-          <Text style={ styles.friendList }> {element.displayName} </Text>
-          <Text style={ styles.friendList }> 400 pts </Text>
+          <Image
+            style={styles.icon}
+            source={{ uri: 'https://static.pexels.com/photos/343717/pexels-photo-343717.jpeg' }}
+          />
+          <Text style={styles.friendList}> {element.displayName} </Text>
+          <Text style={styles.friendList}> 400 pts </Text>
         </View>,
       );
       i += 1;
@@ -67,8 +77,8 @@ export default class FriendsSnapshot extends Component {
 
     return (
       <View style={styles.friendSnap}>
-        <TouchableOpacity style={ styles.button } onPress={this.navFriend.bind(this)}>
-          <Text style={ styles.headerText }>
+        <TouchableOpacity style={styles.button} onPress={this.navFriend.bind(this)}>
+          <Text style={styles.headerText}>
           FRIENDS
         </Text>
         </TouchableOpacity>
@@ -83,35 +93,36 @@ export default class FriendsSnapshot extends Component {
 const styles = StyleSheet.create({
   friendSnap: {
     flex: 0,
-    marginTop: 2,
-    backgroundColor: 'white',
-    borderColor: '#e0e0e0',
+    backgroundColor: 'black',
+    borderColor: '#424242',
     borderBottomWidth: 1,
+    borderTopWidth: 1,
+
   },
-  button : {
+  button: {
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
-  friendList : {
-    color: '#424242',
+  friendList: {
+    color: theme.text,
     fontSize: 10,
-    fontWeight: 'bold'
+    fontWeight: '600',
+    fontFamily: 'OpenSans',
   },
   icon: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: 'transparent',
-    borderRadius: 0,
+    borderRadius: 30,
+    borderColor: theme.accent,
     overflow: 'hidden',
-    color:"#e0e0e0",
   },
-  headerText : {
+  headerText: {
     marginLeft: 10,
     marginTop: 1,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#424242',
+    color: '#bdbdbd',
   },
 });

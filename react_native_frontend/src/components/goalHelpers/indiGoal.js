@@ -3,7 +3,7 @@ import {
     Alert, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import * as Progress from 'react-native-progress';
 const { height, width } = Dimensions.get('window');
 
 
@@ -302,22 +302,31 @@ export default class IndiGoal extends Component {
 
   render() {
     return (
-      <View style={{ marginTop: 10 }}>
-        <Text style={{ backgroundColor: 'transparent', width, textAlign: 'center', fontSize: 15, color: '#424242' }}>
+      <View style={{ padding: 10, backgroundColor: 'black', borderBottomWidth: 0.5, borderTopWidth: 0, borderColor: '#ffc107' }}>
+        <Text style={{ backgroundColor: 'transparent', width, textAlign: 'center', fontSize: 15, color: '#bdbdbd' }}>
           { this.props.element.goal }
         </Text>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', right: 10 }}>
           <TouchableOpacity activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
-            <Icon name="remove" size={27} color="#0d47a1" style={{ margin: 3, backgroundColor: 'white', overflow: 'hidden', borderRadius: 20 }} />
+            <Icon name="remove" size={27} color="#bdbdbd" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
-            <Icon name="pencil" size={27} color="#0d47a1" style={{ margin: 3, backgroundColor: 'white', overflow: 'hidden', borderRadius: 20 }} />
+            <Icon name="pencil" size={27} color="#ffc107" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
           </TouchableOpacity>
         </View>
         <View style={styles.goal} >
-          <View style={{ flex: 1, backgroundColor: '#0d47a1', width: 273 * (+this.state.progress / +this.props.element.amount) }} />
+          <Progress.Bar
+            color="#ffc107"
+            height={1}
+            progress={+this.state.progress / +this.props.element.amount}
+            width={273}
+            borderColor={'black'}
+            unfilledColor={'#424242'}
+          />
         </View>
-        <Text style={{ flexDirection: 'row', textAlign: 'right', right: 20 }}>
+
+
+        <Text style={{ flexDirection: 'row', textAlign: 'right', right: 20, color: '#bdbdbd' }}>
         ${this.props.element.amount}  ${this.state.progress}
         </Text>
         <View
@@ -403,9 +412,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginLeft: 20,
     marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
     borderRadius: 0,
-    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
