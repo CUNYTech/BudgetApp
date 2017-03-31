@@ -50,9 +50,9 @@ export default class Dashboard extends Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator
-          color={'#0d47a1'}
+          color={'#ffc107'}
           animating={this.state.animating}
-          style={{ position: 'absolute', height, width, backgroundColor: 'white' }}
+          style={{ position: 'absolute', height, width, backgroundColor: '#212121' }}
           size="large"
         />
         <Animated.View style={{ flex: 1, opacity: this.state.fadeAnim, backgroundColor: 'white' }}>

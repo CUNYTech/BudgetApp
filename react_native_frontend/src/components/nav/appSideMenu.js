@@ -40,7 +40,6 @@ export default class AppSideMenu extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'rgba(255, 193, 7, .8)', paddingTop: 40 }}>
-        <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,.5)' }} />
         <List containerStyle={{ backgroundColor: 'transparent', margin: 0, borderWidth: 0 }}>
           { sideMenuItems }
         </List>

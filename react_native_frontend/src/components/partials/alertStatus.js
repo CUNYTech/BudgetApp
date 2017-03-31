@@ -6,7 +6,7 @@ export default class AlertStatus extends Component {
   render() {
     return (
       <View style={style.container}>
-        <TextFont fontSize={16} color="#ffffff">
+        <TextFont fontSize={16} color="white">
           <TextFont>{this.props.textHelper}{''}</TextFont>
           <TextFont fontWeight="500" onPress={this.props.onPressAction}>
             {this.props.textAction}

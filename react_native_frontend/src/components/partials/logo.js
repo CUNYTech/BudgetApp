@@ -10,7 +10,7 @@ export default class Logo extends Component {
     ];
     return (
       <View style={style}>
-        <Text style={{ fontWeight: '600', fontSize: 90, fontFamily: 'OpenSans', color: 'pink' }}>Scale</Text>
+        <Text style={{ fontWeight: '100', fontSize: 100, fontFamily: 'OpenSans', color: '#ffc107' }}>Scale</Text>
       </View>
     );
   }
