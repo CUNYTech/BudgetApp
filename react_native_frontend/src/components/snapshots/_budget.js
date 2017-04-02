@@ -109,7 +109,7 @@ export default class BudgetSnapshot extends Component {
 
       if (newBudgetValue > 0) {
         // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userBudgetRef.update({ budget: newBudgetTotal });
+        userBudgetRef.update({ budget: newBudgetValue });
         userBudgetRef.once('value').then((snap) => {
           const updatedValue = snap.val().budget;
           return updatedValue;
@@ -299,7 +299,11 @@ export default class BudgetSnapshot extends Component {
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
           <Icon name="plus-circle" size={50} style={styles.iconStyle} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ position: 'absolute', bottom: 3 }} activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
+        <TouchableOpacity
+          style={{ position: 'absolute', bottom: 3 }}
+          activeOpacity={0.7}
+          onPress={this.showAddBudget.bind(this)}
+        >
           <Icon name="pie-chart" size={40} style={styles.iconStyle} />
         </TouchableOpacity>
 
