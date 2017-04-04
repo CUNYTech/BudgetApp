@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Image, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { View, Alert, Image, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 
 const { height, width } = Dimensions.get('window');
 const CustomLayoutAnimation = {
-  duration: 500,
+  duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
     property: LayoutAnimation.Properties.opacity,
@@ -27,9 +27,11 @@ export default class BudgetSection extends Component {
   constructor() {
     super();
     this.state = {
-      budget: 2000,
-      totalExpenses: 365,
-      progress: 10,
+      budget: 0,
+      totalExpenses: 0,
+      progress: 0,
+      budgetValueChange: '',
+      budgetModalOffset: height * 0.3,
     };
   }
 
@@ -92,8 +94,38 @@ export default class BudgetSection extends Component {
     });
   }
 
-  showUpdateBudget() {
+  async _updateBudget() {
+    try {
+      const _this = this;
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
 
+      const newBudgetValue = +this.state.budgetValueChange;
+
+      if (newBudgetValue >= 0) {
+        userBudgetRef.update({ budget: newBudgetValue });
+        _this.setState({
+          budget: newBudgetValue,
+        });
+      } else if (newBudgetValue < 0) {
+        Alert.alert('Budget cannot be negative.');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    this.toggleUpdateBudget();
+    this.setProgess();
+  }
+
+  toggleUpdateBudget() {
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
+    if (this.state.budgetModalOffset === 0) {
+      this.setState({ budgetModalOffset: height * 0.3 });
+    } else {
+      this.setState({ budgetModalOffset: 0 });
+    }
   }
 
   render() {
@@ -138,13 +170,41 @@ export default class BudgetSection extends Component {
           <Text style={styles.buttonLabel}>
             update budget
           </Text>
-          <TouchableOpacity onPress={this.showUpdateBudget.bind(this)}>
+          <TouchableOpacity onPress={this.toggleUpdateBudget.bind(this)}>
             <Icon
               name="plus-circle"
               size={40}
               color="rgba(255,255,255,1)"
               style={{ bottom: 0 }}
             />
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.modal, { top: this.state.budgetModalOffset }]}>
+          <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
+            Set Budget
+          </Text>
+          <TextInput
+            placeholder="$"
+            placeholderTextColor="white"
+            style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.3)', margin: 10, color: 'white' }}
+            onChangeText={budgetValueChange => this.setState({ budgetValueChange })}
+            value={this.state.budgetValueChange}
+          />
+          <TouchableOpacity
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            onPress={this._updateBudget.bind(this)}
+          >
+            <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
+              Confirm
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 10, right: 10 }}
+            onPress={this.toggleUpdateBudget.bind(this)}
+          >
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
+              Cancel
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -216,5 +276,15 @@ const styles = StyleSheet.create({
     color: theme.text,
     margin: 10,
     fontSize: 10,
+  },
+  modal: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
 });
