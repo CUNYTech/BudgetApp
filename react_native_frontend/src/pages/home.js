@@ -62,10 +62,10 @@ export default class Home extends Component {
                   <Logo/>
                 </Animated.View>
                 <Animated.View style={{position: 'relative', left: this.state.groupHeadingPositionLeft}}>
-                  <Heading marginTop={89} color="#ffffff" textAlign="center">
+                  <Heading marginTop={89} color="#ffc107" textAlign="center">
                   {/* {'Hoola'} */}
                   </Heading>
-                  <Heading style={{fontFamily:'OpenSans'}}marginTop={16} element="h3" color="#ffffff" textAlign="center">
+                  <Heading style={{fontFamily:'OpenSans'}} marginTop={16} element="h3" color="#ffffff" textAlign="center">
                     {'Budgeting With Rewards'}
                   </Heading>
                 </Animated.View>

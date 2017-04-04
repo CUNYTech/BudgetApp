@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Container, Content, Text, Left, Right, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 
+const { height, width } = Dimensions.get('window');
 
 export default class Points extends Component {
 
@@ -13,7 +14,7 @@ export default class Points extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }}>
+      <Container style={{ backgroundColor: '#212121' }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon
@@ -35,80 +36,42 @@ export default class Points extends Component {
           >
             BUDGET
           </Text>
-          <Icon name="diamond" size={20} color="pink" />
+          <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <Card>
-          <CardItem header>
+        <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
+          <CardItem header style={{ backgroundColor: 'transparent' }}>
             <View style={styles.containerHeader}>
               <Image style={styles.thumbnail} source={require('../images/logo.png')} />
-              <Text>Insert Name </Text>
+              <Text style={{ color: 'white' }}>Insert Name </Text>
             </View>
           </CardItem>
-          <Left>
-            <Text
-              style={{
-                fontSize: 15,
-                textAlign: 'left',
-                width: 250,
-                fontWeight: '300',
-                marginBottom: 5,
-              }}
-            >
-              10
-            </Text>
-            <Text
-              style={{
-                marginLeft: -15,
-                marginTop: -10,
-              }}
-            >
-              Friends
-            </Text>
-          </Left>
-          <View style={styles.container}>
-            <Text
-              style={{
-                fontSize: 15,
-                textAlign: 'center',
-                width: 250,
-                fontWeight: '300',
-                marginTop: -65,
-              }}
-            >
-              5th
-            </Text>
-            <Text
-              style={{
-                marginLeft: -5,
-                marginTop: 0,
-              }}
-            >
-              Local Rank
-            </Text>
-          </View>
-          <Right>
-            <View style={styles.container}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  textAlign: 'right',
-                  width: 250,
-                  fontWeight: '300',
-                  marginTop: -130,
-                }}
-              >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+            <View style={{ width: width * 0.3 }}>
+              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
+                10
+              </Text>
+              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
+                Friends
+              </Text>
+            </View>
+            <View style={{ width: width * 0.3 }}>
+              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
+                10
+              </Text>
+              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
+                Local Ranks
+              </Text>
+            </View>
+            <View style={{ width: width * 0.3 }}>
+              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
                 75th
               </Text>
-              <Text
-                style={{
-                  marginLeft: 230,
-                  marginTop: 0,
-                }}
-              >
+              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
                 World Rank
               </Text>
             </View>
-          </Right>
+          </View>
+
         </Card>
         <Content />
       </Container>
@@ -130,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -141,6 +104,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 25,
+    backgroundColor: 'transparent',
+
   },
   container: {
     flex: 1,

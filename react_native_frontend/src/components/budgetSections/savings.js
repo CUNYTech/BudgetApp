@@ -16,16 +16,57 @@ const CustomLayoutAnimation = {
   },
 };
 
+
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+};
+
 export default class Savings extends Component {
 
   render() {
     return (
-      <View style={{ height: height * 0.20, backgroundColor: '#212121', alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ backgroundColor: '#212121', borderBottomWidth: 0.5, borderTopWidth: 0.5, borderColor: '#f48fb1', width, alignSelf: 'flex-start' }}>
-          <Text style={{ color: '#bdbdbd', fontSize: 21, fontFamily: 'OpenSans', fontWeight: '100' }}>Total Savings</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
+            Total Savings
+          </Text>
         </View>
-        <Text style={{ color: 'white', fontSize: 50, fontFamily: 'OpenSans', paddingBottom: 20, paddingTop: 20 }}>$5250</Text>
+        <Text style={styles.savings}>
+          $5250
+        </Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    height: height * 0.20,
+    backgroundColor: theme.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    backgroundColor: theme.bg,
+    borderBottomWidth: 0.5,
+    borderTopWidth: 0.5,
+    borderColor: theme.accent,
+    width,
+    alignSelf: 'flex-start',
+  },
+  headerText: {
+    color: '#bdbdbd',
+    fontSize: 21,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
+  },
+  savings: {
+    color: theme.text,
+    fontSize: 50,
+    fontFamily: 'OpenSans',
+    paddingBottom: 20,
+    paddingTop: 20,
+  },
+});

@@ -3,6 +3,8 @@ import {
     Alert, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Progress from 'react-native-progress';
+
 const { height, width } = Dimensions.get('window');
 
 
@@ -16,6 +18,14 @@ const CustomLayoutAnimation = {
     type: LayoutAnimation.Types.easeInEaseOut,
   },
 };
+
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 
 export default class BudgetSnapshot extends Component {
 
@@ -266,16 +276,23 @@ export default class BudgetSnapshot extends Component {
     return (
       <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
         <Text style={styles.titleText}>
-        BUDGET
-      </Text>
+          BUDGET
+        </Text>
         <View style={styles.budgetSnap}>
-          <View style={{ flex: 1, backgroundColor: '#0d47a1', width: this.state.budgetTracker.margin }} />
+          <Progress.Bar
+            color={theme.accent}
+            height={1}
+            progress={this.state.budgetTracker.margin / 273}
+            width={273}
+            borderColor={'black'}
+            unfilledColor={'#424242'}
+          />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
-          <Text style={{ color: '#212121', marginLeft: this.state.budgetTracker.margin }}>
+          <Text style={{ color: theme.text, marginLeft: this.state.budgetTracker.margin }}>
           ${ this.state.expenseTotal }
           </Text>
-          <Text style={{ right: 20, color: '#212121' }}>
+          <Text style={{ right: 20, color: theme.text }}>
           ${ this.state.budgetValue }
           </Text>
         </View>
@@ -285,6 +302,7 @@ export default class BudgetSnapshot extends Component {
         <TouchableOpacity style={{ position: 'absolute', bottom: 3 }} activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
           <Icon name="pie-chart" size={40} style={styles.iconStyle} />
         </TouchableOpacity>
+
         <View style={styles.modalBody} bottom={this.state.addBudgetOffset}>
           <Text style={styles.modalHeader}>
           ADD A MONTHLY BUDGET
@@ -339,20 +357,16 @@ export default class BudgetSnapshot extends Component {
 const styles = StyleSheet.create({
   budgetSection: {
     flex: 0,
-    borderColor: '#212121',
-    marginTop: 2,
+    borderColor: '#424242',
     paddingBottom: 10,
     borderWidth: 0,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   budgetSnap: {
-    backgroundColor: 'white',
     height: 16,
     marginRight: 80,
     marginLeft: 20,
     marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
   },
   emphasized: {
     color: 'white',
@@ -362,7 +376,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#424242',
+    color: '#bdbdbd',
   },
   addExpense: {
     position: 'absolute',
@@ -398,7 +412,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     backgroundColor: 'transparent',
     marginLeft: 10,
-    color: '#0d47a1',
+    color: '#424242',
   },
   modalBody: {
     position: 'absolute',
@@ -410,5 +424,18 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     backgroundColor: 'black',
     justifyContent: 'center',
+  },
+  bg: {
+    position: 'absolute',
+    width: null,
+    height: null,
+    right: 0,
+    left: 0,
+    top: 0,
+    bottom: 0,
+  },
+  bgFilter: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,.5)',
   },
 });

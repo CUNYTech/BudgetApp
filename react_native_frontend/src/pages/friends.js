@@ -15,6 +15,13 @@ const CustomLayoutAnimation = {
   },
 };
 
+const theme = {
+  accent: '#ffc107',
+  bg: 'black',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class Friends extends Component {
 
   constructor() {
@@ -209,17 +216,17 @@ export default class Friends extends Component {
     let i = 1;
     this.state.friends.forEach((element) => {
       users.push(
-        <TouchableOpacity key={i} activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+        <TouchableOpacity key={i} activeOpacity={0.8} style={{ backgroundColor: 'black', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#424242', paddingTop: 5, paddingBottom: 5 }}>
           <Icon
             name="user-circle-o"
             size={50}
-            color="#e0e0e0"
-            style={{ flex: 0, alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white' }}
+            color="rgba(0,0,0,.5)"
+            style={{ marginLeft: 10, flex: 0, alignItems: 'flex-end', borderRadius: 25, borderColor: '#ffc107', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white' }}
           />
-          <Text style={{ flex: 2, textAlign: 'left', color: '#424242' }} > {element.displayName} </Text>
-          <View style={{ flex: 1 }}>
-            <Text style={{ flex: 1, textAlign: 'right', color: '#424242' }} >200pts</Text>
-            <Text style={{ flex: 1, textAlign: 'right', color: '#0d47a1' }} >Level 1</Text>
+          <Text style={{ flex: 2, textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
+          <View style={{ flex: 1, marginRight: 10 }}>
+            <Text style={{ flex: 1, textAlign: 'right', color: 'white' }} >200pts</Text>
+            <Text style={{ flex: 1, textAlign: 'right', color: '#ffc107' }} >Level 1</Text>
           </View>
         </TouchableOpacity>,
       );
@@ -235,11 +242,11 @@ export default class Friends extends Component {
     this.state.searchResults.forEach((element) => {
       search.push(
         <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
-          <Icon name="user-circle-o" size={50} color="#e0e0e0" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
+          <Icon name="user-circle-o" size={50} color="black" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
           <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
-          <Text style={{ textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
+          <Text style={{ textAlign: 'left', color: 'black' }} > {element.displayName} </Text>
           <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Icon name="plus-circle" size={25} color="white" style={{ backgroundColor: 'transparent' }} />
+            <Icon name="plus-circle" size={25} color="#ffc107" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
         </View>,
       );
@@ -291,7 +298,7 @@ export default class Friends extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)' }}>
+        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: '#616161' }}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
             { search }
           </ScrollView>
@@ -309,14 +316,14 @@ export default class Friends extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#212121',
   },
   header: {
     paddingTop: getPlatformValue('android', 25, 20),
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,

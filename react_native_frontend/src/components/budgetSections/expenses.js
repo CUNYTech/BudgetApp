@@ -14,157 +14,32 @@ const CustomLayoutAnimation = {
   },
 };
 
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class Expenses extends Component {
 
   render() {
     return (
-      <View style={{ height: height * 0.5, margin: 0, backgroundColor: '#212121' }}>
-        <View style={{ backgroundColor: '#212121', borderBottomWidth: 0.5, borderTopWidth: 0.5, borderColor: '#f48fb1', width, alignSelf: 'flex-start' }}>
-          <Text style={{ color: '#bdbdbd', fontSize: 21, fontFamily: 'OpenSans', fontWeight: '100' }}>Expenses</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
+            Expenses
+          </Text>
         </View>
-        <ScrollView style={{ backgroundColor: '#212121' }}>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
+        <ScrollView style={{ backgroundColor: theme.bg }}>
+          <View style={styles.itemWrapper} >
+            <Text style={styles.generalText}>
               Food
             </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'black' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
-            </Text>
-          </View>
-          <View
-            style={{ height: 50,
-              backgroundColor: 'rgb(0,0,0)',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 20,
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: 'transparent' }}
-          >
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              Food
-            </Text>
-            <Text style={{ fontSize: 17, color: 'white' }}>
-              $<Text style={{ fontSize: 17, color: 'white' }}>23.42</Text>
+            <Text style={styles.generalText}>
+              $<Text style={styles.generalText}>
+                23.42
+              </Text>
             </Text>
           </View>
         </ScrollView>
@@ -172,3 +47,42 @@ export default class Expenses extends Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    height: height * 0.5,
+    margin: 0,
+    backgroundColor: theme.bg,
+  },
+  header: {
+    backgroundColor: theme.bg,
+    borderBottomWidth: 0.5,
+    borderTopWidth: 0.5,
+    borderColor: theme.accent,
+    width,
+    alignSelf: 'flex-start',
+  },
+  headerText: {
+    color: '#bdbdbd',
+    fontSize: 21,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
+  },
+  itemWrapper: {
+    height: 50,
+    backgroundColor: 'rgb(0,0,0)',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    marginTop: 1,
+    marginBottom: 1,
+    borderColor: 'transparent',
+  },
+  generalText: {
+    fontSize: 17,
+    fontFamily: 'OpenSans',
+    color: theme.text,
+  },
+});

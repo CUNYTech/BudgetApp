@@ -34,7 +34,7 @@ export default class App extends Component {
         open={this.state.isOpen}
         style={{ backgroundColor: 'transparent' }}
       >
-        <View style={styles.backgroundImage}>
+        <View style={styles.background}>
           <AppRouter
             toggleSideMenu={this.toggleSideMenu}
             handleNavPress={this.handleNavPress}
@@ -47,10 +47,10 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  background: {
     flex: 1,
     height: null,
     width: null,
-    backgroundColor: '#2196f3',
+    backgroundColor: '#212121',
   },
 });

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Container, Content, Text, Left, Right, Body, Card, CardItem, ListItem, Separator } from 'native-base';
 import { getPlatformValue } from '../utils';
 
+const { height, width } = Dimensions.get('window');
 
 export default class Points extends Component {
 
@@ -13,7 +14,7 @@ export default class Points extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }}>
+      <Container style={{ backgroundColor: 'black' }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon
@@ -33,71 +34,64 @@ export default class Points extends Component {
               marginBottom: 5,
             }}
           >
-            BUDGET
+            POINTS
           </Text>
-          <Icon name="diamond" size={20} color="pink" />
+          <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <Card>
-          <CardItem header>
-            <Text style={{ fontSize: 100 }}>145</Text>
-            <Text>Total</Text>
-            <Text> Pts</Text>
+        <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
+          <CardItem header style={{ backgroundColor: 'black', margin: 0 }}>
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100' }}>145</Text>
+            <Text style={{ fontFamily: 'OpenSans', color: '#ffc107' }}>Total Pts</Text>
           </CardItem>
-          <CardItem>
-            <Body>
-              <Text />
-            </Body>
-          </CardItem>
-          <CardItem footer>
-            <Text>Todays Points</Text>
+          <CardItem footer style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107', backgroundColor: '#212121', height: height * 0.197 }}>
+            <Text style={{ fontFamily: 'OpenSans', color: '#bdbdbd', borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107', fontSize: 25 }}>Todays Points</Text>
             <Right>
-              <Text>20</Text>
-              <Text>Pts</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 40 }}>20 <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Pts</Text></Text>
             </Right>
           </CardItem>
         </Card>
         <Content>
           <ListItem>
-            <Text>+2 Pts                                </Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+2 Pts</Text>
             <Right>
-              <Text>Checking In</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Checking In</Text>
             </Right>
           </ListItem>
           <ListItem>
-            <Text>+10 Pts                                </Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+10 Pts</Text>
             <Right>
-              <Text>Under Budget</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Under Budget</Text>
             </Right>
           </ListItem>
           <ListItem>
-            <Text>+5 Pts                                </Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+5 Pts</Text>
             <Right>
-              <Text>New Goal</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>New Goal</Text>
             </Right>
           </ListItem>
-          <Separator bordered>
-            <Text style={{ fontSize: 20, textAlign: 'center' }}>Ranking</Text>
+          <Separator bordered style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107', backgroundColor: '#212121' }}>
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 20, textAlign: 'center', color: '#bdbdbd' }}>Ranking</Text>
           </Separator>
           <ListItem icon>
             <Left>
               <Icon name="certificate" />
             </Left>
             <Body>
-              <Text>Local Rank</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Local Rank</Text>
             </Body>
             <Right>
-              <Text>5 th</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>5 th</Text>
             </Right>
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon name="certificate" />
+              <Icon name="certificate" color="#ffc107" />
             </Left>
             <Body>
-              <Text>World Rank</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>World Rank</Text>
             </Body>
             <Right>
-              <Text>105 th</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>105 th</Text>
             </Right>
           </ListItem>
         </Content>
@@ -128,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,

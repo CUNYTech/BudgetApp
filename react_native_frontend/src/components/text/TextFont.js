@@ -5,9 +5,11 @@ import { getStyleFromProps } from '../../utils';
 export default class TextFont extends Component {
   render() {
     const style = getStyleFromProps(['fontFamily', 'fontSize', 'fontWeight', 'color', 'marginTop'], this.props);
-    return (<Text {...this.props} style={style}>
-      {this.props.children}
-    </Text>);
+    return (
+      <Text {...this.props} style={style}>
+        {this.props.children}
+      </Text>
+    );
   }
 }
 
