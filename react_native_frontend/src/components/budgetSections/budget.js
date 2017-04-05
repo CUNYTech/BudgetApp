@@ -138,15 +138,14 @@ export default class BudgetSection extends Component {
           <View style={styles.bgFilter} />
         </Image>
         <View style={styles.body}>
-          <View style={styles.progressCircle}>
-            <Progress.Circle
-              size={120}
-              progress={this.state.totalExpenses / this.state.budget}
-              color={theme.accent}
-              unfilledColor={'rgba(255,255,255,.3)'}
-              borderWidth={0}
-            />
-          </View>
+          <Progress.Circle
+            style={styles.progressCircle}
+            size={120}
+            progress={this.state.totalExpenses / this.state.budget}
+            color={theme.accent}
+            unfilledColor={'rgba(255,255,255,.3)'}
+            borderWidth={0}
+          />
           <View style={styles.textContainer}>
             <View style={{ top: 100 }}>
               <Text style={styles.expenseLabel}>
@@ -179,6 +178,7 @@ export default class BudgetSection extends Component {
             />
           </TouchableOpacity>
         </View>
+
         <View style={[styles.modal, { top: this.state.budgetModalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
             Set Budget

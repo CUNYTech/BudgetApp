@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { View, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const { height, width } = Dimensions.get('window');
 
 const CustomLayoutAnimation = {
-  duration: 500,
+  duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
     property: LayoutAnimation.Properties.opacity,
@@ -22,6 +22,58 @@ const theme = {
 };
 
 export default class Expenses extends Component {
+  constructor() {
+    super();
+    this.state = {
+      expenseModalOffset: height * 0.5,
+      expenseValueChange: '',
+      expenseTitleChange: '',
+      expenses: [],
+    };
+  }
+
+  async _updateExpenses() {
+    try {
+      const _this = this;
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+
+      const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+
+      const newExpenseValue = +this.state.expenseValueChange;
+      const newExpensesTotal = +newExpenseValue + +_this.props.expensesTotal;
+      const fixedBudget = _this.props.budget;
+
+      if (newExpenseValue > 0) {
+        userTotalExpensesRef.update({ expenses: newExpensesTotal });
+        userTotalExpensesRef.once('value').then((snap) => {
+          const updatedValue = snap.val().expenses;
+          return updatedValue;
+        }).then((value) => {
+          _this.props.setTotalExpenes(value);
+        });
+      }
+      this.toggleUpdateExpense();
+    } catch (e) {
+      Alert.alert(e);
+    }
+  }
+
+  toggleUpdateExpense() {
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
+    if (this.state.expenseModalOffset === 0) {
+      this.setState({
+        expenseModalOffset: height * 0.5,
+        expenseValueChange: '',
+      });
+    } else {
+      this.setState({
+        expenseModalOffset: 0,
+        expenseValueChange: '',
+      });
+    }
+  }
 
   render() {
     return (
@@ -30,6 +82,14 @@ export default class Expenses extends Component {
           <Text style={styles.headerText}>
             Expenses
           </Text>
+          <TouchableOpacity onPress={this.toggleUpdateExpense.bind(this)}>
+            <Icon
+              name="plus-circle"
+              size={20}
+              color={theme.accent}
+              style={{ marginLeft: 10 }}
+            />
+          </TouchableOpacity>
         </View>
         <ScrollView style={{ backgroundColor: theme.bg }}>
           <View style={styles.itemWrapper} >
@@ -43,6 +103,43 @@ export default class Expenses extends Component {
             </Text>
           </View>
         </ScrollView>
+        <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
+          <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
+            Add an Expense
+          </Text>
+          <View style={{ borderBottomWidth: 0.5, borderColor: theme.accent }}>
+            <TextInput
+              placeholder="Title"
+              placeholderTextColor="rgba(255,255,255,.5)"
+              style={{ width: 100, height: 40, alignSelf: 'center', color: 'white', fontSize: 15 }}
+              onChangeText={expenseTitleChange => this.setState({ expenseTitleChange })}
+              value={this.state.expenseTitleChange}
+            />
+          </View>
+          <TextInput
+            placeholder="$"
+            placeholderTextColor="white"
+            style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.1)', margin: 10, color: 'white' }}
+            onChangeText={expenseValueChange => this.setState({ expenseValueChange })}
+            value={this.state.expenseValueChange}
+          />
+          <TouchableOpacity
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            onPress={this._updateExpenses.bind(this)}
+          >
+            <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
+              Submit
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 10, right: 10 }}
+            onPress={this.toggleUpdateExpense.bind(this)}
+          >
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -51,17 +148,18 @@ export default class Expenses extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: height * 0.5,
+    height: height * 0.45,
     margin: 0,
     backgroundColor: theme.bg,
   },
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: theme.bg,
     borderBottomWidth: 0.5,
     borderTopWidth: 0.5,
     borderColor: theme.accent,
     width,
-    alignSelf: 'flex-start',
   },
   headerText: {
     color: '#bdbdbd',
@@ -84,5 +182,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'OpenSans',
     color: theme.text,
+  },
+  modal: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 0,
+    left: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,.5)',
   },
 });
