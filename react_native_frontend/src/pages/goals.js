@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   addExpense: {
     position: 'absolute',
     bottom: 25,
-    right: 20,
+    right: 25,
   },
   addExpenseButton: {
     height: 45,
@@ -234,8 +234,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: '#e0e0e0',
     marginTop: 2,
-
-    borderBottomWidth: 1,
     backgroundColor: '#212121',
   },
   goal: {
