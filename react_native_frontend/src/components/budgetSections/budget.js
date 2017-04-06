@@ -59,6 +59,7 @@ export default class BudgetSection extends Component {
         _this.setState({
           budget: response,
         });
+        _this.props.setBudget(response);
       });
     } catch (e) {
       console.log(e);
@@ -80,6 +81,7 @@ export default class BudgetSection extends Component {
         _this.setState({
           totalExpenses: response,
         });
+        _this.props.setExpense(response);
       });
     } catch (e) {
       console.log(e);
@@ -141,7 +143,7 @@ export default class BudgetSection extends Component {
           <Progress.Circle
             style={styles.progressCircle}
             size={120}
-            progress={this.state.totalExpenses / this.state.budget}
+            progress={this.props.expenseTotal / this.state.budget}
             color={theme.accent}
             unfilledColor={'rgba(255,255,255,.3)'}
             borderWidth={0}
@@ -152,7 +154,7 @@ export default class BudgetSection extends Component {
                 Total Expenses
               </Text>
               <Text style={styles.value} >
-                ${this.state.totalExpenses}
+                ${this.props.expenseTotal}
               </Text>
             </View>
             <View style={{ top: 0 }}>

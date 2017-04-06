@@ -32,6 +32,10 @@ export default class Expenses extends Component {
     };
   }
 
+  componentWillMount() {
+    this._setExpenses();
+  }
+
   async _updateExpenses() {
     try {
       const _this = this;
@@ -42,19 +46,20 @@ export default class Expenses extends Component {
       const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
 
       const newExpenseValue = +this.state.expenseValueChange;
-      const newExpensesTotal = +newExpenseValue + +_this.props.expensesTotal;
+      const newExpensesTotal = +newExpenseValue + +_this.props.expenseTotal;
       const fixedBudget = _this.props.budget;
 
       if (newExpenseValue > 0) {
         userTotalExpensesRef.update({ expenses: newExpensesTotal });
+
         userTotalExpensesRef.once('value').then((snap) => {
           const updatedValue = snap.val().expenses;
           return updatedValue;
         }).then((value) => {
-          _this.props.setTotalExpenes(value);
+          _this.props.setExpense(value);
         });
       }
-      this.toggleUpdateExpense();
+      _this._addExpense();
     } catch (e) {
       Alert.alert(e);
     }
@@ -75,7 +80,68 @@ export default class Expenses extends Component {
     }
   }
 
+  _setExpenses() {
+    const _this = this;
+    const userExpense = [];
+    const ref = _this.props.Firebase.database().ref();
+    const uid = _this.props.Firebase.auth().currentUser.uid;
+    const userExpenseRef = ref.child('userReadable/userExpenses');
+
+    userExpenseRef.child(uid).orderByKey().once('value').then((snap) => {
+      snap.forEach((snapshot) => {
+        console.log(snapshot.val().expenseKey);
+        userExpense.push({ title: snapshot.val().expense, amount: snapshot.val().amount });
+      });
+      return Promise.all(userExpense);
+    }).then((userExpense) => {
+      _this.setState({
+        expenses: userExpense,
+      });
+    });
+  }
+
+  _addExpense() {
+    const ref = this.props.Firebase.database().ref();
+    const userExpenseRef = ref.child('userReadable/userExpenses');
+    const user = this.props.Firebase.auth().currentUser;
+    const userExpense = this.state.expenseTitleChange;
+    const amount = this.state.expenseValueChange;
+    const uid = this.props.Firebase.auth().currentUser.uid;
+
+    userExpenseRef.child(uid).push({
+      expense: userExpense,
+      amount,
+    }).then((snap) => {
+      console.log(snap.key);
+      userExpenseRef.child(`${uid}/${snap.key}`).update({
+        expenseKey: snap.key,
+      });
+    });
+    this._setExpenses();
+    this.toggleUpdateExpense();
+    // this._setGoals();
+  }
+
   render() {
+    let i = 1;
+    const expensesView = [];
+
+    this.state.expenses.forEach((element) => {
+      expensesView.push(
+        <View key={i} style={styles.itemWrapper} >
+          <Text style={styles.generalText}>
+            { element.title}
+          </Text>
+          <Text style={styles.generalText}>
+            $<Text style={styles.generalText}>
+              { element.amount}
+            </Text>
+          </Text>
+        </View>,
+     );
+      i += 1;
+    });
+
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -92,16 +158,7 @@ export default class Expenses extends Component {
           </TouchableOpacity>
         </View>
         <ScrollView style={{ backgroundColor: theme.bg }}>
-          <View style={styles.itemWrapper} >
-            <Text style={styles.generalText}>
-              Food
-            </Text>
-            <Text style={styles.generalText}>
-              $<Text style={styles.generalText}>
-                23.42
-              </Text>
-            </Text>
-          </View>
+          { expensesView }
         </ScrollView>
         <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>

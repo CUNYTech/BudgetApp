@@ -29,7 +29,7 @@ export default class Savings extends Component {
     super();
     this.state = {
       savingValueChange: '0',
-      modalOffset: height * 0.20,
+      modalOffset: height * 0.30,
     };
   }
 
@@ -72,18 +72,18 @@ export default class Savings extends Component {
           $5250
         </Text>
         <View style={[styles.modal, { top: this.state.modalOffset }]}>
-          <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
+          <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 0, fontFamily: 'OpenSans', fontWeight: '100' }}>
             Update Savings
           </Text>
           <TextInput
             placeholder="$"
             placeholderTextColor="white"
-            style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.1)', margin: 10, color: 'white' }}
+            style={{ textAlign: 'center', width: 50, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.2)', margin: 10, color: 'white' }}
             onChangeText={savingValueChange => this.setState({ savingValueChange })}
             value={this.state.savingValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.2, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
             onPress={this._updateSavings.bind(this)}
           >
             <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,.5)',
+    backgroundColor: 'rgba(0,0,0,.8)',
   },
 });
