@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Dimensions, View, Image, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+const { height, width } = Dimensions.get('window');
 
 const theme = {
   accent: '#ffc107',
@@ -93,6 +95,7 @@ export default class FriendsSnapshot extends Component {
 const styles = StyleSheet.create({
   friendSnap: {
     flex: 0,
+    height: height * 0.20,
     backgroundColor: 'black',
     borderColor: '#424242',
     borderBottomWidth: 1,
