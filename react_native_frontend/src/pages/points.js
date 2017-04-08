@@ -11,12 +11,14 @@ export default class Points extends Component {
   constructor() {
     super();
     this.state = {
+      userRank: 0,
       CurrentPoints: 0,
     };
   }
 
   componentDidMount() {
     this.setPoints();
+    this._getBoard();
   }
 
 
@@ -39,29 +41,43 @@ export default class Points extends Component {
     }
   }
 
-  _getBoard() {
-    const ref = this.props.Firebase.database().ref();
-    const userRef = ref.child('userPoints');
-    const leaderBoard = [];
+  async _getBoard() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
 
-    userRef.orderByChild('points').once('value').then((snap) => {
-      snap.forEach((snapshot) => {
-        leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
-      });
-      return Promise.all(leaderBoard);
-    })
+      userRankingRef.orderByChild('points').once('value').then((snap) => {
+        snap.forEach((snapshot) => {
+          leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+        });
+        return Promise.all(leaderBoard);
+      })
       .then((leaderBoard) => {
         const newleaderBoard = leaderBoard.reverse();
         return newleaderBoard;
       })
       .then((newleaderBoard) => {
+        const rankings = [];
         const ranks = Object.keys(newleaderBoard);
         ranks.forEach((ranked) => {
           const name = newleaderBoard[ranked][0];
           const rank = +ranked + 1;
-          console.log(name, `| Rank ${rank}`);
+          rankings.push([name, `${rank}`]);
+        });
+        return rankings;
+      })
+      .then((rankings) => {
+        rankings.forEach((Rank) => {
+          if (Rank[0] === user.displayName) {
+            this.setState({ userRank: Rank[1] });
+          }
         });
       });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {
@@ -132,7 +148,7 @@ export default class Points extends Component {
               <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Local Rank</Text>
             </Body>
             <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>5 th</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}> {this.state.userRank}th </Text>
             </Right>
           </ListItem>
           <ListItem icon>
