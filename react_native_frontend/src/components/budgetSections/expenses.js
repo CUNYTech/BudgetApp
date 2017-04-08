@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { _updatePoints } from '../../utils/pointHelpers';
+
 const { height, width } = Dimensions.get('window');
 
 const CustomLayoutAnimation = {
@@ -60,6 +62,8 @@ export default class Expenses extends Component {
         });
       }
       _this._addExpense();
+      const event_2 = 2;
+      _updatePoints(event_2, uid);
     } catch (e) {
       Alert.alert(e);
     }
