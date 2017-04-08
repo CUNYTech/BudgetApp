@@ -30,11 +30,57 @@ export default class Savings extends Component {
     this.state = {
       savingValueChange: '0',
       modalOffset: height * 0.30,
+      totalSavings: 0,
     };
   }
 
-  async _updateSavings() {
+  componentWillMount() {
+    this.setSavings();
+  }
 
+  async setSavings() {
+    try {
+      const _this = this;
+      const uid = this.props.Firebase.auth().currentUser.uid;
+      const ref = this.props.Firebase.database().ref();
+      const userBudgetRef = ref.child('userReadable/userSavings').child(uid);
+
+      await userBudgetRef.once('value').then((snap) => {
+        console.log('snap', snap);
+        const value = snap.val().savings;
+        return value;
+      }).then((response) => {
+        _this.setState({
+          totalSavings: response,
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async _updateSavings() {
+    try {
+      const _this = this;
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userSavingsRef = ref.child('userReadable/userSavings').child(uid);
+
+      const newSavingsValue = +this.state.totalSavings + +this.state.savingValueChange;
+
+      if (newSavingsValue >= 0) {
+        userSavingsRef.update({ savings: newSavingsValue });
+        _this.setState({
+          totalSavings: newSavingsValue,
+        });
+      } else if (newSavingsValue < 0) {
+        Alert.alert('Savings cannot be negative.');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    this.toggleUpdateSavings();
   }
 
   toggleUpdateSavings() {
@@ -69,7 +115,7 @@ export default class Savings extends Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.savings}>
-          $5250
+          ${this.state.totalSavings}
         </Text>
         <View style={[styles.modal, { top: this.state.modalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 0, fontFamily: 'OpenSans', fontWeight: '100' }}>
