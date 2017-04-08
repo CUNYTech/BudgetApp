@@ -11,6 +11,7 @@ export default class Points extends Component {
   constructor() {
     super();
     this.state = {
+      userLocalRank: 0,
       userRank: 0,
       CurrentPoints: 0,
     };
@@ -19,6 +20,7 @@ export default class Points extends Component {
   componentDidMount() {
     this.setPoints();
     this._getBoard();
+    this._localRank();
   }
 
 
@@ -35,6 +37,75 @@ export default class Points extends Component {
       })
       .then((points) => {
         this.setState({ CurrentPoints: points });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async _localRank() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
+
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName });
+        });
+        return friendList;
+      })
+      .then((friendList) => {
+        userRankingRef.orderByChild('points').once('value').then((snap) => {
+          snap.forEach((snapshot) => {
+            leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+          });
+          return Promise.all(leaderBoard);
+        })
+          .then((leaderBoard) => {
+            const newleaderBoard = leaderBoard.reverse();
+            return newleaderBoard;
+          })
+          .then((newleaderBoard) => {
+            const friendRank = [];
+            friendList.forEach((element) => {
+              for (let i = 0; i < newleaderBoard.length; i++) {
+                if ((newleaderBoard[i][0] === `${element.displayName}`)) {
+                  friendRank.push([newleaderBoard[i][1], newleaderBoard[i][0]]);
+                  console.log(friendRank);
+                }
+              }
+            });
+            newleaderBoard.forEach((element) => {
+              if (element[0] === user.displayName) {
+                friendRank.push([element[1], element[0]]);
+              }
+            });
+            function sortNumber(a, b) {
+              return b[0] - a[0];
+            }
+            const sortedFriends = friendRank.sort(sortNumber);
+            console.log(sortedFriends);
+            const rankings = [];
+            const ranks = Object.keys(friendRank);
+            ranks.forEach((ranked) => {
+              const name = sortedFriends[ranked][1];
+              const rank = +ranked + 1;
+              rankings.push([name, `${rank}`]);
+            });
+            return rankings;
+          })
+          .then((rankings) => {
+            rankings.forEach((Rank) => {
+              if (Rank[0] === user.displayName) {
+                this.setState({ userLocalRank: Rank[1] });
+              }
+            });
+          });
       });
     } catch (e) {
       console.log(e);
@@ -148,7 +219,7 @@ export default class Points extends Component {
               <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Local Rank</Text>
             </Body>
             <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}> {this.state.userRank}th </Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}> {this.state.userLocalRank} </Text>
             </Right>
           </ListItem>
           <ListItem icon>
@@ -159,7 +230,7 @@ export default class Points extends Component {
               <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>World Rank</Text>
             </Body>
             <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>105 th</Text>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>{this.state.userRank}</Text>
             </Right>
           </ListItem>
         </Content>
