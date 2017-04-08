@@ -8,8 +8,60 @@ const { height, width } = Dimensions.get('window');
 
 export default class Points extends Component {
 
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      CurrentPoints: 0,
+    };
+  }
 
+  componentDidMount() {
+    this.setPoints();
+  }
+
+
+  async setPoints() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userPointsRef = ref.child('userReadable/userPoints').child(uid);
+
+      userPointsRef.once('value').then((snap) => {
+        const points = snap.val().points;
+        return points;
+      })
+      .then((points) => {
+        this.setState({ CurrentPoints: points });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  _getBoard() {
+    const ref = this.props.Firebase.database().ref();
+    const userRef = ref.child('userPoints');
+    const leaderBoard = [];
+
+    userRef.orderByChild('points').once('value').then((snap) => {
+      snap.forEach((snapshot) => {
+        leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+      });
+      return Promise.all(leaderBoard);
+    })
+      .then((leaderBoard) => {
+        const newleaderBoard = leaderBoard.reverse();
+        return newleaderBoard;
+      })
+      .then((newleaderBoard) => {
+        const ranks = Object.keys(newleaderBoard);
+        ranks.forEach((ranked) => {
+          const name = newleaderBoard[ranked][0];
+          const rank = +ranked + 1;
+          console.log(name, `| Rank ${rank}`);
+        });
+      });
   }
 
   render() {
@@ -40,7 +92,7 @@ export default class Points extends Component {
         </View>
         <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
           <CardItem header style={{ backgroundColor: 'black', margin: 0 }}>
-            <Text style={{ fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100' }}>145</Text>
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100' }}>{this.state.CurrentPoints}</Text>
             <Text style={{ fontFamily: 'OpenSans', color: '#ffc107' }}>Total Pts</Text>
           </CardItem>
           <CardItem footer style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107', backgroundColor: '#212121', height: height * 0.197 }}>
