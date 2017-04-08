@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
+import { _updatePoints } from '../utils/pointHelpers';
 
 
 // const rootRef = firebaseApp.database().ref();
@@ -80,6 +81,9 @@ export default class Register extends Component {
       displayName: this.state.username,
       points: '',
     }), 0);
+
+    const event_10 = 10;
+    _updatePoints(event_10, uid);
 
         // setTimeout(()=> userFriendsRef.set({
         //   displayName: this.state.username,
