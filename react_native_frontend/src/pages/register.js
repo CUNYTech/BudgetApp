@@ -75,6 +75,8 @@ export default class Register extends Component {
         // let userFriendsRef = ref.child('userReadable/userFriends').child(uid);
     const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
     const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
+    const userSavingsRef = ref.child('userReadable/userSavings').child(uid);
+
     const peopleRef = ref.child('/people');
 
     setTimeout(() => userPointsRef.set({
@@ -99,6 +101,12 @@ export default class Register extends Component {
       displayName: this.state.username,
       budget: 0,
     }), 0);
+
+    setTimeout(() => userSavingsRef.set({
+      displayName: this.state.username,
+      savings: 0,
+    }), 0);
+
 
     setTimeout(() => peopleRef.child(this.state.username).set({
       displayName: this.state.username,
