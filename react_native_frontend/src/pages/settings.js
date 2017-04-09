@@ -19,8 +19,17 @@ export default class Settings extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text style={styles.textSeparators}>Settings</Text>
-          <Icon name="diamond" size={20} color="pink" />
+          <Text style={{
+            fontSize: 25,
+            textAlign: 'center',
+            width: 250,
+            color: 'white',
+            fontWeight: '300',
+            marginBottom: 5,
+          }}>
+          Settings
+          </Text>
+          <Icon name="diamond" size={20} color="#ffc107" />
         </View>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <Content>
@@ -232,7 +241,7 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,
