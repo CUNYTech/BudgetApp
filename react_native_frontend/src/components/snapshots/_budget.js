@@ -34,11 +34,10 @@ export default class BudgetSnapshot extends Component {
     super();
     this.state = {
       expenseModalOffset: height * 0.5,
+      expenseTitleChange: '0',
       expenseValueChange: '',
       expenseTotal: 0,
-      expenseTotalChange: '0',
       budgetValue: 0,
-      progress: 1,
     };
   }
 
@@ -47,15 +46,9 @@ export default class BudgetSnapshot extends Component {
     this.setExpense();
   }
 
-  componentDidMount() {
-    // this.setProgess();
-  }
-
   setProgess() {
-    // this.setState({
-    //   progress: (+this.state.expenseTotal / +this.state.budgetValue),
-    // });
-    return (+this.state.expenseTotal / +this.state.budgetValue);
+    const { budgetValue, expenseTotal } = this.state;
+    return (+expenseTotal / +budgetValue);
   }
 
   async setBudget() {
@@ -155,11 +148,13 @@ export default class BudgetSnapshot extends Component {
       this.setState({
         expenseModalOffset: height * 0.5,
         expenseValueChange: '',
+        expenseTitleChange: '',
       });
     } else {
       this.setState({
         expenseModalOffset: -height * 0.8,
         expenseValueChange: '',
+        expenseTitleChange: '',
       });
     }
   }
