@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontFamily: 'OpenSans',
     fontWeight: '100',
+    marginLeft: 10,
   },
   savings: {
     color: theme.text,

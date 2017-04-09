@@ -107,7 +107,6 @@ export default class Expenses extends Component {
   _addExpense() {
     const ref = this.props.Firebase.database().ref();
     const userExpenseRef = ref.child('userReadable/userExpenses');
-    const user = this.props.Firebase.auth().currentUser;
     const userExpense = this.state.expenseTitleChange;
     const amount = this.state.expenseValueChange;
     const uid = this.props.Firebase.auth().currentUser.uid;
@@ -116,7 +115,6 @@ export default class Expenses extends Component {
       expense: userExpense,
       amount,
     }).then((snap) => {
-      console.log(snap.key);
       userExpenseRef.child(`${uid}/${snap.key}`).update({
         expenseKey: snap.key,
       });
@@ -161,7 +159,7 @@ export default class Expenses extends Component {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ backgroundColor: theme.bg }}>
+        <ScrollView style={{ backgroundColor: theme.bg }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 25 }}>
           { expensesView }
         </ScrollView>
         <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
@@ -227,6 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontFamily: 'OpenSans',
     fontWeight: '100',
+    marginLeft: 10,
   },
   itemWrapper: {
     height: 50,
@@ -235,8 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    marginTop: 1,
-    marginBottom: 1,
+    marginTop: 0.5,
     borderColor: 'transparent',
   },
   generalText: {

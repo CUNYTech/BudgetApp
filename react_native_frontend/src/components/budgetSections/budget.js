@@ -40,10 +40,6 @@ export default class BudgetSection extends Component {
     this.setTotalExpenes();
   }
 
-  componentDidMount() {
-    this.setProgess();
-  }
-
   async setBudget() {
     try {
       const _this = this;
@@ -90,10 +86,7 @@ export default class BudgetSection extends Component {
 
   setProgess() {
     const { budget, totalExpenses } = this.state;
-    const progress = (+totalExpenses / +budget);
-    this.setState({
-      progress,
-    });
+    return (+totalExpenses / +budget);
   }
 
   async _updateBudget() {
@@ -118,7 +111,6 @@ export default class BudgetSection extends Component {
       console.log(e);
     }
     this.toggleUpdateBudget();
-    this.setProgess();
   }
 
   toggleUpdateBudget() {
@@ -131,6 +123,11 @@ export default class BudgetSection extends Component {
   }
 
   render() {
+    let progress = 0.01;
+    if (this.setProgess() < 1) {
+      progress = this.setProgess();
+    }
+
     return (
       <View style={styles.container}>
         <Image
@@ -143,7 +140,7 @@ export default class BudgetSection extends Component {
           <Progress.Circle
             style={styles.progressCircle}
             size={120}
-            progress={this.props.expenseTotal / this.state.budget}
+            progress={progress}
             color={theme.accent}
             unfilledColor={'rgba(255,255,255,.3)'}
             borderWidth={0}
