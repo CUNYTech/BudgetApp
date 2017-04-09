@@ -9,7 +9,7 @@ import { getPlatformValue } from '../utils';
 export default class Settings extends Component {
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }}>
+      <Container style={{ backgroundColor: 'black' }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon
@@ -33,28 +33,28 @@ export default class Settings extends Component {
         </View>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <Content>
-            <ListItem itemDivider>
-              <Text>General</Text>
+            <ListItem itemDivider style={{ backgroundColor: 'black' }}>
+              <Text style={{ fontFamily: 'OpenSans', color: '#ffc107', fontWeight: '600' }}>General</Text>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="user-o" />
+                <Icon name="user-o" style={{ color: 'white' }} />
               </Left>
               <Body>
                 <TouchableOpacity onPress={Actions.accountsettings}>
-                  <Text>Account Settings</Text>
+                  <Text style={{ color: '#bdbdbd' }}>Account Settings</Text>
                 </TouchableOpacity>
               </Body>
               <Right>
-                <Icon name="angle-right" />
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="bell-o" />
+                <Icon name="bell-o" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Notifications</Text>
+                <Text style={{ color: '#bdbdbd' }}>Notifications</Text>
               </Body>
               <Right>
                 <Switch valur />
@@ -62,22 +62,22 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="usd" />
+                <Icon name="usd" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Currency</Text>
+                <Text style={{ color: '#bdbdbd' }}>Currency</Text>
               </Body>
               <Right>
-                <Text>USD</Text>
-                <Icon name="angle-right" />
+                <Text style={{ color: '#bdbdbd' }}>USD</Text>
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="cloud-upload" />
+                <Icon name="cloud-upload" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Backup</Text>
+                <Text style={{ color: '#bdbdbd' }}>Backup</Text>
               </Body>
               <Right>
                 <Switch valur />
@@ -85,26 +85,26 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="history" />
+                <Icon name="history" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Number Of Backups</Text>
+                <Text style={{ color: '#bdbdbd' }}>Number Of Backups</Text>
               </Body>
               <Right>
                 <Badge>
-                  <Text>2</Text>
+                  <Text style={{ color: '#bdbdbd' }}>2</Text>
                 </Badge>
               </Right>
             </ListItem>
-            <ListItem itemDivider>
-              <Text>Social Media</Text>
+            <ListItem itemDivider style={{ backgroundColor: 'black' }}>
+              <Text style={{ fontFamily: 'OpenSans', color: '#ffc107', fontWeight: '600' }}>Social Media</Text>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="facebook" />
+                <Icon name="facebook" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Facebook</Text>
+                <Text style={{ color: '#bdbdbd' }}>Facebook</Text>
               </Body>
               <Right>
                 <Switch valur />
@@ -112,10 +112,10 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="google" />
+                <Icon name="google" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Google</Text>
+                <Text style={{ color: '#bdbdbd' }}>Google</Text>
               </Body>
               <Right>
                 <Switch valur />
@@ -123,10 +123,10 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="twitter" />
+                <Icon name="twitter" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Twitter</Text>
+                <Text style={{ color: '#bdbdbd' }}>Twitter</Text>
               </Body>
               <Right>
                 <Switch valur />
@@ -134,24 +134,24 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="instagram" />
+                <Icon name="instagram" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Instagram</Text>
+                <Text style={{ color: '#bdbdbd' }}>Instagram</Text>
               </Body>
               <Right>
                 <Switch valur />
               </Right>
             </ListItem>
-            <ListItem itemDivider>
-              <Text>Security</Text>
+            <ListItem itemDivider style={{ backgroundColor: 'black' }}>
+              <Text style={{ fontFamily: 'OpenSans', color: '#ffc107', fontWeight: '600' }}>Security</Text>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="key" />
+                <Icon name="key" style={{ color: 'white' }} />
               </Left>
               <Body>
-                <Text>Password To Login</Text>
+                <Text style={{ color: '#bdbdbd' }}>Password To Login</Text>
               </Body>
               <Right>
                 <Switch valur={false} />
@@ -159,57 +159,57 @@ export default class Settings extends Component {
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="unlock" />
+                <Icon name="unlock" style={{ color: 'white' }} />
               </Left>
               <Body>
                 <TouchableOpacity onPress={Actions.changepassword}>
-                  <Text>Change Password</Text>
+                  <Text style={{ color: '#bdbdbd' }}>Change Password</Text>
                 </TouchableOpacity>
               </Body>
               <Right>
-                <Icon name="angle-right" />
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
-            <ListItem itemDivider>
-              <Text>Support</Text>
+            <ListItem itemDivider style={{ backgroundColor: 'black' }}>
+              <Text style={{ fontFamily: 'OpenSans', color: '#ffc107', fontWeight: '600' }}>Support</Text>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="inbox" />
+                <Icon name="inbox" style={{ color: 'white' }} />
               </Left>
               <Body>
                 <TouchableOpacity onPress={Actions.reportproblem}>
-                  <Text>Report A Problem</Text>
+                  <Text style={{ color: '#bdbdbd' }}>Report A Problem</Text>
                 </TouchableOpacity>
               </Body>
               <Right>
-                <Icon name="angle-right" />
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="user-secret" />
+                <Icon name="user-secret" style={{ color: 'white' }} />
               </Left>
               <Body>
                 <TouchableOpacity onPress={Actions.privacy}>
-                  <Text>Privacy Settings</Text>
+                  <Text style={{ color: '#bdbdbd' }}>Privacy Settings</Text>
                 </TouchableOpacity>
               </Body>
               <Right>
-                <Icon name="angle-right" />
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
             <ListItem icon>
               <Left>
-                <Icon name="trash" />
+                <Icon name="trash" style={{ color: 'white' }} />
               </Left>
               <Body>
                 <TouchableOpacity onPress={Actions.accountdelete}>
-                  <Text>Delete Account</Text>
+                  <Text style={{ color: '#bdbdbd' }}>Delete Account</Text>
                 </TouchableOpacity>
               </Body>
               <Right>
-                <Icon name="angle-right" />
+                <Icon name="angle-right" style={{ color: 'white' }} />
               </Right>
             </ListItem>
           </Content>
@@ -254,5 +254,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '300',
     marginBottom: 5,
+  },
+  itemDividerText: {
+    backgroundColor: 'black',
   },
 });
