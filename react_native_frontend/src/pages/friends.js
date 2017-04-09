@@ -205,8 +205,8 @@ export default class Friends extends Component {
       });
     } else {
       this.setState({
-        searchBarOffset: 250,
-        searchBarOffsetWrapper: 300,
+        searchBarOffset: 260,
+        searchBarOffsetWrapper: 320,
       });
     }
   }
@@ -286,11 +286,11 @@ export default class Friends extends Component {
           <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
             <Icon name="search" size={20} color="white" />
           </TouchableOpacity>
-          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 10, top: 22, flexDirection: 'row', backgroundColor: '#424242' }}>
+          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: -5, top: 22, flexDirection: 'row', backgroundColor: '#424242' }}>
             <TextInput
               placeholder="Search for friends"
               autoCapitalize="none"
-              style={{ backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12 }}
+              style={{ backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12, paddingLeft: 5 }}
               onChangeText={this._searchUsers.bind(this)}
             />
             <TouchableOpacity activeOpacity={0.7} onPress={this.showSearchBar.bind(this)} >
