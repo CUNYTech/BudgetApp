@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Dimensions, ImagePickerIOS } from 'react-native';
 import { Container, Content, Text, Left, Right, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
@@ -7,9 +7,20 @@ import { getPlatformValue } from '../utils';
 const { height, width } = Dimensions.get('window');
 
 export default class Points extends Component {
+  constructor() {
+    super();
+    this.state = { image: null };
+  }
 
   componentDidMount() {
+    this.pickImage();
+  }
 
+  pickImage() {
+    // openSelectDialog(config, successCallback, errorCallback);
+    ImagePickerIOS.openSelectDialog({}, (imageUri) => {
+      this.setState({ image: imageUri });
+    }, error => console.log(error));
   }
 
   render() {
@@ -37,6 +48,12 @@ export default class Points extends Component {
             BUDGET
           </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
+        </View>
+        <View style={{ flex: 1 }}>
+          {this.state.image ?
+            <Image style={{ flex: 1 }} source={{ uri: this.state.image }} /> :
+            null
+          }
         </View>
         <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
           <CardItem header style={{ backgroundColor: 'transparent' }}>

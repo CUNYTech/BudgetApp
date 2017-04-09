@@ -76,7 +76,6 @@ export default class Points extends Component {
               for (let i = 0; i < newleaderBoard.length; i++) {
                 if ((newleaderBoard[i][0] === `${element.displayName}`)) {
                   friendRank.push([newleaderBoard[i][1], newleaderBoard[i][0]]);
-                  console.log(friendRank);
                 }
               }
             });
@@ -89,7 +88,6 @@ export default class Points extends Component {
               return b[0] - a[0];
             }
             const sortedFriends = friendRank.sort(sortNumber);
-            console.log(sortedFriends);
             const rankings = [];
             const ranks = Object.keys(friendRank);
             ranks.forEach((ranked) => {
