@@ -4,6 +4,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
+import { _updatePoints } from '../../utils/pointHelpers';
 
 const { height, width } = Dimensions.get('window');
 
@@ -36,10 +37,8 @@ export default class BudgetSnapshot extends Component {
       expenseValueChange: '',
       expenseTotal: 0,
       expenseTotalChange: '0',
-      addExpenseOffest: -200,
-      addBudgetOffset: -200,
       budgetValue: 0,
-      budgetValueChange: '0',
+      progress: 1,
     };
   }
 
@@ -48,12 +47,22 @@ export default class BudgetSnapshot extends Component {
     this.setExpense();
   }
 
+  componentDidMount() {
+    // this.setProgess();
+  }
+
+  setProgess() {
+    // this.setState({
+    //   progress: (+this.state.expenseTotal / +this.state.budgetValue),
+    // });
+    return (+this.state.expenseTotal / +this.state.budgetValue);
+  }
+
   async setBudget() {
     try {
       const _this = this;
       const expenses = this.state.expenseTotal;
       const fixedBudget = this.state.budgetValue;
-      const budgetTrackerWidth = 273;
 
       await this.props.Firebase.auth().currentUser;
 
@@ -65,58 +74,13 @@ export default class BudgetSnapshot extends Component {
         const currentValue = snap.val().budget;
         return currentValue;
       }).then((value) => {
-        if ((expenses / value) < 1) {
-          _this.setState({
-            budgetValue: value,
-          });
-        } else if (fixedBudget === 0) {
-          Alert.alert('Please set a monthly budget.');
-        } else {
-          Alert.alert('Expenses exceed budget. Please set a new, higher monthly budget.');
-        }
-      });
-    } catch (e) {
-      console.log(error);
-    }
-  }
-
-  async _updateBudget() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-
-      const newBudgetValue = +this.state.budgetValueChange;
-      const newBudgetTotal = +this.state.budgetValueChange + +this.state.budgetValue;
-
-      const _this = this;
-      const budgetTrackerWidth = 273;
-
-      if (newBudgetValue > 0) {
-        // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userBudgetRef.update({ budget: newBudgetValue });
-        userBudgetRef.once('value').then((snap) => {
-          const updatedValue = snap.val().budget;
-          return updatedValue;
-        }).then((value) => {
-          if ((_this.state.expenseTotal / value) < 1) {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              budgetValue: value,
-            });
-          } else {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              budgetValue: value,
-            });
-          }
+        _this.setState({
+          budgetValue: value,
         });
-      }
+      });
     } catch (e) {
       console.log(e);
     }
-    this.showAddBudget();
   }
 
   async setExpense() {
@@ -125,107 +89,60 @@ export default class BudgetSnapshot extends Component {
       const uid = this.props.Firebase.auth().currentUser.uid;
       const ref = this.props.Firebase.database().ref();
       const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-
-      await userBudgetRef.once('value').then((snap) => {
-        const updatedValue = snap.val().budget;
-        return updatedValue;
-      }).then((updatedValue) => {
-        _this.setState({
-          budgetValue: updatedValue,
-        });
-      });
-
-      const fixedBudget = this.state.budgetValue;
-      const budgetTrackerWidth = 273;
 
       userTotalExpensesRef.once('value').then((snap) => {
         const currentValue = snap.val().expenses;
         return currentValue;
       }).then((currentValue) => {
-        if (((currentValue / fixedBudget) < 1) && (fixedBudget != 0)) {
-          _this.setState({
-            expenseTotal: currentValue,
-          });
-        } else if (fixedBudget === 0) {
-        } else {
-          _this.setState({
-            expenseTotal: currentValue,
-          });
-        }
-      });
-    } catch (e) {
-      console.log(error);
-    }
-  }
-
-  async _updateExpenses() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-
-      const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-
-      const newExpenseValue = +this.state.expenseTotalChange;
-      const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal;
-      const _this = this;
-      const budgetTrackerWidth = 273;
-      const fixedBudget = _this.state.budgetValue;
-
-      if (newExpenseValue > 0) {
-      // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userTotalExpensesRef.update({ expenses: newExpensesTotal });
-        userTotalExpensesRef.once('value').then((snap) => {
-          const updatedValue = snap.val().expenses;
-          return updatedValue;
-        }).then((value) => {
-          if (((value / fixedBudget) < 1) && (fixedBudget != 0)) {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              expenseTotal: value,
-            });
-          } else if (fixedBudget === 0) {
-            _this.setState({
-            });
-          } else {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              expenseTotal: value,
-            });
-          }
+        _this.setState({
+          expenseTotal: currentValue,
         });
-      }
-      this.showAddExpense();
+      });
     } catch (e) {
       console.log(e);
     }
   }
 
-  showAddExpense() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 220;
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addExpenseOffest === -200) {
-      this.setState({ addExpenseOffest: offSet }); // Set to 0 for android
-    } else {
+  async _updateExpenses() {
+    try {
+      const _this = this;
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      const newExpenseValue = +this.state.expenseValueChange;
+      const newExpensesTotal = +newExpenseValue + +_this.state.expenseTotal;
+
+      if (newExpenseValue > 0) {
+        userTotalExpensesRef.update({ expenses: newExpensesTotal });
+      }
+      _this._addExpense();
+      const event_2 = 2;
+      _updatePoints(event_2, uid);
       this.setState({
-        addExpenseOffest: -200,
-        expenseTotalChange: 0,
+        expenseTotal: newExpensesTotal,
       });
+    } catch (e) {
+      Alert.alert(e);
     }
   }
 
-  showAddBudget() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 220;
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addBudgetOffset === -200) {
-      this.setState({ addBudgetOffset: offSet }); // Set to 0 for android
-    } else {
-      this.setState({
-        addBudgetOffset: -200,
-        budgetValueChange: 0,
+  _addExpense() {
+    const ref = this.props.Firebase.database().ref();
+    const userExpenseRef = ref.child('userReadable/userExpenses');
+    const userExpense = this.state.expenseTitleChange;
+    const amount = this.state.expenseValueChange;
+    const uid = this.props.Firebase.auth().currentUser.uid;
+
+    userExpenseRef.child(uid).push({
+      expense: userExpense,
+      amount,
+    }).then((snap) => {
+      userExpenseRef.child(`${uid}/${snap.key}`).update({
+        expenseKey: snap.key,
       });
-    }
+    });
+    this.toggleUpdateExpense();
   }
 
   handlePress() {
@@ -248,6 +165,11 @@ export default class BudgetSnapshot extends Component {
   }
 
   render() {
+    let progress = 0.01;
+    if (this.setProgess() < 1) {
+      progress = this.setProgess();
+    }
+
     return (
       <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
         <Text style={styles.titleText}>
@@ -255,9 +177,9 @@ export default class BudgetSnapshot extends Component {
         </Text>
         <View style={styles.budgetSnap}>
           <Progress.Bar
-            color={theme.accent}
+            color={'#ffc107'}
             height={1}
-            progress={(this.state.totalExpenses / this.state.budgetValue) / 273}
+            progress={progress}
             width={273}
             borderColor={'black'}
             unfilledColor={'#424242'}
