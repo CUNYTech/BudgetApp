@@ -159,7 +159,7 @@ export default class Expenses extends Component {
             />
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ backgroundColor: theme.bg }}>
+        <ScrollView style={{ backgroundColor: theme.bg }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 25 }}>
           { expensesView }
         </ScrollView>
         <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
@@ -234,8 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    marginTop: 1,
-    marginBottom: 1,
+    marginTop: 0.5,
     borderColor: 'transparent',
   },
   generalText: {
