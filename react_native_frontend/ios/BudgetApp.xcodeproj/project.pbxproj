@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -70,6 +71,8 @@
 		81F405FA0F6547789BE2FA34 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73C3B88C38BC4B71BC204A2E /* Comic Sans MS.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		83E4E72939B545999EF4E0F6 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6EC12AA12694C29A80181B2 /* rubicon-icon-font.ttf */; };
+		8DC6E48F56254807AB6D9423 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C720FBF41D9846D7B8A72A40 /* OFL.txt */; };
+		92F76BB01E9C490C00B727FC /* Icon-App-20x20.imageset in Resources */ = {isa = PBXBuildFile; fileRef = 92F76BAF1E9C490C00B727FC /* Icon-App-20x20.imageset */; };
 		954E3FCE5DC04CDDA12F8E25 /* Arial Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4238EF94E24A4043AEC35921 /* Arial Black.ttf */; };
 		97BA421F5C3044BE91091EE6 /* SanFrancisco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8A03A962D6D46569599492B /* SanFrancisco.ttf */; };
 		99D2B74B31324C2399FC4B1F /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61F348F48D844C639591D358 /* OpenSans-BoldItalic.ttf */; };
@@ -96,7 +99,6 @@
 		F6B0C9BEA07C4518AB3511AC /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13F20DBBBF264D498AB72E25 /* Zocial.ttf */; };
 		F8580DF7C7D64159B5BF88A5 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04AD9A9EE4034EFC99BEB123 /* FontAwesome.ttf */; };
 		FAD1F4A618A44C98AE133AFF /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0264DA00FDAA47678CB9BA92 /* OpenSans-Italic.ttf */; };
-		8DC6E48F56254807AB6D9423 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C720FBF41D9846D7B8A72A40 /* OFL.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,6 +400,7 @@
 		8894E3572C564E14B2220BC8 /* SanFranciscoBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFranciscoBold.ttf; path = "../node_modules/native-base/Fonts/SanFranciscoBold.ttf"; sourceTree = "<group>"; };
 		8C134681530B45A48631E79E /* Courier New.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Courier New.ttf"; path = "../node_modules/native-base/Fonts/Courier New.ttf"; sourceTree = "<group>"; };
 		90E9E54FE9D44A68BD129622 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
+		92F76BAF1E9C490C00B727FC /* Icon-App-20x20.imageset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Icon-App-20x20.imageset"; path = "BudgetApp/Images.xcassets/Icon-App-20x20.imageset"; sourceTree = "<group>"; };
 		A6EC12AA12694C29A80181B2 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		A86E5579261B47C2A353C05D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		B0E6A9DA01334CCE84125DB4 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../assets/fonts/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -409,6 +412,7 @@
 		BC2F3901D1F24986B98D06C2 /* Microsoft Sans Serif.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Microsoft Sans Serif.ttf"; path = "../node_modules/native-base/Fonts/Microsoft Sans Serif.ttf"; sourceTree = "<group>"; };
 		BF39856BA6384D28B26514C1 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Semibold.ttf"; path = "../assets/fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		C08E9E73DE414DEBBA06EBC7 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		C720FBF41D9846D7B8A72A40 /* OFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = OFL.txt; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; };
 		C8A03A962D6D46569599492B /* SanFrancisco.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SanFrancisco.ttf; path = "../node_modules/native-base/Fonts/SanFrancisco.ttf"; sourceTree = "<group>"; };
 		CD8E56D7A45847BA91653F78 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		CDF5A9988C9B4949B2FC45E8 /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../node_modules/native-base/Fonts/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -419,7 +423,6 @@
 		EBA8AF4D4B9A4EC9B63E2D92 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		F0CD45A386B24E208863DCFB /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		FC774E0C5B86497E9FB03193 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		C720FBF41D9846D7B8A72A40 /* OFL.txt */ = {isa = PBXFileReference; name = "OFL.txt"; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -626,6 +629,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				92F76BAF1E9C490C00B727FC /* Icon-App-20x20.imageset */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -1209,6 +1213,7 @@
 				CF5940BB9D014D0E9B5A6242 /* OpenSans-Light.ttf in Resources */,
 				47096DB66C764518A1217D28 /* OpenSans-LightItalic.ttf in Resources */,
 				4289FE4BA35941E799BF4B1D /* OpenSans-Regular.ttf in Resources */,
+				92F76BB01E9C490C00B727FC /* Icon-App-20x20.imageset in Resources */,
 				407B9AB90F544542981B02F3 /* OpenSans-Semibold.ttf in Resources */,
 				3E6417AB3C5C427FB79DAB1C /* OpenSans-SemiboldItalic.ttf in Resources */,
 				4B9365E495BB480C86734A62 /* Andale Mono.ttf in Resources */,
