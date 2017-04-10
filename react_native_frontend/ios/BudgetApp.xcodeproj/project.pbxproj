@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -97,6 +96,7 @@
 		F6B0C9BEA07C4518AB3511AC /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13F20DBBBF264D498AB72E25 /* Zocial.ttf */; };
 		F8580DF7C7D64159B5BF88A5 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 04AD9A9EE4034EFC99BEB123 /* FontAwesome.ttf */; };
 		FAD1F4A618A44C98AE133AFF /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0264DA00FDAA47678CB9BA92 /* OpenSans-Italic.ttf */; };
+		8DC6E48F56254807AB6D9423 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C720FBF41D9846D7B8A72A40 /* OFL.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -419,6 +419,7 @@
 		EBA8AF4D4B9A4EC9B63E2D92 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		F0CD45A386B24E208863DCFB /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		FC774E0C5B86497E9FB03193 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		C720FBF41D9846D7B8A72A40 /* OFL.txt */ = {isa = PBXFileReference; name = "OFL.txt"; path = "../node_modules/native-base/Fonts/OFL.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,6 +596,7 @@
 				29AEDF20DB7D4609A2267094 /* Octicons.ttf */,
 				E9ABFC20A50B49C08996FEC7 /* SimpleLineIcons.ttf */,
 				1AF8DE1C8C6449EE8C48AF43 /* Zocial.ttf */,
+				C720FBF41D9846D7B8A72A40 /* OFL.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1254,6 +1256,7 @@
 				A10C90E0F3E646F3B647472B /* Octicons.ttf in Resources */,
 				2424009B355A4E38A73E0F8B /* SimpleLineIcons.ttf in Resources */,
 				2D5E1B0F782A47D99F18DC9D /* Zocial.ttf in Resources */,
+				8DC6E48F56254807AB6D9423 /* OFL.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
