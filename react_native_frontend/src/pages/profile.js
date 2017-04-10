@@ -3,21 +3,22 @@ import { View, StyleSheet, TouchableOpacity, Image, Dimensions, ImagePickerIOS }
 import { Container, Content, Text, Left, Right, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
+import * as firebase from 'firebase';
 
 const { height, width } = Dimensions.get('window');
 
 export default class Points extends Component {
   constructor() {
     super();
-    this.state = { image: null };
+    this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg' };
   }
-
-  componentDidMount() {
-    this.pickImage();
-  }
+  //
+  // componentDidMount() {
+  //   this.pickImage();
+  // }
 
   pickImage() {
-    // openSelectDialog(config, successCallback, errorCallback);
+    const storageRef = firebase.storage().ref();
     ImagePickerIOS.openSelectDialog({}, (imageUri) => {
       this.setState({ image: imageUri });
     }, error => console.log(error));
@@ -50,10 +51,17 @@ export default class Points extends Component {
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
         <View style={{ flex: 1 }}>
-          {this.state.image ?
-            <Image style={{ flex: 1 }} source={{ uri: this.state.image }} /> :
-            null
-          }
+          <Image style={{ flex: 1 }} source={{ uri: this.state.image }} />
+        </View>
+        <View style={{ marginLeft: 20, position: 'relative' }}>
+          <TouchableOpacity>
+            <Icon
+              name="camera"
+              size={30}
+              color="white"
+              onPress={this.pickImage.bind(this)}
+            />
+          </TouchableOpacity>
         </View>
         <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
           <CardItem header style={{ backgroundColor: 'transparent' }}>
