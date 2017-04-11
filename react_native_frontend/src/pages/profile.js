@@ -16,9 +16,10 @@ export default class Points extends Component {
   }
 
   componentWillMount() {
+    const uid = this.props.Firebase.auth().currentUser.uid;
     const _this = this;
     const storageRef = this.props.Firebase.storage().ref();
-    storageRef.child('testImageName').getDownloadURL().then((url) => {
+    storageRef.child(`${uid}`).getDownloadURL().then((url) => {
       _this.setState({ chosenImage: url });
     });
   }
@@ -33,6 +34,7 @@ export default class Points extends Component {
 
   pickImage() {
     const _this = this;
+    const uid = this.props.Firebase.auth().currentUser.uid;
     const Blob = RNFetchBlob.polyfill.Blob;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     window.Blob = Blob;
@@ -44,11 +46,11 @@ export default class Points extends Component {
       .build(rnfbURI, { type: 'image/jpg;' })
       .then((blob) => {
         storageRef
-        .child('testImageName')
+        .child(`${uid}`)
         .put(blob, { contentType: 'image/jpg' })
         .then((snapshot) => {
           blob.close();
-          storageRef.child('testImageName').getDownloadURL().then((url) => {
+          storageRef.child(`${uid}`).getDownloadURL().then((url) => {
             _this.setState({ chosenImage: url });
           });
         });
