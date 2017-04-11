@@ -11,7 +11,16 @@ const { height, width } = Dimensions.get('window');
 export default class Points extends Component {
   constructor() {
     super();
-    this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg' };
+    this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
+      chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg' };
+  }
+
+  componentWillMount() {
+    const _this = this;
+    const storageRef = this.props.Firebase.storage().ref();
+    storageRef.child('testImageName').getDownloadURL().then((url) => {
+      _this.setState({ chosenImage: url });
+    });
   }
 
   cameraRoll() {
@@ -23,11 +32,13 @@ export default class Points extends Component {
 
 
   pickImage() {
+    const _this = this;
     const Blob = RNFetchBlob.polyfill.Blob;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     window.Blob = Blob;
     const storageRef = this.props.Firebase.storage().ref();
     const rnfbURI = RNFetchBlob.wrap(RNFetchBlob.fs.asset(this.state.image));
+
 
     Blob
       .build(rnfbURI, { type: 'image/jpg;' })
@@ -36,8 +47,10 @@ export default class Points extends Component {
         .child('testImageName')
         .put(blob, { contentType: 'image/jpg' })
         .then((snapshot) => {
-          Alert.alert('Firebase Done.');
           blob.close();
+          storageRef.child('testImageName').getDownloadURL().then((url) => {
+            _this.setState({ chosenImage: url });
+          });
         });
       })
     .catch((err) => {
@@ -73,7 +86,7 @@ export default class Points extends Component {
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
         <View style={{ flex: 1 }}>
-          <Image style={{ flex: 1 }} source={{ uri: this.state.image }} />
+          <Image style={{ flex: 1 }} source={{ uri: this.state.chosenImage }} />
         </View>
         <View style={{ marginLeft: 20, position: 'relative' }}>
           <TouchableOpacity>
