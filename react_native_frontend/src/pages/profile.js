@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
+import { _localRank } from '../utils/pointHelpers';
 
 const { height, width } = Dimensions.get('window');
 
@@ -13,7 +14,8 @@ export default class Points extends Component {
     super();
     this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
       chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
-      userName: '' };
+      userName: '',
+      userLocalRank: 0 };
   }
 
   componentWillMount() {
@@ -21,9 +23,79 @@ export default class Points extends Component {
     const userName = this.props.Firebase.auth().currentUser.displayName;
     const _this = this;
     const storageRef = this.props.Firebase.storage().ref();
+
+    this._localRank();
     storageRef.child(`${uid}`).getDownloadURL().then((url) => {
       _this.setState({ chosenImage: url, userName });
     });
+  }
+
+  async _localRank() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
+
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName });
+        });
+        return friendList;
+      })
+      .then((friendList) => {
+        userRankingRef.orderByChild('points').once('value').then((snap) => {
+          snap.forEach((snapshot) => {
+            leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+          });
+          return Promise.all(leaderBoard);
+        })
+          .then((leaderBoard) => {
+            const newleaderBoard = leaderBoard.reverse();
+            return newleaderBoard;
+          })
+          .then((newleaderBoard) => {
+            const friendRank = [];
+            friendList.forEach((element) => {
+              for (let i = 0; i < newleaderBoard.length; i++) {
+                if ((newleaderBoard[i][0] === `${element.displayName}`)) {
+                  friendRank.push([newleaderBoard[i][1], newleaderBoard[i][0]]);
+                }
+              }
+            });
+            newleaderBoard.forEach((element) => {
+              if (element[0] === user.displayName) {
+                friendRank.push([element[1], element[0]]);
+              }
+            });
+            function sortNumber(a, b) {
+              return b[0] - a[0];
+            }
+            const sortedFriends = friendRank.sort(sortNumber);
+            const rankings = [];
+            const ranks = Object.keys(friendRank);
+            ranks.forEach((ranked) => {
+              const name = sortedFriends[ranked][1];
+              const rank = +ranked + 1;
+              rankings.push([name, `${rank}`]);
+            });
+            return rankings;
+          })
+          .then((rankings) => {
+            const localRank = 0;
+            rankings.forEach((Rank) => {
+              if (Rank[0] === user.displayName) {
+                this.setState({ userLocalRank: Rank[1] });
+              }
+            });
+          });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   cameraRoll() {
@@ -42,7 +114,6 @@ export default class Points extends Component {
     window.Blob = Blob;
     const storageRef = this.props.Firebase.storage().ref();
     const rnfbURI = RNFetchBlob.wrap(RNFetchBlob.fs.asset(this.state.image));
-
 
     Blob
       .build(rnfbURI, { type: 'image/jpg;' })
@@ -112,15 +183,15 @@ export default class Points extends Component {
             </View>
             <View style={{ width: width * 0.3 }}>
               <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
-                10
+                {this.state.userLocalRank}
               </Text>
               <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
-                Local Ranks
+                Local Rank
               </Text>
             </View>
             <View style={{ width: width * 0.3 }}>
               <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
-                75th
+              76
               </Text>
               <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
                 World Rank
