@@ -121,26 +121,6 @@ export default class Friends extends Component {
     }
   }
 
-// USERS FRIENDS TO BE RENDERED ON PAGE WILL BE QUERY OF THE SORT BELOW
-
-// let payload=[];  // RESULT OF SEARCH INDEX or USERS FRIENDS TO BE THROWN TO RENDER
-
-// _updateFriends = () => {
-//   userFriends.child('2/friends').once('value').then(function(snap) {
-//     snap.forEach(function(snapshot){
-//       payload.push([snapshot.val().displayName, snapshot.val().uid]);
-//     }); return Promise.all(payload);
-//   }).then(function(payload){
-//       return payload
-//     })
-   //  .then(function(payload){  //PAYLOAD WILL HOLD UIDS
-   //        console.log(payload);
-   //     })
-
-
-   //  });
-  // }
-
   _searchUsers(searchString) {
     console.log(searchString);
     const ref = firebase.database().ref('/people');

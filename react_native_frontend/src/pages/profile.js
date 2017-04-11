@@ -12,15 +12,17 @@ export default class Points extends Component {
   constructor() {
     super();
     this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
-      chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg' };
+      chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
+      userName: '' };
   }
 
   componentWillMount() {
     const uid = this.props.Firebase.auth().currentUser.uid;
+    const userName = this.props.Firebase.auth().currentUser.displayName;
     const _this = this;
     const storageRef = this.props.Firebase.storage().ref();
     storageRef.child(`${uid}`).getDownloadURL().then((url) => {
-      _this.setState({ chosenImage: url });
+      _this.setState({ chosenImage: url, userName });
     });
   }
 
@@ -87,24 +89,16 @@ export default class Points extends Component {
           </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <View style={{ flex: 1 }}>
-          <Image style={{ flex: 1 }} source={{ uri: this.state.chosenImage }} />
-        </View>
-        <View style={{ marginLeft: 20, position: 'relative' }}>
-          <TouchableOpacity>
-            <Icon
-              name="camera"
-              size={30}
-              color="white"
-              onPress={this.cameraRoll.bind(this)}
-            />
-          </TouchableOpacity>
-        </View>
         <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
           <CardItem header style={{ backgroundColor: 'transparent' }}>
             <View style={styles.containerHeader}>
-              <Image style={styles.thumbnail} source={require('../images/logo.png')} />
-              <Text style={{ color: 'white' }}>Insert Name </Text>
+              <TouchableOpacity onPress={this.cameraRoll.bind(this)}>
+                <Image
+                  style={styles.icon}
+                  source={{ uri: this.state.chosenImage }}
+                />
+              </TouchableOpacity>
+              <Text style={{ color: 'white' }}>{this.state.userName} </Text>
             </View>
           </CardItem>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -179,5 +173,14 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 45,
     marginTop: 40,
+  },
+  icon: {
+    width: 80,
+    height: 80,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 40,
+    borderColor: 'transparent',
+    overflow: 'hidden',
   },
 });
