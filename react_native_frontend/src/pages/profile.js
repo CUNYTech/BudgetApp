@@ -15,7 +15,8 @@ export default class Points extends Component {
     this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
       chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
       userName: '',
-      userLocalRank: 0 };
+      userLocalRank: 0,
+      userGlobalRank: 0 };
   }
 
   componentWillMount() {
@@ -25,9 +26,49 @@ export default class Points extends Component {
     const storageRef = this.props.Firebase.storage().ref();
 
     this._localRank();
+    this._getBoard();
     storageRef.child(`${uid}`).getDownloadURL().then((url) => {
       _this.setState({ chosenImage: url, userName });
     });
+  }
+
+  async _getBoard() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
+
+      userRankingRef.orderByChild('points').once('value').then((snap) => {
+        snap.forEach((snapshot) => {
+          leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+        });
+        return Promise.all(leaderBoard);
+      })
+      .then((leaderBoard) => {
+        const newleaderBoard = leaderBoard.reverse();
+        return newleaderBoard;
+      })
+      .then((newleaderBoard) => {
+        const rankings = [];
+        const ranks = Object.keys(newleaderBoard);
+        ranks.forEach((ranked) => {
+          const name = newleaderBoard[ranked][0];
+          const rank = +ranked + 1;
+          rankings.push([name, `${rank}`]);
+        });
+        return rankings;
+      })
+      .then((rankings) => {
+        rankings.forEach((Rank) => {
+          if (Rank[0] === user.displayName) {
+            this.setState({ userGlobalRank: Rank[1] });
+          }
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async _localRank() {
@@ -191,7 +232,7 @@ export default class Points extends Component {
             </View>
             <View style={{ width: width * 0.3 }}>
               <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
-              76
+                {this.state.userGlobalRank}
               </Text>
               <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
                 World Rank
