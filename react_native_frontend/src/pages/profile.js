@@ -29,9 +29,14 @@ export default class Points extends Component {
     this._localRank();
     this._getBoard();
     this.setFriends();
-    storageRef.child(`${uid}`).getDownloadURL().then((url) => {
-      _this.setState({ chosenImage: url, userName });
-    });
+
+    if (this.state.chosenImage === 'https://static.pexels.com/photos/7613/pexels-photo.jpg') {
+      this.cameraRoll();
+    } else {
+      storageRef.child(`${uid}`).getDownloadURL().then((url) => {
+        _this.setState({ chosenImage: url, userName });
+      });
+    }
   }
 
   async setFriends() {
@@ -54,9 +59,8 @@ export default class Points extends Component {
             friends: value.length,
           });
         } else {
-          Alert.alert('Please add some friends!');
           _this.setState({
-            friends: [],
+            friends: 0,
           });
         }
       });
