@@ -16,7 +16,8 @@ export default class Points extends Component {
       chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
       userName: '',
       userLocalRank: 0,
-      userGlobalRank: 0 };
+      userGlobalRank: 0,
+      friends: 0 };
   }
 
   componentWillMount() {
@@ -27,9 +28,41 @@ export default class Points extends Component {
 
     this._localRank();
     this._getBoard();
+    this.setFriends();
     storageRef.child(`${uid}`).getDownloadURL().then((url) => {
       _this.setState({ chosenImage: url, userName });
     });
+  }
+
+  async setFriends() {
+    try {
+      const _this = this;
+      await this.props.Firebase.auth().currentUser;
+
+      const uid = this.props.Firebase.auth().currentUser.uid;
+      const ref = this.props.Firebase.database().ref();
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
+        });
+        return friendList;
+      }).then((value) => {
+        if ((value.length > 0)) {
+          _this.setState({
+            friends: value.length,
+          });
+        } else {
+          Alert.alert('Please add some friends!');
+          _this.setState({
+            friends: [],
+          });
+        }
+      });
+    } catch (e) {
+      console.log(error);
+    }
   }
 
   async _getBoard() {
@@ -216,7 +249,7 @@ export default class Points extends Component {
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <View style={{ width: width * 0.3 }}>
               <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
-                10
+                {this.state.friends}
               </Text>
               <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
                 Friends
