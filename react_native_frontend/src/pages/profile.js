@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Dimensions, ImagePickerIOS } from 'react-native';
+import { Alert, View, StyleSheet, TouchableOpacity, Image, Dimensions, ImagePickerIOS } from 'react-native';
 import { Container, Content, Text, Left, Right, Card, CardItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 const { height, width } = Dimensions.get('window');
 
@@ -12,17 +13,38 @@ export default class Points extends Component {
     super();
     this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg' };
   }
-  //
-  // componentDidMount() {
-  //   this.pickImage();
-  // }
 
-  pickImage() {
-    const storageRef = firebase.storage().ref();
+  cameraRoll() {
     ImagePickerIOS.openSelectDialog({}, (imageUri) => {
       this.setState({ image: imageUri });
+      this.pickImage();
     }, error => console.log(error));
   }
+
+
+  pickImage() {
+    const Blob = RNFetchBlob.polyfill.Blob;
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+    window.Blob = Blob;
+    const storageRef = this.props.Firebase.storage().ref();
+    const rnfbURI = RNFetchBlob.wrap(RNFetchBlob.fs.asset(this.state.image));
+
+    Blob
+      .build(rnfbURI, { type: 'image/jpg;' })
+      .then((blob) => {
+        storageRef
+        .child('testImageName')
+        .put(blob, { contentType: 'image/jpg' })
+        .then((snapshot) => {
+          Alert.alert('Firebase Done.');
+          blob.close();
+        });
+      })
+    .catch((err) => {
+      console.log('Blob err:', err);
+    });
+  }
+
 
   render() {
     return (
@@ -59,7 +81,7 @@ export default class Points extends Component {
               name="camera"
               size={30}
               color="white"
-              onPress={this.pickImage.bind(this)}
+              onPress={this.cameraRoll.bind(this)}
             />
           </TouchableOpacity>
         </View>
