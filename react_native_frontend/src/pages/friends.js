@@ -33,6 +33,7 @@ export default class Friends extends Component {
       searchBarOffset: 0,
       searchBarOffsetWrapper: 0,
       searchResults: [],
+      checker: '',
     };
   }
 
@@ -61,7 +62,7 @@ export default class Friends extends Component {
             friends: value,
           });
         } else {
-          Alert.alert('Please add some friends!');
+          // Alert.alert('Please add some friends!');
           _this.setState({
             friends: [],
           });
@@ -162,17 +163,41 @@ export default class Friends extends Component {
     }
   }
 
-  _addFriend(displayName, uid) {
+
+  writer(displayName, uid) {
     const ref = firebase.database().ref();
     const currentUid = firebase.auth().currentUser.uid;
     const userFriendsRef = ref.child('userReadable/userFriends');
 
-    userFriendsRef.child(`${currentUid}/${uid}`).set({
-      displayName,
-      uid,
+    if (this.state.checker) {
+      Alert.alert('You are already friends with this person.');
+    } else {
+      userFriendsRef.child(`${currentUid}/${uid}`).set({
+        displayName,
+        uid,
+      });
+
+      this.setFriends();
+      this.showSearchBar();
+    }
+  }
+
+
+  async _checkFriend(displayName, uid) {
+    const ref = firebase.database().ref();
+    const currentUid = firebase.auth().currentUser.uid;
+    const userFriendsRef = ref.child('userReadable/userFriends');
+
+    // Sets checker to TRUE if ARE FRIENDS and FALSE if NOT FRIENDS
+    await userFriendsRef.child(`${currentUid}/${uid}`).once('value').then((snap) => {
+      const bool1 = Boolean(snap.val().displayName);
+      this.setState({ checker: bool1 });
+    }).catch((e) => {
+      const bool2 = Boolean(!e.toString().includes('null'));
+      this.setState({ checker: bool2 });
     });
-    this.setFriends();
-    this.showSearchBar();
+
+    this.writer(displayName, uid);
   }
 
   showSearchBar() {
@@ -225,7 +250,7 @@ export default class Friends extends Component {
           <Icon name="user-circle-o" size={50} color="black" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
           <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
           <Text style={{ textAlign: 'left', color: 'black' }} > {element.displayName} </Text>
-          <TouchableOpacity onPress={_this._addFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity onPress={_this._checkFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
             <Icon name="plus-circle" size={25} color="#ffc107" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
         </View>,
