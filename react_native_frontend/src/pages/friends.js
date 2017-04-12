@@ -176,7 +176,7 @@ export default class Friends extends Component {
         displayName,
         uid,
       });
-
+      Alert.alert(`You and ${displayName} are now friends.`);
       this.setFriends();
       this.showSearchBar();
     }
