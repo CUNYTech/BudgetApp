@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Animated, Alert } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
@@ -27,40 +27,49 @@ export default class Login extends Component {
 
     // User Login Authentication
   async _login() {
-    try {
-      await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.com')) || (this.state.password === '')) {
+      Alert.alert('Please type in a valid email or password.');
+    } else {
+      try {
+        await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 
-      const user = this.props.Firebase.auth().currentUser;
-      let name,
-        email,
-        photoUrl,
-        uid,
-        emailVerified;
+        const user = this.props.Firebase.auth().currentUser;
+        let name,
+          email,
+          photoUrl,
+          uid,
+          emailVerified;
 
-      if (user) {
-        uid = user.uid;
-      } else {
+        if (user) {
+          uid = user.uid;
+        } else {
               // No user is signed in.
-      }
+        }
 
-      const event_10 = 10;
-      _updatePoints(event_10, uid);
+        const event_10 = 10;
+        _updatePoints(event_10, uid);
 
-      setTimeout(() => Actions.dashboard(), 0);
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      if (errorCode === 'auth/user-not-found') {
-        this.setState({
-          errors: '',
-        });
-        Actions.register({ errors: 'Email has not been registered. Please sign up.' });
-      } else {
-        console.log(errorCode);
-        console.log(errorMessage);
-        this.setState({
-          errors: 'Invalid email or password',
-        });
+        setTimeout(() => Actions.dashboard(), 0);
+      } catch (error) {
+        console.log(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if (errorMessage === 'auth/invalid-email') {
+          this.setState({
+            errors: 'Email invalid.',
+          });
+          Actions.register({ errors: 'Email has not been registered. Please sign up.' });
+        } else if (errorMessage === 'auth/user-not-found') {
+          this.setState({
+            errors: 'User not found.',
+          });
+        } else {
+          console.log(errorCode);
+          console.log(errorMessage);
+          this.setState({
+            errors: 'Please try to login again.',
+          });
+        }
       }
     }
   }
