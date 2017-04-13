@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
+import { Image, View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase';
 import { getPlatformValue } from '../utils';
@@ -53,7 +53,7 @@ export default class Friends extends Component {
       userFriendsRef.orderByKey().once('value').then((snap) => {
         const friendList = [];
         snap.forEach((snapshot) => {
-          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
+          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid, photoUrl: snapshot.val().photoUrl });
         });
         return friendList;
       }).then((value) => {
@@ -139,7 +139,7 @@ export default class Friends extends Component {
       ref.orderByChild('displayName').startAt(searchString).limitToFirst(10).once('value')
         .then((snap) => {
           snap.forEach((snapshot) => {
-            people.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
+            people.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid, photoUrl: snapshot.val().photoUrl });
           });
           return Promise.all(people);
         }).then((people) => {
@@ -164,7 +164,7 @@ export default class Friends extends Component {
   }
 
 
-  writer(displayName, uid) {
+  writer(displayName, uid, photoUrl) {
     const ref = firebase.database().ref();
     const currentUid = firebase.auth().currentUser.uid;
     const userFriendsRef = ref.child('userReadable/userFriends');
@@ -175,6 +175,8 @@ export default class Friends extends Component {
       userFriendsRef.child(`${currentUid}/${uid}`).set({
         displayName,
         uid,
+        photoUrl,
+
       });
       Alert.alert(`You and ${displayName} are now friends.`);
       this.setFriends();
@@ -183,7 +185,7 @@ export default class Friends extends Component {
   }
 
 
-  async _checkFriend(displayName, uid) {
+  async _checkFriend(displayName, uid, photoUrl) {
     const ref = firebase.database().ref();
     const currentUid = firebase.auth().currentUser.uid;
     const userFriendsRef = ref.child('userReadable/userFriends');
@@ -197,7 +199,7 @@ export default class Friends extends Component {
       this.setState({ checker: bool2 });
     });
 
-    this.writer(displayName, uid);
+    this.writer(displayName, uid, photoUrl);
   }
 
   showSearchBar() {
@@ -222,11 +224,9 @@ export default class Friends extends Component {
     this.state.friends.forEach((element) => {
       users.push(
         <TouchableOpacity key={i} activeOpacity={0.8} style={{ backgroundColor: 'black', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#424242', paddingTop: 5, paddingBottom: 5 }}>
-          <Icon
-            name="user-circle-o"
-            size={50}
-            color="rgba(0,0,0,.5)"
-            style={{ marginLeft: 10, flex: 0, alignItems: 'flex-end', borderRadius: 25, borderColor: '#ffc107', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'white' }}
+          <Image
+            style={styles.icon}
+            source={{ uri: element.photoUrl }}
           />
           <Text style={{ flex: 2, textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
           <View style={{ flex: 1, marginRight: 10 }}>
@@ -247,10 +247,13 @@ export default class Friends extends Component {
     this.state.searchResults.forEach((element) => {
       search.push(
         <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
-          <Icon name="user-circle-o" size={50} color="black" style={{ alignItems: 'flex-end', borderRadius: 25, borderColor: 'transparent', borderWidth: 1, width: 50, height: 50, overflow: 'hidden', backgroundColor: 'transparent' }} />
+          <Image
+            style={styles.icon}
+            source={{ uri: element.photoUrl }}
+          />
           <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
           <Text style={{ textAlign: 'left', color: 'black' }} > {element.displayName} </Text>
-          <TouchableOpacity onPress={_this._checkFriend.bind(_this, element.displayName, element.uid)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity onPress={_this._checkFriend.bind(_this, element.displayName, element.uid, element.photoUrl)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
             <Icon name="plus-circle" size={25} color="#ffc107" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
         </View>,
@@ -347,5 +350,15 @@ const styles = StyleSheet.create({
     marginLeft: 55,
     overflow: 'hidden',
     justifyContent: 'center',
+  },
+  icon: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: theme.accent,
+    marginLeft: 10,
+    overflow: 'hidden',
   },
 });

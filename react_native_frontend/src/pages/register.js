@@ -56,6 +56,7 @@ export default class Register extends Component {
     const ref = this.props.Firebase.database().ref();
 
         // Pull user profile
+        // THIS IS WHERE TO PULL PHOTO URL AND THEN WRITE IT TO SEARCH INDEX FOR FRIENDS PAGE
     let name,
       email,
       photoUrl,
@@ -107,10 +108,11 @@ export default class Register extends Component {
       savings: 0,
     }), 0);
 
-
+     // THIS IS WHERE TO ADD PHOTOURL TO BE WRITEN TO PEOPLE SEARCH INDEX
     setTimeout(() => peopleRef.child(this.state.username).set({
       displayName: this.state.username,
       uid,
+      photoUrl: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
     }), 0);
   }
 

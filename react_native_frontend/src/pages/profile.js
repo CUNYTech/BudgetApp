@@ -177,6 +177,8 @@ export default class Points extends Component {
   }
 
   cameraRoll() {
+    const uid = this.props.Firebase.auth().currentUser.uid;
+    // REFERENCE PLACE IN PE
     ImagePickerIOS.openSelectDialog({}, (imageUri) => {
       this.setState({ image: imageUri });
       this.pickImage();
@@ -186,7 +188,10 @@ export default class Points extends Component {
 
   pickImage() {
     const _this = this;
+    const ref = this.props.Firebase.database().ref();
+    const peopleRef = ref.child('/people');
     const uid = this.props.Firebase.auth().currentUser.uid;
+    const displayName = this.props.Firebase.auth().currentUser.displayName;
     const Blob = RNFetchBlob.polyfill.Blob;
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     window.Blob = Blob;
@@ -203,6 +208,9 @@ export default class Points extends Component {
           blob.close();
           storageRef.child(`${uid}`).getDownloadURL().then((url) => {
             _this.setState({ chosenImage: url });
+            peopleRef.child(displayName).update({
+              photoUrl: url,
+            });
           });
         });
       })

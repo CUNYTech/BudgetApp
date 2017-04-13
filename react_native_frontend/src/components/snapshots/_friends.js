@@ -36,7 +36,7 @@ export default class FriendsSnapshot extends Component {
       userFriendsRef.orderByKey().once('value').then((snap) => {
         const friendList = [];
         snap.forEach((snapshot) => {
-          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
+          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid, photoUrl: snapshot.val().photoUrl });
         });
         return friendList;
       }).then((value) => {
@@ -68,7 +68,7 @@ export default class FriendsSnapshot extends Component {
         <View key={i} style={{ alignItems: 'center', margin: 10 }}>
           <Image
             style={styles.icon}
-            source={{ uri: 'https://static.pexels.com/photos/343717/pexels-photo-343717.jpeg' }}
+            source={{ uri: element.photoUrl }}
           />
           <Text style={styles.friendList}> {element.displayName} </Text>
           <Text style={styles.friendList}> 400 pts </Text>
