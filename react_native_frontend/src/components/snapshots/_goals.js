@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Goals } from '../../pages/goals.js';
+import IndiGoal from '../goalHelpers/indiGoal.js';
 import * as Progress from 'react-native-progress';
 
 const theme = {
@@ -27,35 +28,48 @@ export default class GoalsSnapshot extends Component {
   }
 
   render() {
+    // NEW CODE TO REPLACE PLACEHOLDER
     let i = 1;
     const goals = [];
-    const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"];
-    myGoals.forEach((element) => {
+
+    this.state.goals.forEach((element) => {
       goals.push(
-        <View key={i} style={{ marginTop: 5 }}>
-          <Text style={styles.goalText}>
-            { element }
-          </Text>
-          <View style={styles.goal} >
-            <Progress.Bar
-              color={theme.accent}
-              height={1}
-              progress={100 / 335}
-              width={335}
-              borderWidth={0}
-              unfilledColor="rgba(255,255,255,.5)"
-            />
-          </View>
-        </View>,
-      );
+        <IndiGoal updateGoals={this._setGoals.bind(this)} element={element} Firebase={this.props.Firebase} />,
+     );
       i += 1;
     });
+
+    // let i = 1;
+    // const goals = [];
+    // const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"];
+    // myGoals.forEach((element) => {
+    //   goals.push(
+    //     <View key={i} style={{ marginTop: 5 }}>
+    //       <Text style={styles.goalText}>
+    //         { element }
+    //       </Text>
+    //       <View style={styles.goal} >
+    //         <Progress.Bar
+    //           color={theme.accent}
+    //           height={1}
+    //           progress={100 / 335}
+    //           width={335}
+    //           borderWidth={0}
+    //           unfilledColor="rgba(255,255,255,.5)"
+    //         />
+    //       </View>
+    //     </View>,
+    //   );
+    //   i += 1;
+    // });
     return (
       <TouchableOpacity style={styles.section} onPress={this.handlePress.bind(this)}>
         <Text style={styles.headerText}>
           GOALS
         </Text>
-        { goals }
+        <View style={styles.section}>
+          { goals }
+        </View>
       </TouchableOpacity>
     );
   }
