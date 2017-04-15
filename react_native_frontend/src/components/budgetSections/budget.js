@@ -85,8 +85,7 @@ export default class BudgetSection extends Component {
   }
 
   setProgess() {
-    const { budget, totalExpenses } = this.state;
-    return (+totalExpenses / +budget);
+    return (this.props.expenseTotal / this.state.budget);
   }
 
   async _updateBudget() {
@@ -116,9 +115,15 @@ export default class BudgetSection extends Component {
   toggleUpdateBudget() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.budgetModalOffset === 0) {
-      this.setState({ budgetModalOffset: height * 0.3 });
+      this.setState({
+        budgetModalOffset: height * 0.3,
+        budgetValueChange: '',
+      });
     } else {
-      this.setState({ budgetModalOffset: 0 });
+      this.setState({
+        budgetModalOffset: 0,
+        budgetValueChange: '',
+      });
     }
   }
 
@@ -126,6 +131,8 @@ export default class BudgetSection extends Component {
     let progress = 0.01;
     if (this.setProgess() < 1) {
       progress = this.setProgess();
+    } else {
+      progress = 1;
     }
 
     return (

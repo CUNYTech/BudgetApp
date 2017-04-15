@@ -32,36 +32,16 @@ export default class Goals extends Component {
     super();
     this.state = {
       addGoalOffset: -300,
-      goal: 'New Goal Title',
+      addExpenseOffest: -200,
+      goal: '',
       amount: 0,
       saved: 0,
       goals: [],
-      goalKey: '',
+      activeGoalKey: '',
+      activeGoalAmount: '',
+      activeGoalTitle: '',
+      newProgressChange: '',
     };
-  }
-
-  // function to be called upon users pressing of button component
-  _addGoal() {
-    const ref = this.props.Firebase.database().ref();
-    const userGoalsRef = ref.child('userReadable/userGoals');
-    const user = this.props.Firebase.auth().currentUser;
-    const userGoal = this.state.goal;
-    const amount = this.state.amount;
-    const uid = this.props.Firebase.auth().currentUser.uid;
-
-    userGoalsRef.child(uid).push({
-      goal: userGoal,
-      amount,
-    }).then((snap) => {
-      console.log(snap.key);
-      userGoalsRef.child(`${uid}/${snap.key}`).update({
-        goalKey: snap.key,
-      });
-    });
-
-
-    this._showAddGoal();
-    this._setGoals();
   }
 
   componentDidMount() {
@@ -77,8 +57,7 @@ export default class Goals extends Component {
     const userGoalsRef = ref.child('userReadable/userGoals');
     userGoalsRef.child(uid).orderByKey().once('value').then((snap) => {
       snap.forEach((snapshot) => {
-        console.log(snapshot.val().goalKey);
-        userGoals.push({ goalKey: snapshot.val().goalKey, goal: snapshot.val().goal, amount: snapshot.val().amount });
+        userGoals.push({ goalKey: snapshot.val().goalKey, goal: snapshot.val().goal, amount: snapshot.val().amount, progress: snapshot.val().progress });
       });
       return Promise.all(userGoals);
     }).then((userGoals) => {
@@ -88,6 +67,81 @@ export default class Goals extends Component {
     });
   }
 
+  _addGoal() {
+    const ref = this.props.Firebase.database().ref();
+    const userGoalsRef = ref.child('userReadable/userGoals');
+    const user = this.props.Firebase.auth().currentUser;
+    const userGoal = this.state.goal;
+    const amount = this.state.amount;
+    const uid = this.props.Firebase.auth().currentUser.uid;
+
+    userGoalsRef.child(uid).push({
+      goal: userGoal,
+      amount,
+      progress: 0,
+    }).then((snap) => {
+      console.log(snap.key);
+      userGoalsRef.child(`${uid}/${snap.key}`).update({
+        goalKey: snap.key,
+      });
+    });
+    this._showAddGoal();
+    this._setGoals();
+  }
+
+  async _editGoals() {
+    console.log('inside edit', this.state.activeGoalKey);
+
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const _this = this;
+      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      const userGoalsProgressRef = ref.child(`userReadable/userGoals/${uid}/`);
+
+      const newProgressChange = +this.state.newProgressChange;
+      const newProgressTotal = +this.state.newProgressChange + +this.state.activeGoalProgress;
+
+      this.setState({ progress: newProgressTotal });
+      if (newProgressTotal > 0) {
+        userGoalsProgressRef.child(this.state.activeGoalKey).update({ progress: `${newProgressTotal}` });
+        userGoalsProgressRef.once('value').then((snap) => {
+          const updatedValue = snap.val().progress;
+          return updatedValue;
+        }).then((value) => {
+          this.setState({ progress: value });
+        });
+      }
+    } catch (e) {
+      Alert.alert(e);
+      console.log(e);
+    }
+    this._setGoals();
+    this.toggleEditGoal();
+  }
+
+  _showAddGoal() {
+    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
+    if (this.state.addGoalOffset == -300) {
+      this.setState({
+        addGoalOffset: offSet,
+        addExpenseOffest: -200,
+        expenseTotalChange: '',
+        activeGoalKey: '',
+        activeGoalAmount: '',
+        activeGoalTitle: '',
+        activeGoalProgress: '',
+      }); // Set to 0 for android
+    } else {
+      this.setState({
+        addGoalOffset: -300,
+        expenseTotalChange: 0,
+      });
+    }
+  }
+
 
   handleChangeInput(stateName, text) {
     this.setState({
@@ -95,16 +149,27 @@ export default class Goals extends Component {
     });
   }
 
-
-  _showAddGoal() {
+  toggleEditGoal(element) {
     const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addGoalOffset == -300) {
-      this.setState({ addGoalOffset: offSet }); // Set to 0 for android
-    } else {
+    if (this.state.addExpenseOffest === -200) {
       this.setState({
+        addExpenseOffest: offSet,
+        activeGoalKey: element.goalKey,
+        activeGoalAmount: element.amount,
+        activeGoalTitle: element.goal,
+        activeGoalProgress: element.progress,
         addGoalOffset: -300,
         expenseTotalChange: 0,
+      }); // Set to 0 for android
+    } else {
+      this.setState({
+        addExpenseOffest: -200,
+        expenseTotalChange: '',
+        activeGoalKey: '',
+        activeGoalAmount: '',
+        activeGoalTitle: '',
+        activeGoalProgress: '',
       });
     }
   }
@@ -115,7 +180,7 @@ export default class Goals extends Component {
 
     this.state.goals.forEach((element) => {
       goals.push(
-        <IndiGoal updateGoals={this._setGoals.bind(this)} element={element} Firebase={this.props.Firebase} />,
+        <IndiGoal updateGoals={this._setGoals.bind(this)} toggleEditGoal={this.toggleEditGoal.bind(this, element)} element={element} Firebase={this.props.Firebase} />,
      );
       i += 1;
     });
@@ -179,6 +244,7 @@ export default class Goals extends Component {
 
             <TextInput
               style={{ bottom: 50, right: 70, height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+              placeholder="New Goal"
               onChangeText={this.handleChangeInput.bind(this, 'goal')}
               value={`${this.state.goal}`}
             />
@@ -193,6 +259,43 @@ export default class Goals extends Component {
             <Text style={{ textAlign: 'center', color: 'white' }}>
                   ADD
                 </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: this.state.addExpenseOffest,
+            width: 300,
+            height: 200,
+            left: 35,
+            borderWidth: 1,
+            borderRadius: 15,
+            borderColor: 'black',
+            backgroundColor: 'black',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={{ textAlign: 'center', color: '#424242' }}>
+            { this.state.activeGoalTitle }
+          </Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
+            <Text style={{ color: 'white', fontSize: 35 }}>
+            $
+          </Text>
+            <TextInput
+              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+              placeholder="Add to Goal"
+              onChangeText={newProgressChange => this.setState({ newProgressChange })}
+              value={`${this.state.newProgressChange}`}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={this._editGoals.bind(this)}
+            style={styles.addExpenseButton}
+          >
+            <Text style={{ textAlign: 'center', color: 'white' }}>
+            UPDATE
+          </Text>
           </TouchableOpacity>
         </View>
       </View>
