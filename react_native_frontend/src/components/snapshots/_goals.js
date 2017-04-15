@@ -23,45 +23,90 @@ export default class GoalsSnapshot extends Component {
     };
   }
 
+  componentWillMount() {
+    this._setGoals();
+  }
+
+  _setGoals() {
+    const _this = this;
+    const userGoals = [];
+    const ref = _this.props.Firebase.database().ref();
+    const uid = _this.props.Firebase.auth().currentUser.uid;
+
+    const userGoalsRef = ref.child('userReadable/userGoals');
+    userGoalsRef.child(uid).orderByKey().once('value').then((snap) => {
+      snap.forEach((snapshot) => {
+        userGoals.push({ goalKey: snapshot.val().goalKey, goal: snapshot.val().goal, amount: snapshot.val().amount, progress: snapshot.val().progress });
+      });
+      return Promise.all(userGoals);
+    }).then((userGoals) => {
+      _this.setState({
+        goals: userGoals,
+      });
+    });
+  }
+
   handlePress() {
     Actions.goals();
   }
 
   render() {
-    // NEW CODE TO REPLACE PLACEHOLDER
     let i = 1;
     const goals = [];
 
-    this.state.goals.forEach((element) => {
-      goals.push(
-        <IndiGoal updateGoals={this._setGoals.bind(this)} element={element} Firebase={this.props.Firebase} />,
-     );
-      i += 1;
-    });
+    if (this.state.goals.length > 3) {
+      i -= 1;
+      while (i < 3) {
+        goals.push(
+          <View key={i + 1} style={{ marginTop: 5 }}>
+            <Text style={styles.goalText}>
+              { this.state.goals[i].goal }
+            </Text>
+            <View style={styles.goal} >
+              <Progress.Bar
+                color={theme.accent}
+                height={1}
+                progress={this.state.goals[i].progress / this.state.goals[i].amount}
+                width={335}
+                borderWidth={0}
+                unfilledColor="rgba(255,255,255,.5)"
+              />
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 310, alignSelf: 'center' }}>
+              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].progress}</Text>
+              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].amount}</Text>
+            </View>
+          </View>,
+        );
+        i += 1;
+      }
+    } else {
+      this.state.goals.forEach((element) => {
+        goals.push(
+          <View key={i} style={{ marginTop: 5 }}>
+            <Text style={styles.goalText}>
+              { element.goal }
+            </Text>
+            <View style={styles.goal} >
+              <Progress.Bar
+                color={theme.accent}
+                height={1}
+                progress={element.progress / element.amount}
+                width={335}
+                borderWidth={0}
+                unfilledColor="rgba(255,255,255,.5)"
+              />
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 310, alignSelf: 'center' }}>
+              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.progress}</Text>
+              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.amount}</Text>
+            </View>
+          </View>,
+        );
+        i += 1;
+      });
+    }
 
-    // let i = 1;
-    // const goals = [];
-    // const myGoals = ['Paris Trip', "Yeezy's", "Mac 'n' Cheese"];
-    // myGoals.forEach((element) => {
-    //   goals.push(
-    //     <View key={i} style={{ marginTop: 5 }}>
-    //       <Text style={styles.goalText}>
-    //         { element }
-    //       </Text>
-    //       <View style={styles.goal} >
-    //         <Progress.Bar
-    //           color={theme.accent}
-    //           height={1}
-    //           progress={100 / 335}
-    //           width={335}
-    //           borderWidth={0}
-    //           unfilledColor="rgba(255,255,255,.5)"
-    //         />
-    //       </View>
-    //     </View>,
-    //   );
-    //   i += 1;
-    // });
     return (
       <TouchableOpacity style={styles.section} onPress={this.handlePress.bind(this)}>
         <Text style={styles.headerText}>
