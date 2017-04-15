@@ -115,9 +115,15 @@ export default class BudgetSection extends Component {
   toggleUpdateBudget() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
     if (this.state.budgetModalOffset === 0) {
-      this.setState({ budgetModalOffset: height * 0.3 });
+      this.setState({
+        budgetModalOffset: height * 0.3,
+        budgetValueChange: '',
+      });
     } else {
-      this.setState({ budgetModalOffset: 0 });
+      this.setState({
+        budgetModalOffset: 0,
+        budgetValueChange: '',
+      });
     }
   }
 

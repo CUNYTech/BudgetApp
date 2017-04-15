@@ -89,10 +89,12 @@ export default class Savings extends Component {
     if (this.state.modalOffset === height * 0.30) {
       this.setState({
         modalOffset: 0,
+        savingValueChange: '',
       });
     } else {
       this.setState({
         modalOffset: height * 0.30,
+        savingValueChange: '',
       });
     }
   }

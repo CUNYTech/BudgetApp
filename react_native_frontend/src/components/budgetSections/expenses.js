@@ -75,11 +75,13 @@ export default class Expenses extends Component {
       this.setState({
         expenseModalOffset: height * 0.5,
         expenseValueChange: '',
+        expenseTitleChange: '',
       });
     } else {
       this.setState({
         expenseModalOffset: 0,
         expenseValueChange: '',
+        expenseTitleChange: '',
       });
     }
   }
