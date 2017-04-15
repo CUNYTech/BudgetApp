@@ -85,8 +85,7 @@ export default class BudgetSection extends Component {
   }
 
   setProgess() {
-    const { budget, totalExpenses } = this.state;
-    return (+totalExpenses / +budget);
+    return (this.props.expenseTotal / this.state.budget);
   }
 
   async _updateBudget() {
@@ -126,6 +125,8 @@ export default class BudgetSection extends Component {
     let progress = 0.01;
     if (this.setProgess() < 1) {
       progress = this.setProgess();
+    } else {
+      progress = 1;
     }
 
     return (
