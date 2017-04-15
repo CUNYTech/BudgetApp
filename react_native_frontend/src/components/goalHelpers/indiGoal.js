@@ -23,294 +23,30 @@ export default class IndiGoal extends Component {
   constructor() {
     super();
     this.state = {
-      addGoalOffset: -300,
-      goal: 'New Goal Title',
-      amount: 0,
-      saved: 0,
-      goals: [],
-      progress: 0,
-      expenseTotal: 0,
-      expenseTotalChange: '0',
-      addExpenseOffest: -1000,
-      addBudgetOffset: -200,
-      budgetValue: 0,
-      budgetValueChange: '0',
-      budgetTracker: {
-        margin: 0,
-      },
     };
   }
 
-  componentWillMount() {
-    this.setBudget();
-    this.setExpense();
-  }
-  componentDidMount() {
-  }
-
-  async setBudget() {
-    try {
-      const _this = this;
-      const expenses = this.state.expenseTotal;
-      const fixedBudget = this.state.budgetValue;
-      const budgetTrackerWidth = 273;
-
-      await this.props.Firebase.auth().currentUser;
-
-      const uid = this.props.Firebase.auth().currentUser.uid;
-      const ref = this.props.Firebase.database().ref();
-      // const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-      const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
-
-      userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
-        const currentValue = snap.val().amount;
-        return currentValue;
-      }).then((value) => {
-        if ((expenses / value) < 1) {
-          _this.setState({
-            budgetValue: value,
-            budgetTracker: {
-              margin: ((expenses / value) * budgetTrackerWidth),
-            },
-          });
-        } else if (fixedBudget === 0) {
-          Alert.alert('Please set a monthly budget.');
-          _this.setState({
-            budgetTracker: {
-              margin: 0,
-            },
-          });
-        } else {
-          Alert.alert('Expenses exceed budget. Please set a new, higher monthly budget.');
-          _this.setState({
-            budgetTracker: {
-              margin: (budgetTrackerWidth),
-            },
-          });
-        }
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  _showAddGoal() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addGoalOffset == -300) {
-      this.setState({ addGoalOffset: offSet }); // Set to 0 for android
-    } else {
-      this.setState({
-        addGoalOffset: -300,
-        expenseTotalChange: 0,
-      });
-    }
-  }
-
-  async _updateBudget() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-      const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-
-      const newBudgetValue = +this.state.budgetValueChange;
-      const newBudgetTotal = +this.state.budgetValueChange + +this.state.budgetValue;
-
-      const _this = this;
-      const budgetTrackerWidth = 273;
-
-      if (newBudgetValue > 0) {
-        // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userBudgetRef.update({ budget: newBudgetTotal });
-        userBudgetRef.once('value').then((snap) => {
-          const updatedValue = snap.val().budget;
-          return updatedValue;
-        }).then((value) => {
-          if ((_this.state.expenseTotal / value) < 1) {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              budgetValue: value,
-              budgetTracker: {
-                margin: ((_this.state.expenseTotal / value) * budgetTrackerWidth),
-              },
-            });
-          } else {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              budgetValue: value,
-              budgetTracker: {
-                margin: 273,
-              },
-            });
-          }
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-    this.showAddBudget();
-  }
-
-  async setExpense() {
-    try {
-      _this.setState({ progress: 0 });
-      console.log(this.props.element.goalKey);
-      const ref = this.props.Firebase.database().ref();
-      const uid = this.props.Firebase.auth().currentUser.uid;
-      const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
-      const _this = this;
-
-      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-      // const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
-
-      await userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
-        const updatedValue = snap.val().amount;
-        return updatedValue;
-      }).then((updatedValue) => {
-        _this.setState({
-          budgetValue: updatedValue,
-        });
-      });
-
-      const fixedBudget = this.state.budgetValue;
-      const budgetTrackerWidth = 273;
-
-      userGoalsRef.child(this.props.element.goalKey).once('value').then((snap) => {
-        const currentValue = snap.val().progress;
-        _this.setState({ progress: currentValue });
-        return currentValue;
-      }).then((currentValue) => {
-        if (((currentValue / fixedBudget) < 1) && (fixedBudget != 0) && (currentValue != 0)) {
-          _this.setState({
-            progress: currentValue,
-            budgetTracker: {
-              margin: ((currentValue / fixedBudget) * budgetTrackerWidth),
-            },
-          });
-        } else if (fixedBudget === 0) {
-          _this.setState({
-            budgetTracker: {
-              margin: 0,
-            },
-          });
-        } else {
-          _this.setState({
-            expenseTotal: currentValue,
-            budgetTracker: {
-              margin: (budgetTrackerWidth),
-            },
-          });
-        }
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-
-  async _updateExpenses() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-      const _this = this;
-      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
-      const userGoalsProgressRef = ref.child(`userReadable/userGoals/${uid}/`);
-
-      const newExpenseValue = +this.state.expenseTotalChange;
-      const newExpensesTotal = +this.state.expenseTotalChange + +this.state.expenseTotal;
-
-      const budgetTrackerWidth = 273;
-      const fixedBudget = _this.state.budgetValue;
-
-      this.setState({ progress: newExpensesTotal });
-      if (newExpenseValue > 0) {
-        console.log(this.props.element.goalKey);
-      // let curentUser = this.props.Firebase.database().ref().child(uid);
-        userGoalsProgressRef.child(this.props.element.goalKey).update({ progress: `${newExpensesTotal}` });
-
-        userGoalsProfressRef.once('value').then((snap) => {
-          const updatedValue = snap.val().progress;
-          return updatedValue;
-        }).then((value) => {
-          if (((value / fixedBudget) < 1) && (fixedBudget != 0)) {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              expenseTotal: value,
-              budgetTracker: {
-                margin: ((value / fixedBudget) * budgetTrackerWidth),
-              },
-            });
-          } else if (fixedBudget === 0) {
-            _this.setState({
-              budgetTracker: {
-                margin: 0,
-              },
-            });
-          } else {
-            LayoutAnimation.configureNext(CustomLayoutAnimation);
-            _this.setState({
-              expenseTotal: value,
-              budgetTracker: {
-                margin: 273,
-              },
-            });
-          }
-        });
-      }
-      this.showAddExpense();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  showAddExpense() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addExpenseOffest === -200) {
-      this.setState({ addExpenseOffest: offSet }); // Set to 0 for android
-    } else {
-      this.setState({
-        addExpenseOffest: -200,
-        expenseTotalChange: 0,
-      });
-    }
-  }
-
-  showAddBudget() {
+  deleteGoal() {
     const ref = this.props.Firebase.database().ref();
     const uid = this.props.Firebase.auth().currentUser.uid;
     const userGoalsRef = ref.child(`userReadable/userGoals/${uid}`);
     userGoalsRef.child(this.props.element.goalKey).remove();
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addBudgetOffset === -200) {
-      this.setState({ addBudgetOffset: offSet }); // Set to 0 for android
-    } else {
-      this.setState({
-        addBudgetOffset: -200,
-        budgetValueChange: 0,
-      });
-    }
     this.props.updateGoals();
   }
 
-  handlePress() {
-    Actions.budget();
-  }
-
   render() {
+    console.log('element', this.props.element);
+    console.log('goal in indi', this.props.element.goalKey);
     return (
       <View style={{ padding: 10, backgroundColor: 'black', borderBottomWidth: 0.5, borderTopWidth: 0, borderColor: '#ffc107' }}>
         <Text style={{ backgroundColor: 'transparent', width, textAlign: 'center', fontSize: 15, color: '#bdbdbd' }}>
           { this.props.element.goal }
         </Text>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', right: 10 }}>
-          <TouchableOpacity activeOpacity={0.7} onPress={this.showAddBudget.bind(this)}>
+          <TouchableOpacity activeOpacity={0.7} onPress={this.deleteGoal.bind(this)}>
             <Icon name="remove" size={27} color="#bdbdbd" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} onPress={this.showAddExpense.bind(this)}>
+          <TouchableOpacity activeOpacity={0.7} onPress={this.props.toggleEditGoal}>
             <Icon name="pencil" size={27} color="#ffc107" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
           </TouchableOpacity>
         </View>
@@ -318,53 +54,15 @@ export default class IndiGoal extends Component {
           <Progress.Bar
             color="#ffc107"
             height={1}
-            progress={+this.state.progress / +this.props.element.amount}
+            progress={+this.props.element.progress / +this.props.element.amount}
             width={273}
             borderColor={'black'}
             unfilledColor={'#424242'}
           />
         </View>
-
-
         <Text style={{ flexDirection: 'row', textAlign: 'right', right: 20, color: '#bdbdbd' }}>
-        ${this.props.element.amount}  ${this.state.progress}
+         ${this.props.element.progress} ${this.props.element.amount}
         </Text>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: this.state.addExpenseOffest,
-            width: 300,
-            height: 200,
-            left: 35,
-            borderWidth: 1,
-            borderRadius: 15,
-            borderColor: 'black',
-            backgroundColor: 'black',
-            justifyContent: 'center',
-          }}
-        >
-          <Text style={{ textAlign: 'center', color: '#424242' }}>
-          ADD AN EXPENSE
-        </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
-            <Text style={{ color: 'white', fontSize: 35 }}>
-            $
-          </Text>
-            <TextInput
-              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
-              onChangeText={expenseTotalChange => this.setState({ expenseTotalChange })}
-              value={`${this.state.expenseTotalChange}`}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={this._updateExpenses.bind(this)}
-            style={styles.addExpenseButton}
-          >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
-            ADD
-          </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
