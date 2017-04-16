@@ -33,7 +33,7 @@ export default class BudgetSnapshot extends Component {
   constructor() {
     super();
     this.state = {
-      expenseModalOffset: height * 0.5,
+      expenseModalOffset: -height,
       expenseTitleChange: '0',
       expenseValueChange: '',
       expenseTotal: 0,
@@ -144,15 +144,15 @@ export default class BudgetSnapshot extends Component {
 
   toggleUpdateExpense() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.expenseModalOffset === -height * 0.8) {
+    if (this.state.expenseModalOffset === -height) {
       this.setState({
-        expenseModalOffset: height * 0.5,
+        expenseModalOffset: 0,
         expenseValueChange: '',
         expenseTitleChange: '',
       });
     } else {
       this.setState({
-        expenseModalOffset: -height * 0.8,
+        expenseModalOffset: -height,
         expenseValueChange: '',
         expenseTitleChange: '',
       });
@@ -171,28 +171,35 @@ export default class BudgetSnapshot extends Component {
           BUDGET
         </Text>
         <View style={styles.budgetSnap}>
-          <Progress.Bar
-            color={'#ffc107'}
-            height={1}
+          <Progress.Pie
+            color={'rgba(255, 193, 7, 1)'}
             progress={progress}
-            width={273}
+            size={150}
             borderColor={'black'}
-            unfilledColor={'#424242'}
+            unfilledColor={'rgba(66,66,66,1)'}
           />
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
-          <Text style={{ color: theme.text, marginLeft: 10 }}>
-          ${ this.state.expenseTotal }
-          </Text>
-          <Text style={{ right: 20, color: theme.text }}>
-          ${ this.state.budgetValue }
-          </Text>
-        </View>
+        <Text
+          style={{
+            color: theme.text,
+            backgroundColor: 'transparent',
+            alignSelf: 'center',
+            top: 40,
+            fontSize: 17,
+            fontFamily: 'OpenSans',
+            textShadowColor: '#424242',
+            textShadowOffset: { width: 0.25, height: 0.25 },
+            textShadowRadius: 5,
+          }}
+        >
+          ${ this.state.expenseTotal }  / {'\n'} ${ this.state.budgetValue }
+        </Text>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.toggleUpdateExpense.bind(this)}>
+          <Text style={{ fontSize: 10, fontFamily: 'OpenSans', color: 'white' }}>Add Expense</Text>
           <Icon name="plus-circle" size={50} style={styles.iconStyle} />
         </TouchableOpacity>
 
-        <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
+        <View style={[styles.modal, { bottom: this.state.expenseModalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
               Add an Expense
             </Text>
@@ -213,7 +220,7 @@ export default class BudgetSnapshot extends Component {
             value={this.state.expenseValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderColor: theme.accent, borderWidth: 0.5 }}
             onPress={this._updateExpenses.bind(this)}
           >
             <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
@@ -239,16 +246,17 @@ export default class BudgetSnapshot extends Component {
 const styles = StyleSheet.create({
   budgetSection: {
     flex: 0,
+    width: width * 0.525,
     borderColor: '#424242',
-    paddingBottom: 10,
-    borderWidth: 0,
+    borderLeftWidth: 1,
     backgroundColor: 'black',
   },
   budgetSnap: {
     height: 16,
-    marginRight: 80,
-    marginLeft: 20,
-    marginTop: 10,
+    marginRight: 0,
+    marginLeft: 0,
+    marginTop: 20,
+    alignItems: 'center',
   },
   emphasized: {
     color: 'white',
@@ -262,6 +270,9 @@ const styles = StyleSheet.create({
   },
   addExpense: {
     position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     bottom: 25,
     right: 20,
   },
@@ -325,8 +336,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     right: 0,
-    left: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,.5)',
+
+    width,
+    height: height * 0.92,
+    backgroundColor: 'rgba(0,0,0,.9)',
   },
 });

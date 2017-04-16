@@ -76,8 +76,10 @@ export default class Dashboard extends Component {
           </View>
           <PointsSnapshot Firebase={this.props.Firebase} />
           <FriendsSnapshot Firebase={this.props.Firebase} />
-          <GoalsSnapshot Firebase={this.props.Firebase} />
-          <BudgetSnapshot Firebase={this.props.Firebase} />
+          <View style={{ flexDirection: 'row', height: height * 0.42 }}>
+            <GoalsSnapshot Firebase={this.props.Firebase} />
+            <BudgetSnapshot Firebase={this.props.Firebase} />
+          </View>
         </Animated.View>
       </View>
     );
