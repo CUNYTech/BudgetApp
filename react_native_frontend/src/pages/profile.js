@@ -247,7 +247,7 @@ export default class Points extends Component {
               marginBottom: 5,
             }}
           >
-            BUDGET
+            PROFILE
           </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
