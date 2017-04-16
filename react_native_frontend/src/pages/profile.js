@@ -13,30 +13,35 @@ export default class Points extends Component {
   constructor() {
     super();
     this.state = { image: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
-      chosenImage: 'https://static.pexels.com/photos/7613/pexels-photo.jpg',
+      chosenImage: '',
       userName: '',
       userLocalRank: 0,
       userGlobalRank: 0,
-      friends: 0 };
+      friends: 0,
+    };
   }
 
   componentWillMount() {
     const uid = this.props.Firebase.auth().currentUser.uid;
-    const userName = this.props.Firebase.auth().currentUser.displayName;
     const _this = this;
     const storageRef = this.props.Firebase.storage().ref();
+    const userName = this.props.Firebase.auth().currentUser.displayName;
+    const ref = this.props.Firebase.database().ref();
 
+    const peopleRef = ref.child('/people');
+    peopleRef.child(userName).once('value').then((snap) => {
+      if (snap.val().photoUrl) {
+        return snap.val().photoUrl;
+      }
+      return 'https://static.pexels.com/photos/7613/pexels-photo.jpg';
+    }).then((pic) => {
+      this.setState({ chosenImage: pic });
+    });
+
+    _this.setState({ userName });
     this._localRank();
     this._getBoard();
     this.setFriends();
-
-    if (this.state.chosenImage === 'https://static.pexels.com/photos/7613/pexels-photo.jpg') {
-      this.cameraRoll();
-    } else {
-      storageRef.child(`${uid}`).getDownloadURL().then((url) => {
-        _this.setState({ chosenImage: url, userName });
-      });
-    }
   }
 
   async setFriends() {
@@ -242,7 +247,7 @@ export default class Points extends Component {
               marginBottom: 5,
             }}
           >
-            BUDGET
+            PROFILE
           </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
