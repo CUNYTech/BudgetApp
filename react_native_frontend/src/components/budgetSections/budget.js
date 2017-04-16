@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    textAlign: 'center',
   },
   expenseLabel: {
     color: theme.text,

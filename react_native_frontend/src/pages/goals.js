@@ -180,7 +180,7 @@ export default class Goals extends Component {
 
     this.state.goals.forEach((element) => {
       goals.push(
-        <IndiGoal updateGoals={this._setGoals.bind(this)} toggleEditGoal={this.toggleEditGoal.bind(this, element)} element={element} Firebase={this.props.Firebase} />,
+        <IndiGoal key={i} updateGoals={this._setGoals.bind(this)} toggleEditGoal={this.toggleEditGoal.bind(this, element)} element={element} Firebase={this.props.Firebase} />,
      );
       i += 1;
     });
