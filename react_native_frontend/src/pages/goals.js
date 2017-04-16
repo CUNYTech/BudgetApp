@@ -31,7 +31,7 @@ export default class Goals extends Component {
   constructor() {
     super();
     this.state = {
-      addGoalOffset: -300,
+      addGoalOffset: height,
       addExpenseOffest: -200,
       goal: '',
       amount: 0,
@@ -122,11 +122,10 @@ export default class Goals extends Component {
   }
 
   _showAddGoal() {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addGoalOffset == -300) {
+    if (this.state.addGoalOffset === height) {
       this.setState({
-        addGoalOffset: offSet,
+        addGoalOffset: 0,
         addExpenseOffest: -200,
         expenseTotalChange: '',
         activeGoalKey: '',
@@ -136,7 +135,7 @@ export default class Goals extends Component {
       }); // Set to 0 for android
     } else {
       this.setState({
-        addGoalOffset: -300,
+        addGoalOffset: height,
         expenseTotalChange: 0,
       });
     }
@@ -218,14 +217,14 @@ export default class Goals extends Component {
         <View
           style={{
             position: 'absolute',
-            bottom: this.state.addGoalOffset,
-            width: 300,
-            height: 250,
-            left: 35,
+            top: this.state.addGoalOffset,
+            width,
+            height,
+            left: 0,
             borderWidth: 1,
             borderRadius: 15,
             borderColor: 'black',
-            backgroundColor: 'black',
+            backgroundColor: 'rgba(0,0,0,.7)',
             justifyContent: 'center',
           }}
         >
