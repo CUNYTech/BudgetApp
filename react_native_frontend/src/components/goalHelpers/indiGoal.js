@@ -35,21 +35,14 @@ export default class IndiGoal extends Component {
   }
 
   render() {
-    console.log('element', this.props.element);
-    console.log('goal in indi', this.props.element.goalKey);
     return (
-      <View style={{ padding: 10, backgroundColor: 'black', borderBottomWidth: 0.5, borderTopWidth: 0, borderColor: '#ffc107' }}>
-        <Text style={{ backgroundColor: 'transparent', width, textAlign: 'center', fontSize: 15, color: '#bdbdbd' }}>
+      <View style={{ width: width * 0.9, height: width * 0.4, padding: 10, backgroundColor: 'black', borderWidth: 0.5, borderColor: '#ffc107', borderRadius: 10, margin: 10 }}>
+        <Text style={{ backgroundColor: 'transparent', textAlign: 'center', fontSize: 17, color: '#bdbdbd', fontFamily: 'OpenSans' }}>
           { this.props.element.goal }
         </Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', right: 10 }}>
-          <TouchableOpacity activeOpacity={0.7} onPress={this.deleteGoal.bind(this)}>
-            <Icon name="remove" size={27} color="#bdbdbd" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} onPress={this.props.toggleEditGoal}>
-            <Icon name="pencil" size={27} color="#ffc107" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={{ position: 'absolute', right: 0 }} activeOpacity={0.7} onPress={this.deleteGoal.bind(this)}>
+          <Icon name="trash" size={20} color="rgba(255,255,255,.3)" style={{ margin: 3, backgroundColor: 'transparent', overflow: 'hidden' }} />
+        </TouchableOpacity>
         <View style={styles.goal} >
           <Progress.Bar
             color="#ffc107"
@@ -60,9 +53,14 @@ export default class IndiGoal extends Component {
             unfilledColor={'#424242'}
           />
         </View>
-        <Text style={{ flexDirection: 'row', textAlign: 'right', right: 20, color: '#bdbdbd' }}>
-         ${this.props.element.progress} ${this.props.element.amount}
-        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ color: '#bdbdbd' }}>${this.props.element.progress}</Text>
+          <Text style={{ color: '#bdbdbd' }}>${this.props.element.amount}</Text>
+        </View>
+        <TouchableOpacity style={{ alignItems: 'center' }} activeOpacity={0.7} onPress={this.props.toggleEditGoal}>
+          <Icon name="plus-square-o" size={30} color="#ffc107" style={{ backgroundColor: 'transparent', overflow: 'hidden' }} />
+          <Text style={{ color: 'white', fontSize: 10, fontFamily: 'OpenSans' }}>add to goal</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -106,10 +104,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   goal: {
-    height: 20,
+    height: 10,
     marginRight: 20,
     marginLeft: 20,
-    marginTop: 10,
+    marginTop: 30,
     borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',

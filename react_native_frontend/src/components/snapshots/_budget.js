@@ -166,37 +166,50 @@ export default class BudgetSnapshot extends Component {
     }
 
     return (
-      <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
-        <Text style={styles.titleText}>
+      <View style={styles.budgetSection}>
+        <TouchableOpacity onPress={this.handlePress.bind(this)}>
+          <Text style={styles.titleText}>
           BUDGET
         </Text>
-        <View style={styles.budgetSnap}>
-          <Progress.Pie
-            color={'rgba(255, 193, 7, 1)'}
-            progress={progress}
-            size={150}
-            borderColor={'black'}
-            unfilledColor={'rgba(66,66,66,1)'}
-          />
-        </View>
-        <Text
-          style={{
-            color: theme.text,
-            backgroundColor: 'transparent',
-            alignSelf: 'center',
-            top: 40,
-            fontSize: 17,
-            fontFamily: 'OpenSans',
-            textShadowColor: '#424242',
-            textShadowOffset: { width: 0.25, height: 0.25 },
-            textShadowRadius: 5,
-          }}
-        >
-          ${ this.state.expenseTotal }  / {'\n'} ${ this.state.budgetValue }
-        </Text>
+          <View style={styles.budgetSnap}>
+            <Progress.Pie
+              color={theme.accent}
+              progress={progress}
+              size={150}
+              borderColor={theme.accent}
+              unfilledColor={'black'}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                right: 55,
+                top: 30,
+                backgroundColor: 'transparent',
+                width: 90,
+                height: 90,
+                borderRadius: 45,
+                overflow: 'hidden',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: theme.text,
+                  alignSelf: 'center',
+                  fontSize: 17,
+                  fontWeight: '600',
+                  fontFamily: 'OpenSans',
+                }}
+              >
+                ${ this.state.expenseTotal }  / {'\n'} ${ this.state.budgetValue }
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.toggleUpdateExpense.bind(this)}>
           <Text style={{ fontSize: 10, fontFamily: 'OpenSans', color: 'white' }}>Add Expense</Text>
-          <Icon name="plus-circle" size={50} style={styles.iconStyle} />
+          <Icon name="plus-circle" size={45} style={styles.iconStyle} />
         </TouchableOpacity>
 
         <View style={[styles.modal, { bottom: this.state.expenseModalOffset }]}>
@@ -223,7 +236,7 @@ export default class BudgetSnapshot extends Component {
             style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderColor: theme.accent, borderWidth: 0.5 }}
             onPress={this._updateExpenses.bind(this)}
           >
-            <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
                 Submit
               </Text>
           </TouchableOpacity>
@@ -237,22 +250,18 @@ export default class BudgetSnapshot extends Component {
           </TouchableOpacity>
         </View>
 
-
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   budgetSection: {
-    flex: 0,
-    width: width * 0.525,
+    width: width * 0.50,
     borderColor: '#424242',
-    borderLeftWidth: 1,
     backgroundColor: 'black',
   },
   budgetSnap: {
-    height: 16,
     marginRight: 0,
     marginLeft: 0,
     marginTop: 20,
@@ -263,7 +272,8 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   titleText: {
-    marginLeft: 6,
+    textAlign: 'right',
+    marginRight: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,
     color: '#bdbdbd',
@@ -273,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 25,
+    bottom: 0,
     right: 20,
   },
   addExpenseButton: {
@@ -305,7 +315,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     backgroundColor: 'transparent',
     marginLeft: 10,
-    color: '#424242',
+    color: '#ffffff',
   },
   modalBody: {
     position: 'absolute',
@@ -338,7 +348,7 @@ const styles = StyleSheet.create({
     right: 0,
 
     width,
-    height: height * 0.92,
+    height: height * 0.35,
     backgroundColor: 'rgba(0,0,0,.9)',
   },
 });

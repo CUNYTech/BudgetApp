@@ -27,7 +27,7 @@ export default class AppSideMenu extends Component {
  // backgroundColor: 'rgba(33, 33, 33, .1)',
 
     const menuItems = menuDesc.map(item => (
-      <TouchableOpacity key={item.id} onPress={item.nav} activeOpacity={0.8} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#212121', width: width * 0.38, height: width * 0.38, padding: 10, marginBottom: 5, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(255,255,255,.3)' }}>
+      <TouchableOpacity key={item.id} onPress={item.nav} activeOpacity={0.8} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', width: width * 0.38, height: width * 0.38, padding: 10, marginBottom: 5, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(255,255,255,.3)' }}>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Icon name={item.icon} size={35} color="white" />
           <Text style={{ fontSize: 15, fontFamily: 'OpenSans', alignSelf: 'center', color: 'white' }}>{item.title}</Text>

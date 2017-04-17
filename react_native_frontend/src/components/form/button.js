@@ -51,7 +51,7 @@ const styleButton = {
   text: {
     color: '#424242',
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: '600',
     fontFamily: 'OpenSans',
     textAlign: 'center',
     letterSpacing: 3,

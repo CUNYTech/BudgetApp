@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Image, View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
+import { Dimensions, Image, View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase';
 import { getPlatformValue } from '../utils';
+const { height, width } = Dimensions.get('window');
 
 const CustomLayoutAnimation = {
   duration: 200,
@@ -223,17 +224,17 @@ export default class Friends extends Component {
     let i = 1;
     this.state.friends.forEach((element) => {
       users.push(
-        <TouchableOpacity key={i} activeOpacity={0.8} style={{ backgroundColor: 'black', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 0.5, borderColor: '#424242', paddingTop: 5, paddingBottom: 5 }}>
+        <View key={i} style={{ width: width * 0.9, height: width * 0.44, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center', margin: 9, borderRadius: 10 }}>
           <Image
-            style={styles.icon}
+            style={styles.iconMain}
             source={{ uri: element.photoUrl }}
           />
-          <Text style={{ flex: 2, textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
-          <View style={{ flex: 1, marginRight: 10 }}>
-            <Text style={{ flex: 1, textAlign: 'right', color: 'white' }} >200pts</Text>
-            <Text style={{ flex: 1, textAlign: 'right', color: '#ffc107' }} >Level 1</Text>
+          <Text style={{ textAlign: 'center', color: 'white' }} > {element.displayName} </Text>
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <Text style={{ flex: 1, textAlign: 'center', color: 'white' }} >200pts</Text>
+            <Text style={{ flex: 1, textAlign: 'center', color: '#ffc107' }} >Level 1</Text>
           </View>
-        </TouchableOpacity>,
+        </View>,
       );
       i += 1;
     });
@@ -246,13 +247,12 @@ export default class Friends extends Component {
     let i = 0;
     this.state.searchResults.forEach((element) => {
       search.push(
-        <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#e0e0e0', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
+        <View key={i} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: '#424242', marginLeft: 10, marginRight: 10, paddingTop: 5, paddingBottom: 5 }}>
           <Image
             style={styles.icon}
             source={{ uri: element.photoUrl }}
           />
-          <Text style={{ textAlign: 'left', color: 'transparent', fontSize: 12, position: 'absolute', top: 23, left: 50 }}> (pending)</Text>
-          <Text style={{ textAlign: 'left', color: 'black' }} > {element.displayName} </Text>
+          <Text style={{ textAlign: 'left', color: 'white' }} > {element.displayName} </Text>
           <TouchableOpacity onPress={_this._checkFriend.bind(_this, element.displayName, element.uid, element.photoUrl)} style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around' }}>
             <Icon name="plus-circle" size={25} color="#ffc107" style={{ backgroundColor: 'transparent' }} />
           </TouchableOpacity>
@@ -294,11 +294,11 @@ export default class Friends extends Component {
           <TouchableOpacity onPress={this.showSearchBar.bind(this)} >
             <Icon name="search" size={20} color="white" />
           </TouchableOpacity>
-          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: -5, top: 22, flexDirection: 'row', backgroundColor: '#424242' }}>
+          <View style={{ height: 30, justifyContent: 'center', width: this.state.searchBarOffsetWrapper, position: 'absolute', right: 5, top: 22, flexDirection: 'row', backgroundColor: 'black' }}>
             <TextInput
               placeholder="Search for friends"
               autoCapitalize="none"
-              style={{ backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12, paddingLeft: 5 }}
+              style={{ backgroundColor: '#e0e0e0', width: this.state.searchBarOffset, height: 30, borderRadius: 5, fontSize: 12 }}
               onChangeText={this._searchUsers.bind(this)}
             />
             <TouchableOpacity activeOpacity={0.7} onPress={this.showSearchBar.bind(this)} >
@@ -306,13 +306,13 @@ export default class Friends extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: '#616161' }}>
+        <View style={{ position: 'absolute', top: 60, left: 0, right: 0, zIndex: 999999, backgroundColor: 'rgba(0,0,0,.8)' }}>
           <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
             { search }
           </ScrollView>
         </View>
         <View style={{ flex: 1 }}>
-          <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
+          <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', backgroundColor: '#424242' }}>
             { users }
           </ScrollView>
         </View>
@@ -324,7 +324,7 @@ export default class Friends extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#212121',
+    backgroundColor: '#424242',
   },
   header: {
     paddingTop: getPlatformValue('android', 25, 20),
@@ -359,6 +359,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: theme.accent,
     marginLeft: 10,
+    overflow: 'hidden',
+  },
+  iconMain: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: theme.accent,
     overflow: 'hidden',
   },
 });

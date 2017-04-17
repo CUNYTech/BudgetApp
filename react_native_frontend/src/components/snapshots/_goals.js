@@ -94,12 +94,12 @@ export default class GoalsSnapshot extends Component {
               color={theme.accent}
               height={1}
               progress={element.progress / element.amount}
-              width={width * 0.4}
+              width={width * 0.9}
               borderWidth={0}
               unfilledColor="rgba(255,255,255,.5)"
             />
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 0.3, alignSelf: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 0.8, alignSelf: 'center' }}>
             <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.progress}</Text>
             <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.amount}</Text>
           </View>
@@ -110,23 +110,23 @@ export default class GoalsSnapshot extends Component {
     // }
 
     return (
-      <TouchableOpacity style={styles.container} onPress={this.handlePress.bind(this)}>
+      <View style={styles.container} onPress={this.handlePress.bind(this)}>
         <Text style={styles.headerText}>
           GOALS
         </Text>
-        <ScrollView style={styles.section}>
+        <ScrollView contentContainerStyle={styles.section}>
           { goals }
         </ScrollView>
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.5,
+    flex: 1,
     borderColor: '#424242',
-    borderLeftWidth: 1,
+    borderTopWidth: 1,
     backgroundColor: 'black',
   },
   section: {
@@ -142,8 +142,6 @@ const styles = StyleSheet.create({
   },
   goalText: {
     backgroundColor: 'transparent',
-    position: 'absolute',
-    width: width * 0.4,
     textAlign: 'center',
     fontSize: 15,
     color: '#424242',

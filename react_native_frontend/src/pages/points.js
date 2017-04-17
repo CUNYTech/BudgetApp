@@ -151,7 +151,7 @@ export default class Points extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'black' }}>
+      <Container style={{ backgroundColor: 'black', margin: 0 }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon

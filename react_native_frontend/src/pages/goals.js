@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput,
-    LayoutAnimation, Platform, Dimensions, Alert } from 'react-native';
+    LayoutAnimation, Platform, Dimensions, Alert, ScrollView } from 'react-native';
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
 import IndiGoal from '../components/goalHelpers/indiGoal.js';
@@ -176,11 +176,19 @@ export default class Goals extends Component {
   render() {
     let i = 1;
     const goals = [];
+    let completed = 0;
+    let inProgess = 0;
+
 
     this.state.goals.forEach((element) => {
       goals.push(
         <IndiGoal key={i} updateGoals={this._setGoals.bind(this)} toggleEditGoal={this.toggleEditGoal.bind(this, element)} element={element} Firebase={this.props.Firebase} />,
      );
+      if (element.progress >= element.amount) {
+        completed += 1;
+      } else {
+        inProgess += 1;
+      }
       i += 1;
     });
     return (
@@ -208,9 +216,33 @@ export default class Goals extends Component {
               </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <View style={styles.section}>
-          { goals }
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#424242', borderBottomWidth: 0.5, borderColor: theme.accent, padding: 5 }}>
+          <View style={{ backgroundColor: 'black', borderRadius: 50, overflow: 'hidden', height: 100, width: 100, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 17, fontFamily: 'OpenSans', color: 'white' }}>
+              Total Goals
+            </Text>
+            <Text style={{ textAlign: 'center', color: theme.accent, fontSize: 22 }}>
+              {goals.length}
+            </Text>
+          </View>
+          <View style={{}}>
+            <Text style={{ fontSize: 15, fontFamily: 'OpenSans', color: '#e0e0e0' }}>
+              Goals Completed
+            </Text>
+            <Text style={{ textAlign: 'center', color: theme.accent }}>
+              {completed}
+            </Text>
+            <Text style={{ fontSize: 15, fontFamily: 'OpenSans', color: '#e0e0e0' }}>
+              Goals In Progress
+            </Text>
+            <Text style={{ textAlign: 'center', color: theme.accent }}>
+              {inProgess}
+            </Text>
+          </View>
         </View>
+        <ScrollView contentContainerStyle={styles.section}>
+          { goals }
+        </ScrollView>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this._showAddGoal.bind(this)}>
           <Icon name="plus-circle" size={50} color="#ffc107" style={{ backgroundColor: 'transparent', overflow: 'hidden', borderRadius: 20 }} />
         </TouchableOpacity>
@@ -333,10 +365,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   section: {
-    flex: 1,
+    flex: 0,
     borderColor: '#e0e0e0',
     marginTop: 2,
     backgroundColor: '#212121',
+    alignItems: 'center',
   },
   goal: {
     height: 20,
