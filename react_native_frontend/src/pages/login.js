@@ -119,7 +119,7 @@ export default class Login extends Component {
     return (
       <View style={loginStyle.container}>
         <BackButton
-          iconLeft="home"
+          transparent iconLeft="arrow-left-circle"
           onPressIcon={this.handleToHome.bind(this)}
         />
         <View style={loginStyle.loginContainer}>

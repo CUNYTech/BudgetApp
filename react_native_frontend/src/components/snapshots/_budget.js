@@ -33,7 +33,7 @@ export default class BudgetSnapshot extends Component {
   constructor() {
     super();
     this.state = {
-      expenseModalOffset: height * 0.5,
+      expenseModalOffset: -height,
       expenseTitleChange: '0',
       expenseValueChange: '',
       expenseTotal: 0,
@@ -144,15 +144,15 @@ export default class BudgetSnapshot extends Component {
 
   toggleUpdateExpense() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.expenseModalOffset === -height * 0.8) {
+    if (this.state.expenseModalOffset === -height) {
       this.setState({
-        expenseModalOffset: height * 0.5,
+        expenseModalOffset: 0,
         expenseValueChange: '',
         expenseTitleChange: '',
       });
     } else {
       this.setState({
-        expenseModalOffset: -height * 0.8,
+        expenseModalOffset: -height,
         expenseValueChange: '',
         expenseTitleChange: '',
       });
@@ -166,33 +166,53 @@ export default class BudgetSnapshot extends Component {
     }
 
     return (
-      <TouchableOpacity style={styles.budgetSection} onPress={this.handlePress.bind(this)}>
-        <Text style={styles.titleText}>
+      <View style={styles.budgetSection}>
+        <TouchableOpacity onPress={this.handlePress.bind(this)}>
+          <Text style={styles.titleText}>
           BUDGET
         </Text>
-        <View style={styles.budgetSnap}>
-          <Progress.Bar
-            color={'#ffc107'}
-            height={1}
-            progress={progress}
-            width={273}
-            borderColor={'black'}
-            unfilledColor={'#424242'}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 60, paddingTop: 5 }}>
-          <Text style={{ color: theme.text, marginLeft: 10 }}>
-          ${ this.state.expenseTotal }
-          </Text>
-          <Text style={{ right: 20, color: theme.text }}>
-          ${ this.state.budgetValue }
-          </Text>
-        </View>
+          <View style={styles.budgetSnap}>
+            <Progress.Pie
+              color={theme.accent}
+              progress={progress}
+              size={150}
+              borderColor={theme.accent}
+              unfilledColor={'black'}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                right: 55,
+                top: 30,
+                backgroundColor: 'transparent',
+                width: 90,
+                height: 90,
+                borderRadius: 45,
+                overflow: 'hidden',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  color: theme.text,
+                  alignSelf: 'center',
+                  fontSize: 17,
+                  fontWeight: '600',
+                  fontFamily: 'OpenSans',
+                }}
+              >
+                ${ this.state.expenseTotal }  / {'\n'} ${ this.state.budgetValue }
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.addExpense} activeOpacity={0.7} onPress={this.toggleUpdateExpense.bind(this)}>
-          <Icon name="plus-circle" size={50} style={styles.iconStyle} />
+          <Text style={{ fontSize: 10, fontFamily: 'OpenSans', color: 'white' }}>Add Expense</Text>
+          <Icon name="plus-circle" size={45} style={styles.iconStyle} />
         </TouchableOpacity>
 
-        <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
+        <View style={[styles.modal, { bottom: this.state.expenseModalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
               Add an Expense
             </Text>
@@ -213,10 +233,10 @@ export default class BudgetSnapshot extends Component {
             value={this.state.expenseValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderColor: theme.accent, borderWidth: 0.5 }}
             onPress={this._updateExpenses.bind(this)}
           >
-            <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
                 Submit
               </Text>
           </TouchableOpacity>
@@ -230,39 +250,40 @@ export default class BudgetSnapshot extends Component {
           </TouchableOpacity>
         </View>
 
-
-      </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   budgetSection: {
-    flex: 0,
+    width: width * 0.50,
     borderColor: '#424242',
-    paddingBottom: 10,
-    borderWidth: 0,
     backgroundColor: 'black',
   },
   budgetSnap: {
-    height: 16,
-    marginRight: 80,
-    marginLeft: 20,
-    marginTop: 10,
+    marginRight: 0,
+    marginLeft: 0,
+    marginTop: 20,
+    alignItems: 'center',
   },
   emphasized: {
     color: 'white',
     fontSize: 35,
   },
   titleText: {
-    marginLeft: 6,
+    textAlign: 'right',
+    marginRight: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,
     color: '#bdbdbd',
   },
   addExpense: {
     position: 'absolute',
-    bottom: 25,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
     right: 20,
   },
   addExpenseButton: {
@@ -294,7 +315,7 @@ const styles = StyleSheet.create({
   iconStyle: {
     backgroundColor: 'transparent',
     marginLeft: 10,
-    color: '#424242',
+    color: '#ffffff',
   },
   modalBody: {
     position: 'absolute',
@@ -325,8 +346,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     right: 0,
-    left: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,.5)',
+
+    width,
+    height: height * 0.35,
+    backgroundColor: 'rgba(0,0,0,.9)',
   },
 });

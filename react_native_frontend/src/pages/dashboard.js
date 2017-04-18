@@ -70,14 +70,16 @@ export default class Dashboard extends Component {
                 marginBottom: 0,
               }}
             >
-                HOME
+                SCALE
               </Text>
             <Icon name="diamond" size={20} color={theme.accent} />
           </View>
-          <PointsSnapshot Firebase={this.props.Firebase} />
-          <FriendsSnapshot Firebase={this.props.Firebase} />
+          <View style={{ flexDirection: 'row', height: height * 0.35, width }}>
+            <PointsSnapshot Firebase={this.props.Firebase} />
+            <BudgetSnapshot Firebase={this.props.Firebase} />
+          </View>
           <GoalsSnapshot Firebase={this.props.Firebase} />
-          <BudgetSnapshot Firebase={this.props.Firebase} />
+          <FriendsSnapshot Firebase={this.props.Firebase} />
         </Animated.View>
       </View>
     );

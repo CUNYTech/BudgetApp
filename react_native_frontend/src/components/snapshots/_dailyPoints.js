@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { StockLine } from 'react-native-pathjs-charts';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../../utils';
+
+const { height, width } = Dimensions.get('window');
 
 const theme = {
   accent: '#ffc107',
@@ -50,8 +52,8 @@ const graphData = [
 
 
 const options = {
-  width: getPlatformValue('android', 601, 375),
-  height: getPlatformValue('android', 275, 175),
+  width: width * 0.5,
+  height: height * 0.3,
   margin: {
     top: 0,
     left: 0,
@@ -110,34 +112,51 @@ export default class PointsSnapshot extends Component {
 
   render() {
     return (
-      <View style={styles.pointSection}>
+      <TouchableOpacity onPress={this.navPoints.bind(this)} style={styles.pointSection}>
         <Image
           style={styles.bg}
           source={{ uri: 'http://www.ilikewallpaper.net/ipad-wallpapers/download/7702/Circle-Pattern-ipad-wallpaper-ilikewallpaper_com.jpg' }}
         >
           <View style={styles.bgFilter} />
         </Image>
-        <TouchableOpacity onPress={this.navPoints.bind(this)} style={styles.button}>
+        <View style={styles.button}>
           <Text style={styles.headerText}>
             DAILY POINTS
           </Text>
-        </TouchableOpacity>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} bounces={false}>
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Total Points</Text>
+          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>200</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 13 }}>Local Rank</Text>
+            <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>2</Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 13 }}>Global Rank</Text>
+            <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>10</Text>
+          </View>
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Earned Today</Text>
+          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>200</Text>
+        </View>
+        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} bounces={false}>
           <StockLine data={graphData} options={options} xKey="x" yKey="y" />
-        </ScrollView>
-      </View>
+        </ScrollView> */}
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
   pointSection: {
-    flex: 1,
-    marginTop: 0,
-    borderWidth: 0,
-    backgroundColor: '#424242',
+    width: width * 0.51,
+    backgroundColor: 'black',
   },
   button: {
+    marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },

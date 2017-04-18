@@ -162,7 +162,7 @@ export default class Expenses extends Component {
           </TouchableOpacity>
         </View>
         <ScrollView style={{ backgroundColor: theme.bg }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 25 }}>
-          { expensesView }
+          { expensesView.reverse() }
         </ScrollView>
         <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
           <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Goals } from '../../pages/goals.js';
 import IndiGoal from '../goalHelpers/indiGoal.js';
@@ -11,6 +11,8 @@ const theme = {
   text: 'white',
   font: 'OpenSans',
 };
+
+const { height, width } = Dimensions.get('window');
 
 
 export default class GoalsSnapshot extends Component {
@@ -54,77 +56,55 @@ export default class GoalsSnapshot extends Component {
     let i = 1;
     const goals = [];
 
-    if (this.state.goals.length > 3) {
-      i -= 1;
-      while (i < 3) {
-        goals.push(
-          <View key={i + 1} style={{ marginTop: 5 }}>
-            <Text style={styles.goalText}>
-              { this.state.goals[i].goal }
-            </Text>
-            <View style={styles.goal} >
-              <Progress.Bar
-                color={theme.accent}
-                height={1}
-                progress={this.state.goals[i].progress / this.state.goals[i].amount}
-                width={335}
-                borderWidth={0}
-                unfilledColor="rgba(255,255,255,.5)"
-              />
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 310, alignSelf: 'center' }}>
-              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].progress}</Text>
-              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].amount}</Text>
-            </View>
-          </View>,
+    this.state.goals.forEach((element) => {
+      goals.push(
+        <View key={i} style={{ marginTop: 5 }}>
+          <Text style={styles.goalText}>
+            { element.goal }
+          </Text>
+          <View style={styles.goal} >
+            <Progress.Bar
+              color={theme.accent}
+              height={2}
+              progress={element.progress / element.amount}
+              width={width * 0.9}
+              borderWidth={0}
+              unfilledColor="rgba(255,255,255,.5)"
+            />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 0.8, alignSelf: 'center' }}>
+            <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.progress}</Text>
+            <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.amount}</Text>
+          </View>
+        </View>,
         );
-        i += 1;
-      }
-    } else {
-      this.state.goals.forEach((element) => {
-        goals.push(
-          <View key={i} style={{ marginTop: 5 }}>
-            <Text style={styles.goalText}>
-              { element.goal }
-            </Text>
-            <View style={styles.goal} >
-              <Progress.Bar
-                color={theme.accent}
-                height={1}
-                progress={element.progress / element.amount}
-                width={335}
-                borderWidth={0}
-                unfilledColor="rgba(255,255,255,.5)"
-              />
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 310, alignSelf: 'center' }}>
-              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.progress}</Text>
-              <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{element.amount}</Text>
-            </View>
-          </View>,
-        );
-        i += 1;
-      });
-    }
+      i += 1;
+    });
+    // }
 
     return (
-      <TouchableOpacity style={styles.section} onPress={this.handlePress.bind(this)}>
+      <TouchableOpacity style={styles.container} onPress={this.handlePress.bind(this)}>
         <Text style={styles.headerText}>
           GOALS
         </Text>
-        <View style={styles.section}>
+        <ScrollView contentContainerStyle={styles.section}>
           { goals }
-        </View>
+        </ScrollView>
       </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderColor: '#424242',
+    borderTopWidth: 1,
+    backgroundColor: 'black',
+  },
   section: {
     flex: 1,
     borderColor: '#424242',
-    borderBottomWidth: 1,
     backgroundColor: 'black',
   },
   goal: {
@@ -135,13 +115,13 @@ const styles = StyleSheet.create({
   },
   goalText: {
     backgroundColor: 'transparent',
-    position: 'absolute',
-    width: 335,
     textAlign: 'center',
     fontSize: 15,
-    color: '#424242',
+    color: 'white',
+    fontFamily: 'OpenSans',
   },
   headerText: {
+    marginTop: 10,
     marginLeft: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,

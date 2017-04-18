@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Container, Content, Text, Left, Right, Body, Card, CardItem, ListItem, Separator } from 'native-base';
 import { getPlatformValue } from '../utils';
 
 const { height, width } = Dimensions.get('window');
@@ -151,7 +150,7 @@ export default class Points extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'black' }}>
+      <View style={{ flex: 1, backgroundColor: 'black' }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon
@@ -175,64 +174,45 @@ export default class Points extends Component {
           </Text>
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
-        <Card style={{ backgroundColor: 'black', borderWidth: 0 }}>
-          <CardItem header style={{ backgroundColor: 'black', margin: 0 }}>
-            <Text style={{ fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100' }}>{this.state.CurrentPoints}</Text>
-            <Text style={{ fontFamily: 'OpenSans', color: '#ffc107' }}>Total Pts</Text>
-          </CardItem>
-          <CardItem footer style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107', backgroundColor: '#212121', height: height * 0.197 }}>
-            <Text style={{ fontFamily: 'OpenSans', color: '#bdbdbd', borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107', fontSize: 25 }}>Todays Points</Text>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 40 }}>20 <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Pts</Text></Text>
-            </Right>
-          </CardItem>
-        </Card>
-        <Content>
-          <ListItem>
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width, height: height * 0.25 }}>
+          <Text style={{ fontFamily: 'OpenSans', fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100', textAlign: 'left' }}>{this.state.CurrentPoints}</Text>
+          <Text style={{ fontFamily: 'OpenSans', fontFamily: 'OpenSans', color: '#ffc107', textAlign: 'left' }}>Total Pts</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#212121', width, height: height * 0.20, borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107' }}>
+          <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 30 }}>Today's Points</Text>
+          <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 40 }}>
+            20
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 17 }}>Pts</Text>
+          </Text>
+        </View>
+        <View style={{ width, height: height * 0.22 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+2 Pts</Text>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Checking In</Text>
-            </Right>
-          </ListItem>
-          <ListItem>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Checking In</Text>
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+10 Pts</Text>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Under Budget</Text>
-            </Right>
-          </ListItem>
-          <ListItem>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Under Budget</Text>
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+5 Pts</Text>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>New Goal</Text>
-            </Right>
-          </ListItem>
-          <Separator bordered style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107', backgroundColor: '#212121' }}>
-            <Text style={{ fontFamily: 'OpenSans', fontSize: 20, textAlign: 'center', color: '#bdbdbd' }}>Ranking</Text>
-          </Separator>
-          <ListItem icon>
-            <Left>
-              <Icon name="certificate" />
-            </Left>
-            <Body>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Local Rank</Text>
-            </Body>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}> {this.state.userLocalRank} </Text>
-            </Right>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Icon name="certificate" color="#ffc107" />
-            </Left>
-            <Body>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>World Rank</Text>
-            </Body>
-            <Right>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>{this.state.userRank}</Text>
-            </Right>
-          </ListItem>
-        </Content>
-      </Container>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>New Goal</Text>
+          </View>
+        </View>
+        <View style={{ justifyContent: 'center', backgroundColor: '#212121', padding: 5, borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107' }}>
+          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: 'white', fontSize: 20 }}>Ranking</Text>
+        </View>
+        <View style={{ width, height: height * 0.19, padding: 15, paddingTop: 0, paddingBottom: 0 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 0.5, borderColor: '#e0e0e0' }}>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>Local Rank</Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>{this.state.userLocalRank}</Text>
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 0.5, borderColor: '#e0e0e0' }}>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>World Rank</Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>{this.state.userRank}</Text>
+          </View>
+        </View>
+      </View>
     );
   }
 }
@@ -264,5 +244,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
+    zIndex: 999999,
   },
 });
