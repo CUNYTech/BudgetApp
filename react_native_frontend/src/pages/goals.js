@@ -32,7 +32,7 @@ export default class Goals extends Component {
     super();
     this.state = {
       addGoalOffset: height,
-      addExpenseOffest: -200,
+      addExpenseOffest: height,
       goal: '',
       amount: 0,
       saved: 0,
@@ -126,7 +126,7 @@ export default class Goals extends Component {
     if (this.state.addGoalOffset === height) {
       this.setState({
         addGoalOffset: 0,
-        addExpenseOffest: -200,
+        addExpenseOffest: height,
         expenseTotalChange: '',
         activeGoalKey: '',
         activeGoalAmount: '',
@@ -149,21 +149,22 @@ export default class Goals extends Component {
   }
 
   toggleEditGoal(element) {
-    const offSet = (Platform.OS === 'ios') ? 220 : 0;
+    const offSet = (Platform.OS === 'ios') ? 0 : 0;
+
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addExpenseOffest === -200) {
+
+    if (this.state.addExpenseOffest === height) {
       this.setState({
         addExpenseOffest: offSet,
         activeGoalKey: element.goalKey,
         activeGoalAmount: element.amount,
         activeGoalTitle: element.goal,
         activeGoalProgress: element.progress,
-        addGoalOffset: -300,
         expenseTotalChange: 0,
       }); // Set to 0 for android
     } else {
       this.setState({
-        addExpenseOffest: -200,
+        addExpenseOffest: height,
         expenseTotalChange: '',
         activeGoalKey: '',
         activeGoalAmount: '',
@@ -217,26 +218,28 @@ export default class Goals extends Component {
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#424242', borderBottomWidth: 0.5, borderColor: theme.accent, padding: 5 }}>
-          <View style={{ backgroundColor: 'black', borderRadius: 50, overflow: 'hidden', height: 100, width: 100, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 17, fontFamily: 'OpenSans', color: 'white' }}>
-              Total Goals
-            </Text>
-            <Text style={{ textAlign: 'center', color: theme.accent, fontSize: 22 }}>
+          <View style={{ width: width * 0.3, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ textAlign: 'center', color: theme.accent, fontSize: 50, fontWeight: '100' }}>
               {goals.length}
             </Text>
-          </View>
-          <View style={{}}>
-            <Text style={{ fontSize: 15, fontFamily: 'OpenSans', color: '#e0e0e0' }}>
-              Goals Completed
+            <Text style={{ fontSize: 15, fontFamily: 'OpenSans', color: 'white', textAlign: 'center' }}>
+              Total{'\n'} Goals
             </Text>
-            <Text style={{ textAlign: 'center', color: theme.accent }}>
+          </View>
+          <View style={{ justifyContent: 'center', width: width * 0.3, alignItems: 'center' }}>
+            <Text style={{ textAlign: 'center', color: theme.accent, fontSize: 50, fontWeight: '100' }}>
+              {inProgess}
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 15, fontFamily: 'OpenSans', color: 'white' }}>
+                Goals{'\n'} In Progress
+              </Text>
+          </View>
+          <View style={{ justifyContent: 'center', width: width * 0.3, alignItems: 'center' }}>
+            <Text style={{ textAlign: 'center', color: theme.accent, fontSize: 50, fontWeight: '100' }}>
               {completed}
             </Text>
-            <Text style={{ fontSize: 15, fontFamily: 'OpenSans', color: '#e0e0e0' }}>
-              Goals In Progress
-            </Text>
-            <Text style={{ textAlign: 'center', color: theme.accent }}>
-              {inProgess}
+            <Text style={{ textAlign: 'center', fontSize: 15, fontFamily: 'OpenSans', color: 'white' }}>
+              Goals{'\n'} Completed
             </Text>
           </View>
         </View>
@@ -252,14 +255,17 @@ export default class Goals extends Component {
             top: this.state.addGoalOffset,
             width,
             height,
+            marginTop: 59,
             left: 0,
             borderWidth: 1,
-            borderRadius: 15,
             borderColor: 'black',
             backgroundColor: 'rgba(0,0,0,.7)',
             justifyContent: 'center',
           }}
         >
+          <TouchableOpacity onPress={this._showAddGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>Cancel</Text>
+          </TouchableOpacity>
           <Text style={{ bottom: 40, textAlign: 'center', color: '#424242' }}>
                 ADD NEW GOAL
               </Text>
@@ -295,17 +301,20 @@ export default class Goals extends Component {
         <View
           style={{
             position: 'absolute',
-            bottom: this.state.addExpenseOffest,
-            width: 300,
-            height: 200,
-            left: 35,
+            top: this.state.addExpenseOffest,
+            width,
+            height,
+            marginTop: 59,
+            left: 0,
             borderWidth: 1,
-            borderRadius: 15,
             borderColor: 'black',
-            backgroundColor: 'black',
+            backgroundColor: 'rgba(0,0,0,.7)',
             justifyContent: 'center',
           }}
         >
+          <TouchableOpacity onPress={this.toggleEditGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>Cancel</Text>
+          </TouchableOpacity>
           <Text style={{ textAlign: 'center', color: '#424242' }}>
             { this.state.activeGoalTitle }
           </Text>

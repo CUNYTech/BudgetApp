@@ -162,12 +162,6 @@ export default class Register extends Component {
     ]).start(callback);
   }
 
-  handleBack() {
-    this.unmountComponent(() => {
-      Actions.pop();
-    });
-  }
-
   handleLogin() {
     this.unmountComponent(() => {
       Actions.login();
@@ -180,7 +174,7 @@ export default class Register extends Component {
       <View style={loginStyle.container}>
         <BackButton
           transparent iconLeft="arrow-left-circle"
-          onPressIcon={this.handleBack.bind(this)}
+          onPressIcon={this.handleLogin.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
           <Animated.View style={{ position: 'relative', top: this.state.animation.headerPositionTop }}>

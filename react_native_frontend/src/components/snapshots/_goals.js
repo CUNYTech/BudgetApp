@@ -56,33 +56,6 @@ export default class GoalsSnapshot extends Component {
     let i = 1;
     const goals = [];
 
-    // if (this.state.goals.length < 3) {
-    //   i -= 1;
-    //   while (i < 3) {
-    //     goals.push(
-    //       <View key={i + 1} style={{ marginTop: 5 }}>
-    //         <Text style={styles.goalText}>
-    //           { this.state.goals[i].goal }
-    //         </Text>
-    //         <View style={styles.goal} >
-    //           <Progress.Bar
-    //             color={theme.accent}
-    //             height={1}
-    //             progress={this.state.goals[i].progress / this.state.goals[i].amount}
-    //             width={width * 0.4}
-    //             borderWidth={0}
-    //             unfilledColor="rgba(255,255,255,.5)"
-    //           />
-    //         </View>
-    //         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width * 0.3, alignSelf: 'center' }}>
-    //           <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].progress}</Text>
-    //           <Text style={{ fontSize: 12, fontFamily: 'OpenSans', padding: 0, margin: -10, color: 'white' }}>{this.state.goals[i].amount}</Text>
-    //         </View>
-    //       </View>,
-    //     );
-    //     i += 1;
-    //   }
-    // } else {
     this.state.goals.forEach((element) => {
       goals.push(
         <View key={i} style={{ marginTop: 5 }}>
@@ -92,7 +65,7 @@ export default class GoalsSnapshot extends Component {
           <View style={styles.goal} >
             <Progress.Bar
               color={theme.accent}
-              height={1}
+              height={2}
               progress={element.progress / element.amount}
               width={width * 0.9}
               borderWidth={0}
@@ -110,14 +83,14 @@ export default class GoalsSnapshot extends Component {
     // }
 
     return (
-      <View style={styles.container} onPress={this.handlePress.bind(this)}>
+      <TouchableOpacity style={styles.container} onPress={this.handlePress.bind(this)}>
         <Text style={styles.headerText}>
           GOALS
         </Text>
         <ScrollView contentContainerStyle={styles.section}>
           { goals }
         </ScrollView>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -144,9 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     fontSize: 15,
-    color: '#424242',
+    color: 'white',
+    fontFamily: 'OpenSans',
   },
   headerText: {
+    marginTop: 10,
     marginLeft: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,

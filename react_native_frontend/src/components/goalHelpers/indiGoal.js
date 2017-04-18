@@ -36,7 +36,7 @@ export default class IndiGoal extends Component {
 
   render() {
     return (
-      <View style={{ width: width * 0.9, height: width * 0.4, padding: 10, backgroundColor: 'black', borderWidth: 0.5, borderColor: '#ffc107', borderRadius: 10, margin: 10 }}>
+      <View style={{ width: width * 0.9, height: width * 0.4, padding: 10, backgroundColor: 'black', borderWidth: 0.5, borderColor: 'black', borderRadius: 10, margin: 10 }}>
         <Text style={{ backgroundColor: 'transparent', textAlign: 'center', fontSize: 17, color: '#bdbdbd', fontFamily: 'OpenSans' }}>
           { this.props.element.goal }
         </Text>
@@ -46,7 +46,7 @@ export default class IndiGoal extends Component {
         <View style={styles.goal} >
           <Progress.Bar
             color="#ffc107"
-            height={1}
+            height={2}
             progress={+this.props.element.progress / +this.props.element.amount}
             width={273}
             borderColor={'black'}

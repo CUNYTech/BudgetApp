@@ -29,6 +29,7 @@ export default class App extends Component {
       <Drawer
         type="overlay"
         tapToClose
+        openDrawerOffset={0}
         ref={(ref) => { this._drawer = ref; }}
         content={<AppSideMenu toggleSideMenu={this.toggleSideMenu} />}
         open={this.state.isOpen}
