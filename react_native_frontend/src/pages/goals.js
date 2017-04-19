@@ -87,7 +87,6 @@ export default class Goals extends Component {
       amount,
       progress: 0,
     }).then((snap) => {
-      console.log(snap.key);
       userGoalsRef.child(`${uid}/${snap.key}`).update({
         goalKey: snap.key,
       });
@@ -97,8 +96,6 @@ export default class Goals extends Component {
   }
 
   async _editGoals() {
-    console.log('inside edit', this.state.activeGoalKey);
-
     try {
       const ref = this.props.Firebase.database().ref();
       const user = this.props.Firebase.auth().currentUser;
@@ -121,8 +118,6 @@ export default class Goals extends Component {
         });
       }
     } catch (e) {
-      Alert.alert(e);
-      console.log(e);
     }
     this._setGoals();
     this.toggleEditGoal();

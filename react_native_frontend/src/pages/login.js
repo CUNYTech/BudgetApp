@@ -94,10 +94,6 @@ export default class Login extends Component {
     });
   }
 
-    /* handePressSignIn() {
-        Alert.alert('Button pressed', 'User sign in');
-    }*/
-
   handlePressSignUp() {
     Actions.register();
   }

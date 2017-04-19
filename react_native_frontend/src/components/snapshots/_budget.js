@@ -73,7 +73,6 @@ export default class BudgetSnapshot extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -93,7 +92,6 @@ export default class BudgetSnapshot extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -124,7 +122,6 @@ export default class BudgetSnapshot extends Component {
         error: 'transparent',
       });
     } catch (e) {
-      Alert.alert(e);
     }
   }
 
