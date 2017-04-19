@@ -31,6 +31,7 @@ export default class Expenses extends Component {
       expenseValueChange: '',
       expenseTitleChange: '',
       expenses: [],
+      error: 'transparent',
     };
   }
 
@@ -39,6 +40,12 @@ export default class Expenses extends Component {
   }
 
   async _updateExpenses() {
+    if (!Number.isInteger(+this.state.expenseValueChange) || +this.state.expenseValueChange <= 0 || this.state.expenseTitleChange === '') {
+      this.setState({
+        error: 'red',
+      });
+      return;
+    }
     try {
       const _this = this;
       const ref = this.props.Firebase.database().ref();
@@ -76,12 +83,14 @@ export default class Expenses extends Component {
         expenseModalOffset: height * 0.5,
         expenseValueChange: '',
         expenseTitleChange: '',
+        error: 'transparent',
       });
     } else {
       this.setState({
         expenseModalOffset: 0,
         expenseValueChange: '',
         expenseTitleChange: '',
+        error: 'transparent',
       });
     }
   }
@@ -107,6 +116,12 @@ export default class Expenses extends Component {
   }
 
   _addExpense() {
+    if (!Number.isInteger(+this.state.expenseValueChange) || +this.state.expenseValueChange <= 0 || this.state.expenseTitleChange === '') {
+      this.setState({
+        error: 'red',
+      });
+      return;
+    }
     const ref = this.props.Firebase.database().ref();
     const userExpenseRef = ref.child('userReadable/userExpenses');
     const userExpense = this.state.expenseTitleChange;
@@ -185,7 +200,7 @@ export default class Expenses extends Component {
             value={this.state.expenseValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderWidth: 0.5, borderColor: theme.accent }}
             onPress={this._updateExpenses.bind(this)}
           >
             <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
@@ -200,6 +215,9 @@ export default class Expenses extends Component {
               Cancel
             </Text>
           </TouchableOpacity>
+          <Text style={[styles.errors, { color: this.state.error }]}>
+            invalid title or value
+          </Text>
         </View>
       </View>
     );
@@ -252,5 +270,12 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,.5)',
+  },
+  errors: {
+    position: 'absolute',
+    top: 40,
+    left: 60,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
   },
 });

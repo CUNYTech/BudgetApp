@@ -31,16 +31,17 @@ export default class Goals extends Component {
   constructor() {
     super();
     this.state = {
-      addGoalOffset: height,
+      addGoalOffset: -height,
       addExpenseOffest: height,
       goal: '',
-      amount: 0,
+      amount: '',
       saved: 0,
       goals: [],
       activeGoalKey: '',
       activeGoalAmount: '',
       activeGoalTitle: '',
       newProgressChange: '',
+      errors: 'transparent',
     };
   }
 
@@ -68,6 +69,12 @@ export default class Goals extends Component {
   }
 
   _addGoal() {
+    if (!Number.isInteger(+this.state.amount) || +this.state.amount <= 0 || this.state.goal === '') {
+      this.setState({
+        errors: 'red',
+      });
+      return;
+    }
     const ref = this.props.Firebase.database().ref();
     const userGoalsRef = ref.child('userReadable/userGoals');
     const user = this.props.Firebase.auth().currentUser;
@@ -123,20 +130,24 @@ export default class Goals extends Component {
 
   _showAddGoal() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-    if (this.state.addGoalOffset === height) {
+    if (this.state.addGoalOffset === -height) {
       this.setState({
         addGoalOffset: 0,
-        addExpenseOffest: height,
         expenseTotalChange: '',
         activeGoalKey: '',
         activeGoalAmount: '',
         activeGoalTitle: '',
         activeGoalProgress: '',
+        errors: 'transparent',
+        goal: '',
+        amount: '',
       }); // Set to 0 for android
     } else {
       this.setState({
-        addGoalOffset: height,
-        expenseTotalChange: 0,
+        addGoalOffset: -height,
+        errors: 'transparent',
+        goal: '',
+        amount: '',
       });
     }
   }
@@ -148,32 +159,6 @@ export default class Goals extends Component {
     });
   }
 
-  toggleEditGoal(element) {
-    const offSet = (Platform.OS === 'ios') ? 0 : 0;
-
-    LayoutAnimation.configureNext(CustomLayoutAnimation);
-
-    if (this.state.addExpenseOffest === height) {
-      this.setState({
-        addExpenseOffest: offSet,
-        activeGoalKey: element.goalKey,
-        activeGoalAmount: element.amount,
-        activeGoalTitle: element.goal,
-        activeGoalProgress: element.progress,
-        expenseTotalChange: 0,
-      }); // Set to 0 for android
-    } else {
-      this.setState({
-        addExpenseOffest: height,
-        expenseTotalChange: '',
-        activeGoalKey: '',
-        activeGoalAmount: '',
-        activeGoalTitle: '',
-        activeGoalProgress: '',
-      });
-    }
-  }
-
   render() {
     let i = 1;
     const goals = [];
@@ -183,12 +168,12 @@ export default class Goals extends Component {
 
     this.state.goals.forEach((element) => {
       goals.push(
-        <IndiGoal key={i} updateGoals={this._setGoals.bind(this)} toggleEditGoal={this.toggleEditGoal.bind(this, element)} element={element} Firebase={this.props.Firebase} />,
+        <IndiGoal key={i} updateGoals={this._setGoals.bind(this)} element={element} Firebase={this.props.Firebase} />,
      );
-      if (element.progress >= element.amount) {
-        completed += 1;
-      } else {
+      if (+element.progress < +element.amount) {
         inProgess += 1;
+      } else {
+        completed += 1;
       }
       i += 1;
     });
@@ -252,91 +237,53 @@ export default class Goals extends Component {
         <View
           style={{
             position: 'absolute',
-            top: this.state.addGoalOffset,
+            bottom: this.state.addGoalOffset,
             width,
-            height,
-            marginTop: 59,
-            left: 0,
-            borderWidth: 1,
-            borderColor: 'black',
+            height: height * 0.92,
             backgroundColor: 'rgba(0,0,0,.7)',
+            alignItems: 'flex-end',
             justifyContent: 'center',
           }}
         >
           <TouchableOpacity onPress={this._showAddGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>
             <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>Cancel</Text>
           </TouchableOpacity>
-          <Text style={{ bottom: 40, textAlign: 'center', color: '#424242' }}>
-                ADD NEW GOAL
-              </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
-            <Text style={{ fontFamily: 'OpenSans', left: 120, color: 'white', fontSize: 25 }}>
-                  $
-                </Text>
-            <TextInput
-              style={{ left: 130, height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
-              onChangeText={this.handleChangeInput.bind(this, 'amount')}
-              value={`${this.state.amount}`}
-            />
 
-            <TextInput
-              style={{ bottom: 50, right: 70, height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
-              placeholder="New Goal"
-              onChangeText={this.handleChangeInput.bind(this, 'goal')}
-              value={`${this.state.goal}`}
-            />
-            <Text style={{ fontFamily: 'OpenSans', bottom: 45, left: -327, textAlign: 'left', color: 'white', fontSize: 22 }}>
-                    Goal
-                </Text>
-          </View>
-          <TouchableOpacity
-            onPress={this._addGoal.bind(this)}
-            style={styles.addExpenseButton}
-          >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
+          <Text style={{ textAlign: 'center', color: 'white', fontFamily: 'OpenSans', alignSelf: 'center', marginBottom: 20 }}>
+            ADD NEW GOAL
+          </Text>
+          <View style={{ justifyContent: 'center', alignItems: 'flex-end', marginRight: width * 0.2 }}>
+            <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: 'white', fontSize: 22 }}>
+                Goal
+              </Text>
+              <TextInput
+                style={{ height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+                placeholder="New Goal"
+                onChangeText={this.handleChangeInput.bind(this, 'goal')}
+                value={this.state.goal}
+              />
+            </View>
+            <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 25 }}>
+                $
+              </Text>
+              <TextInput
+                style={{ height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
+                onChangeText={this.handleChangeInput.bind(this, 'amount')}
+                value={this.state.amount}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={this._addGoal.bind(this)}
+              style={styles.addExpenseButton}
+            >
+              <Text style={{ textAlign: 'center', color: 'white' }}>
                   ADD
                 </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            position: 'absolute',
-            top: this.state.addExpenseOffest,
-            width,
-            height,
-            marginTop: 59,
-            left: 0,
-            borderWidth: 1,
-            borderColor: 'black',
-            backgroundColor: 'rgba(0,0,0,.7)',
-            justifyContent: 'center',
-          }}
-        >
-          <TouchableOpacity onPress={this.toggleEditGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>
-            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>Cancel</Text>
-          </TouchableOpacity>
-          <Text style={{ textAlign: 'center', color: '#424242' }}>
-            { this.state.activeGoalTitle }
-          </Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', padding: 20 }}>
-            <Text style={{ color: 'white', fontSize: 35 }}>
-            $
-          </Text>
-            <TextInput
-              style={{ height: 40, width: 100, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
-              placeholder="Add to Goal"
-              onChangeText={newProgressChange => this.setState({ newProgressChange })}
-              value={`${this.state.newProgressChange}`}
-            />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={this._editGoals.bind(this)}
-            style={styles.addExpenseButton}
-          >
-            <Text style={{ textAlign: 'center', color: 'white' }}>
-            UPDATE
-          </Text>
-          </TouchableOpacity>
+          <Text style={{ position: 'absolute', top: 180, left: 30, fontSize: 12, fontFamily: 'OpenSans', color: this.state.errors }}>Invalid goal or value</Text>
         </View>
       </View>
     );
@@ -367,9 +314,10 @@ const styles = StyleSheet.create({
   addExpenseButton: {
     height: 45,
     width: 200,
-    backgroundColor: '#3949ab',
+    backgroundColor: 'black',
     borderRadius: 10,
-    marginLeft: 55,
+    borderWidth: 0.5,
+    borderColor: theme.accent,
     overflow: 'hidden',
     justifyContent: 'center',
   },

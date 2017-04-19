@@ -179,7 +179,6 @@ export default class Friends extends Component {
         photoUrl,
 
       });
-      Alert.alert(`You and ${displayName} are now friends.`);
       this.setFriends();
       this.showSearchBar();
     }

@@ -28,6 +28,19 @@ export default class Register extends Component {
 
     // Add new user to Firebase DB
   async _register() {
+    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.'))) {
+      this.setState({ errors: 'Please use a valid email.' });
+      return;
+    }
+    if (this.state.password.length < 6) {
+      this.setState({ errors: 'Password must me at least 6 characters in length.' });
+      return;
+    }
+    if (this.state.username.length < 1) {
+      this.setState({ errors: 'Type in a username.' });
+      return;
+    }
+
     try {
       await this.props.Firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
@@ -169,7 +182,13 @@ export default class Register extends Component {
   }
 
   render() {
-    const { errors } = this.props;
+    let errors = '';
+    if (this.state.errors != '') {
+      errors = this.state.errors;
+    } else {
+      errors = this.props.errors;
+    }
+
     return (
       <View style={loginStyle.container}>
         <BackButton
@@ -185,7 +204,7 @@ export default class Register extends Component {
           <Logo marginTop={25} />
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
-              <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>
+              <Text style={{ color: 'red', fontSize: 12 }}>{errors}</Text>
               <Input
                 label="Username"
                 autoCorrect={false}
@@ -210,8 +229,8 @@ export default class Register extends Component {
             </Animated.View>
             <Animated.View style={{ position: 'relative', top: this.state.animation.buttonPositionTop }}>
               <Button marginTop={getPlatformValue('android', 25, 38)} width={200} onPress={this._register.bind(this)}>
-                    Create
-                  </Button>
+                Create
+              </Button>
             </Animated.View>
           </View>
         </View>
@@ -234,7 +253,7 @@ const loginStyle = StyleSheet.create({
   loginContainer: {
     flex: 1,
     backgroundColor: 'transparent',
-    paddingTop: getPlatformValue('android', 10, 30),
+    paddingTop: getPlatformValue('android', 10, 40),
   },
   formContainer: {
     flex: 1,

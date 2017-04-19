@@ -32,6 +32,7 @@ export default class BudgetSection extends Component {
       progress: 0,
       budgetValueChange: '',
       budgetModalOffset: height * 0.3,
+      error: 'transparent',
     };
   }
 
@@ -89,6 +90,12 @@ export default class BudgetSection extends Component {
   }
 
   async _updateBudget() {
+    if (!Number.isInteger(+this.state.budgetValueChange) || +this.state.budgetValueChange <= 0) {
+      this.setState({
+        error: 'red',
+      });
+      return;
+    }
     try {
       const _this = this;
       const ref = this.props.Firebase.database().ref();
@@ -118,20 +125,45 @@ export default class BudgetSection extends Component {
       this.setState({
         budgetModalOffset: height * 0.3,
         budgetValueChange: '',
+        error: 'transparent',
       });
     } else {
       this.setState({
         budgetModalOffset: 0,
         budgetValueChange: '',
+        error: 'transparent',
       });
     }
+  }
+
+  warning() {
+    if (+this.state.budget === 0) {
+      return {
+        color: 'white',
+        text: 'please set a budget',
+      };
+    } else if (this.setProgess() < 1) {
+      return {
+        color: 'transparent',
+        text: 'budget reached',
+      };
+    } else if (this.setProgess() > 1) {
+      return {
+        color: 'red',
+        text: 'budget exceeded',
+      };
+    }
+    return {
+      color: theme.accent,
+      text: 'budget reached',
+    };
   }
 
   render() {
     let progress = 0.01;
     if (this.setProgess() < 1) {
       progress = this.setProgess();
-    } else {
+    } else if (this.setProgess() >= 1) {
       progress = 1;
     }
 
@@ -180,7 +212,7 @@ export default class BudgetSection extends Component {
               name="plus-circle"
               size={40}
               color="rgba(255,255,255,1)"
-              style={{ bottom: 0 }}
+              style={{ bottom: 0, backgroundColor: 'transparent' }}
             />
           </TouchableOpacity>
         </View>
@@ -197,7 +229,7 @@ export default class BudgetSection extends Component {
             value={this.state.budgetValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderWidth: 0.5, borderColor: theme.accent }}
             onPress={this._updateBudget.bind(this)}
           >
             <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
@@ -212,7 +244,13 @@ export default class BudgetSection extends Component {
               Cancel
             </Text>
           </TouchableOpacity>
+          <Text style={[styles.errors, { color: this.state.error }]}>
+            invalid value
+          </Text>
         </View>
+        <Text style={[styles.exceed, { color: this.warning().color }]}>
+          WARNING: {this.warning().text}
+        </Text>
       </View>
     );
   }
@@ -222,7 +260,7 @@ export default class BudgetSection extends Component {
 const styles = StyleSheet.create({
   container: {
     height: height * 0.30,
-    backgroundColor: 'transparent',
+    backgroundColor: 'black',
   },
   bg: {
     position: 'absolute',
@@ -281,6 +319,7 @@ const styles = StyleSheet.create({
     color: theme.text,
     margin: 10,
     fontSize: 10,
+    backgroundColor: 'transparent',
   },
   modal: {
     position: 'absolute',
@@ -291,5 +330,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+  },
+  errors: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
+    backgroundColor: 'transparent',
+  },
+  exceed: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    fontFamily: 'OpenSans',
+    fontWeight: '600',
+    backgroundColor: 'transparent',
   },
 });

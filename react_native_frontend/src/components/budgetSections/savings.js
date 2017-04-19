@@ -28,9 +28,10 @@ export default class Savings extends Component {
   constructor() {
     super();
     this.state = {
-      savingValueChange: '0',
+      savingValueChange: '',
       modalOffset: height * 0.30,
       totalSavings: 0,
+      error: 'transparent',
     };
   }
 
@@ -60,6 +61,12 @@ export default class Savings extends Component {
   }
 
   async _updateSavings() {
+    if (!Number.isInteger(+this.state.savingValueChange) || +this.state.savingValueChange < 0) {
+      this.setState({
+        error: 'red',
+      });
+      return;
+    }
     try {
       const _this = this;
       const ref = this.props.Firebase.database().ref();
@@ -90,11 +97,13 @@ export default class Savings extends Component {
       this.setState({
         modalOffset: 0,
         savingValueChange: '',
+        error: 'transparent',
       });
     } else {
       this.setState({
         modalOffset: height * 0.30,
         savingValueChange: '',
+        error: 'transparent',
       });
     }
   }
@@ -125,13 +134,13 @@ export default class Savings extends Component {
           </Text>
           <TextInput
             placeholder="$"
-            placeholderTextColor="white"
-            style={{ textAlign: 'center', width: 50, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.2)', margin: 10, color: 'white' }}
+            placeholderTextColor="#bdbdbd"
+            style={{ textAlign: 'left', width: 80, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.2)', margin: 10, color: 'white' }}
             onChangeText={savingValueChange => this.setState({ savingValueChange })}
             value={this.state.savingValueChange}
           />
           <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.2, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center' }}
+            style={{ backgroundColor: 'black', width: width * 0.3, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderWidth: 0.5, borderColor: theme.accent }}
             onPress={this._updateSavings.bind(this)}
           >
             <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
@@ -146,6 +155,7 @@ export default class Savings extends Component {
               Cancel
             </Text>
           </TouchableOpacity>
+          <Text style={[styles.errors, { color: this.state.error }]}>Invalid input</Text>
         </View>
       </View>
     );
@@ -192,5 +202,12 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,.8)',
+  },
+  errors: {
+    position: 'absolute',
+    top: 10,
+    left: 30,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
   },
 });

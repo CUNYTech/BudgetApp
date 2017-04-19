@@ -81,16 +81,29 @@ export default class GoalsSnapshot extends Component {
       i += 1;
     });
     // }
+    let content = '';
+    if (goals.length === 0) {
+      content = (<Text style={{ flex: 1, padding: 60, textAlign: 'center', fontFamily: 'OpenSans', color: theme.accent, opacity: 0.9, fontSize: 12 }}>
+          No goals. Add Some Goals!
+        </Text>);
+    } else {
+      content = (<ScrollView contentContainerStyle={styles.section}>
+        { goals }
+      </ScrollView>);
+    }
 
     return (
-      <TouchableOpacity style={styles.container} onPress={this.handlePress.bind(this)}>
-        <Text style={styles.headerText}>
-          GOALS
-        </Text>
-        <ScrollView contentContainerStyle={styles.section}>
-          { goals }
-        </ScrollView>
-      </TouchableOpacity>
+      <View style={styles.container} >
+        <TouchableOpacity onPress={this.handlePress.bind(this)}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>
+              GOALS
+            </Text>
+          </View>
+        </TouchableOpacity>
+        { content }
+      </View>
+
     );
   }
 }
@@ -98,20 +111,18 @@ export default class GoalsSnapshot extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderColor: '#424242',
-    borderTopWidth: 1,
     backgroundColor: 'black',
   },
   section: {
-    flex: 1,
-    borderColor: '#424242',
+    flex: 0,
     backgroundColor: 'black',
+    paddingBottom: 20,
   },
   goal: {
     height: 20,
     marginRight: 20,
     marginLeft: 20,
-    marginTop: 20,
+    marginTop: 10,
   },
   goalText: {
     backgroundColor: 'transparent',
@@ -121,11 +132,14 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans',
   },
   headerText: {
-    marginTop: 10,
-    marginLeft: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#bdbdbd',
-    marginBottom: 10,
+    color: '#e0e0e0',
+  },
+  header: {
+    padding: 10,
+
+    borderTopWidth: 0.5,
+    borderColor: '#424242',
   },
 });
