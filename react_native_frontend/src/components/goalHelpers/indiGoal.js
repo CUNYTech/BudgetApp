@@ -8,7 +8,7 @@ const { height, width } = Dimensions.get('window');
 
 
 const CustomLayoutAnimation = {
-  duration: 500,
+  duration: 200,
   create: {
     type: LayoutAnimation.Types.easeInEaseOut,
     property: LayoutAnimation.Properties.opacity,
@@ -18,12 +18,56 @@ const CustomLayoutAnimation = {
   },
 };
 
+const theme = {
+  accent: '#ffc107',
+  bg: '#212121',
+  text: 'white',
+  font: 'OpenSans',
+};
+
 export default class IndiGoal extends Component {
 
   constructor() {
     super();
     this.state = {
+      newProgressChange: '',
+      modalOffset: width * 0.5,
+      errors: 'transparent',
     };
+  }
+
+  async _editGoals() {
+    if (!Number.isInteger(+this.state.newProgressChange)) {
+      this.setState({
+        errors: 'red',
+      });
+      return;
+    }
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const _this = this;
+      // const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
+      const userGoalsProgressRef = ref.child(`userReadable/userGoals/${uid}/`);
+
+      const newProgressChange = +this.state.newProgressChange;
+      const newProgressTotal = +this.state.newProgressChange + +this.props.element.progress;
+
+      this.setState({ progress: newProgressTotal });
+      if (newProgressTotal > 0) {
+        userGoalsProgressRef.child(this.props.element.goalKey).update({ progress: `${newProgressTotal}` });
+        userGoalsProgressRef.once('value').then((snap) => {
+          const updatedValue = snap.val().progress;
+          return updatedValue;
+        }).then((value) => {
+          this.setState({ progress: value });
+        });
+      }
+    } catch (e) {
+    }
+    this.props.updateGoals();
+    this.toggleEditGoal();
   }
 
   deleteGoal() {
@@ -34,9 +78,24 @@ export default class IndiGoal extends Component {
     this.props.updateGoals();
   }
 
+  toggleEditGoal() {
+    LayoutAnimation.configureNext(CustomLayoutAnimation);
+    if (this.state.modalOffset === 0) {
+      this.setState({
+        modalOffset: width * 0.5,
+        errors: 'transparent',
+      });
+    } else {
+      this.setState({
+        modalOffset: 0,
+        errors: 'transparent',
+      });
+    }
+  }
+
   render() {
     return (
-      <View style={{ width: width * 0.9, height: width * 0.4, padding: 10, backgroundColor: 'black', borderWidth: 0.5, borderColor: 'black', borderRadius: 10, margin: 10 }}>
+      <View style={{ width: width * 0.9, height: width * 0.4, padding: 10, backgroundColor: 'black', borderWidth: 0.5, borderColor: 'black', borderRadius: 10, margin: 10, overflow: 'hidden' }}>
         <Text style={{ backgroundColor: 'transparent', textAlign: 'center', fontSize: 17, color: '#bdbdbd', fontFamily: 'OpenSans' }}>
           { this.props.element.goal }
         </Text>
@@ -57,10 +116,39 @@ export default class IndiGoal extends Component {
           <Text style={{ color: '#bdbdbd' }}>${this.props.element.progress}</Text>
           <Text style={{ color: '#bdbdbd' }}>${this.props.element.amount}</Text>
         </View>
-        <TouchableOpacity style={{ alignItems: 'center' }} activeOpacity={0.7} onPress={this.props.toggleEditGoal}>
+        <TouchableOpacity style={{ alignItems: 'center' }} activeOpacity={0.7} onPress={this.toggleEditGoal.bind(this)}>
           <Icon name="plus-square-o" size={30} color="#ffc107" style={{ backgroundColor: 'transparent', overflow: 'hidden' }} />
           <Text style={{ color: 'white', fontSize: 10, fontFamily: 'OpenSans' }}>add to goal</Text>
         </TouchableOpacity>
+        <View style={[styles.modal, { top: this.state.modalOffset }]}>
+          <View style={{ justifyContent: 'center', paddingBottom: 10, alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 15, fontFamily: 'OpenSans', padding: 10 }}>
+            Add to goal
+          </Text>
+            <TextInput
+              style={{ height: 40, width: 100, backgroundColor: 'rgba(255,255,255,.6)', borderWidth: 1, textAlign: 'center' }}
+              placeholder="$"
+              onChangeText={newProgressChange => this.setState({ newProgressChange })}
+              value={this.state.newProgressChange}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={this._editGoals.bind(this)}
+            style={styles.addExpenseButton}
+          >
+            <Text style={{ textAlign: 'center', color: 'white', fontFamily: 'OpenSans', fontSize: 12 }}>
+            UPDATE
+          </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.toggleEditGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>
+            <Text style={{ fontFamily: 'OpenSans', fontSize: 12, color: 'white' }}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+          <Text style={{ position: 'absolute', top: 10, left: 10, fontFamily: 'OpenSans', fontSize: 12, color: this.state.errors }}>
+            invalid input
+          </Text>
+        </View>
       </View>
     );
   }
@@ -87,11 +175,13 @@ const styles = StyleSheet.create({
     right: 20,
   },
   addExpenseButton: {
-    height: 45,
-    width: 200,
-    backgroundColor: '#3949ab',
+    padding: 10,
+    paddingRight: 50,
+    paddingLeft: 50,
+    backgroundColor: 'black',
     borderRadius: 10,
-    marginLeft: 55,
+    borderWidth: 0.5,
+    borderColor: theme.accent,
     overflow: 'hidden',
     justifyContent: 'center',
   },
@@ -111,5 +201,14 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modal: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'rgba(0,0,0,.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

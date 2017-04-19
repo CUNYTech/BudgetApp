@@ -27,49 +27,40 @@ export default class Login extends Component {
 
     // User Login Authentication
   async _login() {
-    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.com')) || (this.state.password === '')) {
-      Alert.alert('Please type in a valid email or password.');
-    } else {
-      try {
-        await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.')) || (this.state.password === '')) {
+      this.setState({ errors: 'Please type in a valid email or password.' });
+      return;
+    }
+    try {
+      await this.props.Firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 
-        const user = this.props.Firebase.auth().currentUser;
-        let name,
-          email,
-          photoUrl,
-          uid,
-          emailVerified;
+      const user = this.props.Firebase.auth().currentUser;
+      let name,
+        email,
+        photoUrl,
+        uid,
+        emailVerified;
 
-        if (user) {
-          uid = user.uid;
-        } else {
-              // No user is signed in.
-        }
+      if (user) {
+        uid = user.uid;
+      }
+      const event_10 = 10;
+      _updatePoints(event_10, uid);
 
-        const event_10 = 10;
-        _updatePoints(event_10, uid);
-
-        setTimeout(() => Actions.dashboard(), 0);
-      } catch (error) {
-        console.log(error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorMessage === 'auth/invalid-email') {
-          this.setState({
-            errors: 'Email invalid.',
-          });
-          Actions.register({ errors: 'Email has not been registered. Please sign up.' });
-        } else if (errorMessage === 'auth/user-not-found') {
-          this.setState({
-            errors: 'User not found.',
-          });
-        } else {
-          console.log(errorCode);
-          console.log(errorMessage);
-          this.setState({
-            errors: 'Please try to login again.',
-          });
-        }
+      setTimeout(() => Actions.dashboard(), 0);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if (errorCode === 'auth/invalid-email') {
+        this.setState({
+          errors: 'Email invalid.',
+        });
+      } else if (errorCode === 'auth/user-not-found') {
+        Actions.register({ errors: 'Email has not been registered. Please sign up.' });
+      } else {
+        this.setState({
+          errors: 'Please try to login again.',
+        });
       }
     }
   }
@@ -103,10 +94,6 @@ export default class Login extends Component {
     });
   }
 
-    /* handePressSignIn() {
-        Alert.alert('Button pressed', 'User sign in');
-    }*/
-
   handlePressSignUp() {
     Actions.register();
   }
@@ -124,9 +111,6 @@ export default class Login extends Component {
         />
         <View style={loginStyle.loginContainer}>
           <Logo />
-          <Heading style={{ fontFamily: 'OpenSans' }} marginTop={16} color="#ffffff" textAlign="center">
-            {/* {'Hoola'} */}
-          </Heading>
           <View style={loginStyle.formContainer}>
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>

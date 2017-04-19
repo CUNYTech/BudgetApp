@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderColor: theme.bg,
+    borderColor: '#424242',
+    borderBottomWidth: 1,
   },
 });
