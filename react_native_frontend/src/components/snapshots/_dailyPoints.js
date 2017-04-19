@@ -113,12 +113,6 @@ export default class PointsSnapshot extends Component {
   render() {
     return (
       <TouchableOpacity onPress={this.navPoints.bind(this)} style={styles.pointSection}>
-        <Image
-          style={styles.bg}
-          source={{ uri: 'http://www.ilikewallpaper.net/ipad-wallpapers/download/7702/Circle-Pattern-ipad-wallpaper-ilikewallpaper_com.jpg' }}
-        >
-          <View style={styles.bgFilter} />
-        </Image>
         <View style={styles.button}>
           <Text style={styles.headerText}>
             DAILY POINTS
@@ -165,7 +159,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#bdbdbd',
+    color: '#e0e0e0',
     backgroundColor: 'transparent',
   },
   bg: {

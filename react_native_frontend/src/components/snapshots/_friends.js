@@ -45,14 +45,13 @@ export default class FriendsSnapshot extends Component {
             friends: value,
           });
         } else {
-          Alert.alert('Please add some friends!');
           _this.setState({
             friends: [],
           });
         }
       });
     } catch (e) {
-      console.log(error);
+      console.log(e);
     }
   }
 
@@ -77,16 +76,27 @@ export default class FriendsSnapshot extends Component {
       i += 1;
     });
 
+    let content = '';
+    if (friends.length === 0) {
+      content = (<Text style={{ flex: 1, padding: 30, textAlign: 'center', fontFamily: 'OpenSans', color: theme.accent, opacity: 0.9, fontSize: 12 }}>
+          No Friends Yet. Add Some Friends!
+        </Text>);
+    } else {
+      content = (<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        { friends }
+      </ScrollView>);
+    }
+
     return (
       <View style={styles.friendSnap}>
-        <TouchableOpacity style={styles.button} onPress={this.navFriend.bind(this)}>
-          <Text style={styles.headerText}>
-          FRIENDS
-        </Text>
+        <TouchableOpacity onPress={this.navFriend.bind(this)}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>
+              FRIENDS
+            </Text>
+          </View>
         </TouchableOpacity>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          { friends }
-        </ScrollView>
+        { content }
       </View>
     );
   }
@@ -97,14 +107,6 @@ const styles = StyleSheet.create({
     flex: 0,
     height: height * 0.20,
     backgroundColor: 'black',
-    borderColor: '#424242',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-
-  },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
   },
   friendList: {
     color: theme.text,
@@ -122,10 +124,15 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   headerText: {
-    marginLeft: 10,
-    marginTop: 10,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#bdbdbd',
+    color: '#e0e0e0',
+  },
+  header: {
+
+    padding: 10,
+
+    borderTopWidth: 0.5,
+    borderColor: '#424242',
   },
 });
