@@ -66,6 +66,7 @@ export default class Register extends Component {
   }
 
   _load(user) {
+    const date = new Date().getDate();
     const ref = this.props.Firebase.database().ref();
 
         // Pull user profile
@@ -90,12 +91,18 @@ export default class Register extends Component {
     const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
     const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
     const userSavingsRef = ref.child('userReadable/userSavings').child(uid);
+    const userDailyPointsRef = ref.child('userReadable/userDailyPoints').child(uid);
 
     const peopleRef = ref.child('/people');
 
     setTimeout(() => userPointsRef.set({
       displayName: this.state.username,
-      points: '',
+      points: 0,
+    }), 0);
+
+    setTimeout(() => userDailyPointsRef.set({
+      date,
+      points: 0,
     }), 0);
 
     const event_10 = 10;
