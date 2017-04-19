@@ -13,6 +13,7 @@ export default class Points extends Component {
       userLocalRank: 0,
       userRank: 0,
       CurrentPoints: 0,
+      dailyPoints: 0,
     };
   }
 
@@ -29,6 +30,12 @@ export default class Points extends Component {
       const user = this.props.Firebase.auth().currentUser;
       const uid = user.uid;
       const userPointsRef = ref.child('userReadable/userPoints').child(uid);
+      const userDailyPointsRef = ref.child('userReadable/userDailyPoints').child(uid);
+
+      userDailyPointsRef.once('value').then((snap) => {
+        const dailyPoints = snap.val().points;
+        this.setState({ dailyPoints });
+      });
 
       userPointsRef.once('value').then((snap) => {
         const points = snap.val().points;
@@ -178,7 +185,7 @@ export default class Points extends Component {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#212121', width, height: height * 0.20, borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107' }}>
           <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 30 }}>Today's Points</Text>
           <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 40 }}>
-            20
+            {this.state.dailyPoints}
             <Text style={{ fontFamily: 'OpenSans', fontSize: 17 }}>Pts</Text>
           </Text>
         </View>
