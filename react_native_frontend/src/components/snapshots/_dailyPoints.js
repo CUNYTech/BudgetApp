@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Image, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { StockLine } from 'react-native-pathjs-charts';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../../utils';
 
