@@ -17,11 +17,41 @@ export default class PointsSnapshot extends Component {
   constructor() {
     super();
     this.state = {
+      dailyPoints: 0,
+      CurrentPoints: 0,
     };
+  }
+
+  componentWillMount() {
+    this.setPoints();
   }
 
   navPoints() {
     Actions.points();
+  }
+
+  async setPoints() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userPointsRef = ref.child('userReadable/userPoints').child(uid);
+      const userDailyPointsRef = ref.child('userReadable/userDailyPoints').child(uid);
+
+      userDailyPointsRef.once('value').then((snap) => {
+        const dailyPoints = snap.val().points;
+        this.setState({ dailyPoints });
+      });
+
+      userPointsRef.once('value').then((snap) => {
+        const points = snap.val().points;
+        return points;
+      })
+      .then((points) => {
+        this.setState({ CurrentPoints: points });
+      });
+    } catch (e) {
+    }
   }
 
   render() {
@@ -34,7 +64,7 @@ export default class PointsSnapshot extends Component {
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Total Points</Text>
-          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>200</Text>
+          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.CurrentPoints}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
           <View style={{ alignItems: 'center' }}>
@@ -48,7 +78,7 @@ export default class PointsSnapshot extends Component {
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Earned Today</Text>
-          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>200</Text>
+          <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.dailyPoints}</Text>
         </View>
         {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} bounces={false}>
           <StockLine data={graphData} options={options} xKey="x" yKey="y" />
