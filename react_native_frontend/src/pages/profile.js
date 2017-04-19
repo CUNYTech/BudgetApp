@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, View, StyleSheet, TouchableOpacity, Image, Dimensions, ImagePickerIOS } from 'react-native';
-import { Container, Content, Text, Left, Right, Card, CardItem } from 'native-base';
+import { Container, Content, Text, Left, Right, Card, CardItem, ListItem } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
@@ -260,38 +260,46 @@ export default class Points extends Component {
                   source={{ uri: this.state.chosenImage }}
                 />
               </TouchableOpacity>
-              <Text style={{ color: 'white' }}>{this.state.userName} </Text>
+              <Text style={{ color: 'white', marginTop: 20 }}>
+                {this.state.userName}
+              </Text>
             </View>
           </CardItem>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-            <View style={{ width: width * 0.3 }}>
-              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
+          <CardItem style={{ backgroundColor: 'transparent' }}>
+            <Content>
+              <ListItem style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107' }}>
+              <Left>
+                <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  Friends
+                </Text>
+              </Left>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                 {this.state.friends}
               </Text>
-              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
-                Friends
-              </Text>
-            </View>
-            <View style={{ width: width * 0.3 }}>
-              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
+            </ListItem>
+            <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }}>
+              <Left>
+                <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  Local Rank
+                </Text>
+              </Left>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                 {this.state.userLocalRank}
               </Text>
-              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
-                Local Rank
-              </Text>
-            </View>
-            <View style={{ width: width * 0.3 }}>
-              <Text style={{ fontSize: 25, color: 'white', textAlign: 'center' }}>
+            </ListItem>
+            <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }} >
+              <Left>
+                <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  Global Rank
+                </Text>
+              </Left>
+              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                 {this.state.userGlobalRank}
               </Text>
-              <Text style={{ color: '#ffc107', fontSize: 12, textAlign: 'center' }}>
-                World Rank
-              </Text>
-            </View>
-          </View>
-
+            </ListItem>
+            </Content>
+          </CardItem>
         </Card>
-        <Content />
       </Container>
     );
   }
@@ -337,8 +345,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   icon: {
-    width: 80,
-    height: 80,
+    width: 220,
+    height: 220,
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderRadius: 40,
