@@ -6,8 +6,17 @@ import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import { _localRank } from '../utils/pointHelpers';
+import ImagePicker from 'react-native-image-picker';
 
 const { height, width } = Dimensions.get('window');
+
+const options = {
+  title: 'Select Avatar',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 export default class Points extends Component {
   constructor() {
@@ -70,7 +79,6 @@ export default class Points extends Component {
         }
       });
     } catch (e) {
-      console.log(error);
     }
   }
 
@@ -109,7 +117,6 @@ export default class Points extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -177,19 +184,25 @@ export default class Points extends Component {
           });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
-  cameraRoll() {
-    const uid = this.props.Firebase.auth().currentUser.uid;
-    // REFERENCE PLACE IN PE
-    ImagePickerIOS.openSelectDialog({}, (imageUri) => {
-      this.setState({ image: imageUri });
-      this.pickImage();
-    }, error => console.log(error));
-  }
+  // cameraRoll() {
+  //   const uid = this.props.Firebase.auth().currentUser.uid;
+  //   // REFERENCE PLACE IN PE
+  //   ImagePickerIOS.openSelectDialog({}, (imageUri) => {
+  //     console.log(imageUri);
+  //     this.setState({ image: imageUri });
+  //     this.pickImage();
+  //   }, error => console.log(error));
+  // }
 
+  cameraRoll() {
+    ImagePicker.showImagePicker(options, (response) => {
+      this.setState({ image: response.origURL });
+      this.pickImage();
+    });
+  }
 
   pickImage() {
     const _this = this;
@@ -220,7 +233,6 @@ export default class Points extends Component {
         });
       })
     .catch((err) => {
-      console.log('Blob err:', err);
     });
   }
 

@@ -38,7 +38,6 @@ export default class Points extends Component {
         this.setState({ CurrentPoints: points });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -105,7 +104,6 @@ export default class Points extends Component {
           });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -144,7 +142,6 @@ export default class Points extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 

@@ -38,6 +38,7 @@ export default class BudgetSnapshot extends Component {
       expenseValueChange: '',
       expenseTotal: 0,
       budgetValue: 0,
+      error: 'transparent',
     };
   }
 
@@ -72,7 +73,6 @@ export default class BudgetSnapshot extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -92,11 +92,16 @@ export default class BudgetSnapshot extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
   async _updateExpenses() {
+    if (!Number.isInteger(+this.state.expenseValueChange) || +this.state.expenseValueChange <= 0 || this.state.expenseTitleChange === '') {
+      this.setState({
+        error: 'red',
+      });
+      return;
+    }
     try {
       const _this = this;
       const ref = this.props.Firebase.database().ref();
@@ -114,9 +119,9 @@ export default class BudgetSnapshot extends Component {
       _updatePoints(event_2, uid);
       this.setState({
         expenseTotal: newExpensesTotal,
+        error: 'transparent',
       });
     } catch (e) {
-      Alert.alert(e);
     }
   }
 
@@ -163,6 +168,8 @@ export default class BudgetSnapshot extends Component {
     let progress = 0.01;
     if (this.setProgess() < 1) {
       progress = this.setProgess();
+    } else if (this.setProgess() > 1) {
+      progress = 1;
     }
 
     return (
@@ -248,6 +255,9 @@ export default class BudgetSnapshot extends Component {
                 Cancel
               </Text>
           </TouchableOpacity>
+          <Text style={[styles.errors, { color: this.state.error }]}>
+            invalid title or value
+          </Text>
         </View>
 
       </View>
@@ -276,7 +286,7 @@ const styles = StyleSheet.create({
     marginRight: 6,
     fontFamily: 'OpenSans',
     fontSize: 17,
-    color: '#bdbdbd',
+    color: '#e0e0e0',
   },
   addExpense: {
     position: 'absolute',
@@ -346,9 +356,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     right: 0,
-
     width,
     height: height * 0.35,
     backgroundColor: 'rgba(0,0,0,.9)',
+  },
+  errors: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    fontFamily: 'OpenSans',
+    fontWeight: '100',
   },
 });
