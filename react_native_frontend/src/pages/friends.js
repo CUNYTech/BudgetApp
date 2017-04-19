@@ -63,14 +63,12 @@ export default class Friends extends Component {
             friends: value,
           });
         } else {
-          // Alert.alert('Please add some friends!');
           _this.setState({
             friends: [],
           });
         }
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -101,7 +99,6 @@ export default class Friends extends Component {
         });
       }
     } catch (e) {
-      console.log(e);
     }
     this.showAddFriend();
   }
@@ -124,7 +121,6 @@ export default class Friends extends Component {
   }
 
   _searchUsers(searchString) {
-    console.log(searchString);
     const ref = firebase.database().ref('/people');
     const userRef = ref.child('userPoints');
     const userFriends = ref.child('userFriends');

@@ -72,7 +72,6 @@ export default class Expenses extends Component {
       const event_2 = 2;
       _updatePoints(event_2, uid);
     } catch (e) {
-      Alert.alert(e);
     }
   }
 
@@ -104,7 +103,6 @@ export default class Expenses extends Component {
 
     userExpenseRef.child(uid).orderByKey().once('value').then((snap) => {
       snap.forEach((snapshot) => {
-        console.log(snapshot.val().expenseKey);
         userExpense.push({ title: snapshot.val().expense, amount: snapshot.val().amount });
       });
       return Promise.all(userExpense);

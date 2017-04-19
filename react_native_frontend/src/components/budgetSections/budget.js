@@ -49,7 +49,6 @@ export default class BudgetSection extends Component {
       const userBudgetRef = ref.child('userReadable/userBudget').child(uid);
 
       await userBudgetRef.once('value').then((snap) => {
-        console.log('snap', snap);
         const value = snap.val().budget;
         return value;
       }).then((response) => {
@@ -59,7 +58,6 @@ export default class BudgetSection extends Component {
         _this.props.setBudget(response);
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -71,7 +69,6 @@ export default class BudgetSection extends Component {
       const userTotalExpensesRef = ref.child('userReadable/userTotalExpenses').child(uid);
 
       await userTotalExpensesRef.once('value').then((snap) => {
-        console.log('snap', snap);
         const value = snap.val().expenses;
         return value;
       }).then((response) => {
@@ -81,7 +78,6 @@ export default class BudgetSection extends Component {
         _this.props.setExpense(response);
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -110,11 +106,8 @@ export default class BudgetSection extends Component {
         _this.setState({
           budget: newBudgetValue,
         });
-      } else if (newBudgetValue < 0) {
-        Alert.alert('Budget cannot be negative.');
       }
     } catch (e) {
-      console.log(e);
     }
     this.toggleUpdateBudget();
   }

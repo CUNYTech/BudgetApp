@@ -65,8 +65,6 @@ export default class IndiGoal extends Component {
         });
       }
     } catch (e) {
-      Alert.alert(e);
-      console.log(e);
     }
     this.props.updateGoals();
     this.toggleEditGoal();

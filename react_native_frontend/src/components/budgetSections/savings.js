@@ -47,7 +47,6 @@ export default class Savings extends Component {
       const userBudgetRef = ref.child('userReadable/userSavings').child(uid);
 
       await userBudgetRef.once('value').then((snap) => {
-        console.log('snap', snap);
         const value = snap.val().savings;
         return value;
       }).then((response) => {
@@ -56,7 +55,6 @@ export default class Savings extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -81,11 +79,8 @@ export default class Savings extends Component {
         _this.setState({
           totalSavings: newSavingsValue,
         });
-      } else if (newSavingsValue < 0) {
-        Alert.alert('Savings cannot be negative.');
       }
     } catch (e) {
-      console.log(e);
     }
     this.toggleUpdateSavings();
   }

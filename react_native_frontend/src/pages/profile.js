@@ -70,7 +70,6 @@ export default class Points extends Component {
         }
       });
     } catch (e) {
-      console.log(error);
     }
   }
 
@@ -109,7 +108,6 @@ export default class Points extends Component {
         });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -177,7 +175,6 @@ export default class Points extends Component {
           });
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -220,7 +217,6 @@ export default class Points extends Component {
         });
       })
     .catch((err) => {
-      console.log('Blob err:', err);
     });
   }
 

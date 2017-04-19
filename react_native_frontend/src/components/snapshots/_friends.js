@@ -51,7 +51,6 @@ export default class FriendsSnapshot extends Component {
         }
       });
     } catch (e) {
-      console.log(e);
     }
   }
 
