@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput,
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
 import IndiGoal from '../components/goalHelpers/indiGoal.js';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { height, width } = Dimensions.get('window');
@@ -125,6 +126,7 @@ export default class Goals extends Component {
 
   _showAddGoal() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
+    dismissKeyboard();
     if (this.state.addGoalOffset === -height) {
       this.setState({
         addGoalOffset: 0,
@@ -264,6 +266,7 @@ export default class Goals extends Component {
                 $
               </Text>
               <TextInput
+                keyboardType="numeric"
                 style={{ height: 40, width: 200, borderColor: '#e0e0e0', backgroundColor: '#e0e0e0', borderWidth: 1, textAlign: 'center' }}
                 onChangeText={this.handleChangeInput.bind(this, 'amount')}
                 value={this.state.amount}

@@ -4,6 +4,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 const { height, width } = Dimensions.get('window');
 
 
@@ -80,6 +81,7 @@ export default class IndiGoal extends Component {
 
   toggleEditGoal() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
+    dismissKeyboard();
     if (this.state.modalOffset === 0) {
       this.setState({
         modalOffset: width * 0.5,
@@ -126,6 +128,7 @@ export default class IndiGoal extends Component {
             Add to goal
           </Text>
             <TextInput
+              keyboardType="numeric"
               style={{ height: 40, width: 100, backgroundColor: 'rgba(255,255,255,.6)', borderWidth: 1, textAlign: 'center' }}
               placeholder="$"
               onChangeText={newProgressChange => this.setState({ newProgressChange })}

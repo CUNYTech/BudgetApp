@@ -187,16 +187,6 @@ export default class Points extends Component {
     }
   }
 
-  // cameraRoll() {
-  //   const uid = this.props.Firebase.auth().currentUser.uid;
-  //   // REFERENCE PLACE IN PE
-  //   ImagePickerIOS.openSelectDialog({}, (imageUri) => {
-  //     console.log(imageUri);
-  //     this.setState({ image: imageUri });
-  //     this.pickImage();
-  //   }, error => console.log(error));
-  // }
-
   cameraRoll() {
     ImagePicker.showImagePicker(options, (response) => {
       this.setState({ image: response.origURL });
@@ -280,35 +270,35 @@ export default class Points extends Component {
           <CardItem style={{ backgroundColor: 'transparent' }}>
             <Content>
               <ListItem style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#ffc107' }}>
-              <Left>
-                <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                <Left>
+                  <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                   Friends
                 </Text>
-              </Left>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
-                {this.state.friends}
-              </Text>
-            </ListItem>
-            <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }}>
-              <Left>
+                </Left>
                 <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  {this.state.friends}
+                </Text>
+              </ListItem>
+              <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }}>
+                <Left>
+                  <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                   Local Rank
                 </Text>
-              </Left>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
-                {this.state.userLocalRank}
-              </Text>
-            </ListItem>
-            <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }} >
-              <Left>
+                </Left>
                 <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  {this.state.userLocalRank}
+                </Text>
+              </ListItem>
+              <ListItem style={{ borderBottomWidth: 1, borderColor: '#ffc107' }} >
+                <Left>
+                  <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
                   Global Rank
                 </Text>
-              </Left>
-              <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
-                {this.state.userGlobalRank}
-              </Text>
-            </ListItem>
+                </Left>
+                <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>
+                  {this.state.userGlobalRank}
+                </Text>
+              </ListItem>
             </Content>
           </CardItem>
         </Card>

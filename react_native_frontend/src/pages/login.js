@@ -27,7 +27,7 @@ export default class Login extends Component {
 
     // User Login Authentication
   async _login() {
-    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.')) || (this.state.password === '')) {
+    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.')) || (this.state.password === '') || (this.state.email.includes(' '))) {
       this.setState({ errors: 'Please type in a valid email or password.' });
       return;
     }
@@ -116,6 +116,7 @@ export default class Login extends Component {
               <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>
               <Input
                 autoCorrect={false}
+                keyboardType="email-address"
                 label="Email"
                 value={this.state.email}
                 onChange={this.handleChangeInput.bind(this, 'email')}

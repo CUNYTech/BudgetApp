@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import { _updatePoints } from '../utils/pointHelpers';
@@ -28,7 +29,7 @@ export default class Register extends Component {
 
     // Add new user to Firebase DB
   async _register() {
-    if (!(this.state.email.includes('@')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.'))) {
+    if (!(this.state.email.includes('@')) || (this.state.email.includes(' ')) || !(this.state.email.includes('.')) || (this.state.email.includes('@.'))) {
       this.setState({ errors: 'Please use a valid email.' });
       return;
     }
@@ -219,6 +220,7 @@ export default class Register extends Component {
                 onChange={this.handleChangeInput.bind(this, 'username')}
               />
               <Input
+                keyboardType="email-address"
                 label="Email"
                 autoCorrect={false}
                 value={this.state.email}
@@ -233,6 +235,7 @@ export default class Register extends Component {
                 onChange={this.handleChangeInput.bind(this, 'password')}
                 secureTextEntry
               />
+              <KeyboardSpacer topSpacing={50} />
             </Animated.View>
             <Animated.View style={{ position: 'relative', top: this.state.animation.buttonPositionTop }}>
               <Button marginTop={getPlatformValue('android', 25, 38)} width={200} onPress={this._register.bind(this)}>

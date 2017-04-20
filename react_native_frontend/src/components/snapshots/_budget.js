@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-    Alert, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform, Dimensions } from 'react-native';
+    Alert, Keyboard, View, Text, StyleSheet, TouchableOpacity, TextInput, LayoutAnimation, Platform, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 import { _updatePoints } from '../../utils/pointHelpers';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 
 const { height, width } = Dimensions.get('window');
 
@@ -149,6 +150,7 @@ export default class BudgetSnapshot extends Component {
 
   toggleUpdateExpense() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
+    dismissKeyboard();
     if (this.state.expenseModalOffset === -height) {
       this.setState({
         expenseModalOffset: 0,
@@ -233,8 +235,10 @@ export default class BudgetSnapshot extends Component {
             />
           </View>
           <TextInput
+            keyboardType="numeric"
             placeholder="$"
             placeholderTextColor="white"
+            onSubmitEditing={Keyboard.dismiss}
             style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.1)', margin: 10, color: 'white' }}
             onChangeText={expenseValueChange => this.setState({ expenseValueChange })}
             value={this.state.expenseValueChange}

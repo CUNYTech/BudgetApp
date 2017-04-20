@@ -5,6 +5,7 @@ import { getPlatformValue } from '../utils';
 import Expenses from '../components/budgetSections/expenses.js';
 import Savings from '../components/budgetSections/savings.js';
 import BudgetSection from '../components/budgetSections/budget.js';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const { height, width } = Dimensions.get('window');
 const CustomLayoutAnimation = {
@@ -33,9 +34,6 @@ export default class Budget extends Component {
       expenseTotal: 0,
       budgetTotal: 0,
     };
-  }
-
-  componentWillMount() {
   }
 
   showAddBudget() {
