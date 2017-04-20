@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Alert, Image, Text, Dimensions, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 
@@ -114,6 +115,7 @@ export default class BudgetSection extends Component {
 
   toggleUpdateBudget() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
+    dismissKeyboard();
     if (this.state.budgetModalOffset === 0) {
       this.setState({
         budgetModalOffset: height * 0.3,
@@ -215,6 +217,7 @@ export default class BudgetSection extends Component {
             Set Budget
           </Text>
           <TextInput
+            keyboardType="numeric"
             placeholder="$"
             placeholderTextColor="white"
             style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.3)', margin: 10, color: 'white' }}

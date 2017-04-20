@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 
@@ -87,7 +88,7 @@ export default class Savings extends Component {
 
   toggleUpdateSavings() {
     LayoutAnimation.configureNext(CustomLayoutAnimation);
-
+    dismissKeyboard();
     if (this.state.modalOffset === height * 0.30) {
       this.setState({
         modalOffset: 0,
@@ -128,6 +129,7 @@ export default class Savings extends Component {
             Update Savings
           </Text>
           <TextInput
+            keyboardType="numeric"
             placeholder="$"
             placeholderTextColor="#bdbdbd"
             style={{ textAlign: 'left', width: 80, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.2)', margin: 10, color: 'white' }}

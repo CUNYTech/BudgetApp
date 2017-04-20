@@ -10,17 +10,153 @@ export default class Points extends Component {
   constructor() {
     super();
     this.state = {
-      userLocalRank: 0,
-      userRank: 0,
       CurrentPoints: 0,
       dailyPoints: 0,
+      userLocalRank: 0,
+      userGlobalRank: 0,
+      friends: 0,
     };
   }
 
-  componentDidMount() {
-    this.setPoints();
-    this._getBoard();
+  componentWillMount() {
     this._localRank();
+    this._getBoard();
+    this.setFriends();
+    this.setPoints();
+  }
+
+  async setFriends() {
+    try {
+      const _this = this;
+      await this.props.Firebase.auth().currentUser;
+
+      const uid = this.props.Firebase.auth().currentUser.uid;
+      const ref = this.props.Firebase.database().ref();
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
+        });
+        return friendList;
+      }).then((value) => {
+        if ((value.length > 0)) {
+          _this.setState({
+            friends: value.length,
+          });
+        } else {
+          _this.setState({
+            friends: 0,
+          });
+        }
+      });
+    } catch (e) {
+    }
+  }
+
+  async _getBoard() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
+
+      userRankingRef.orderByChild('points').once('value').then((snap) => {
+        snap.forEach((snapshot) => {
+          leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+        });
+        return Promise.all(leaderBoard);
+      })
+      .then((leaderBoard) => {
+        const newleaderBoard = leaderBoard.reverse();
+        return newleaderBoard;
+      })
+      .then((newleaderBoard) => {
+        const rankings = [];
+        const ranks = Object.keys(newleaderBoard);
+        ranks.forEach((ranked) => {
+          const name = newleaderBoard[ranked][0];
+          const rank = +ranked + 1;
+          rankings.push([name, `${rank}`]);
+        });
+        return rankings;
+      })
+      .then((rankings) => {
+        rankings.forEach((Rank) => {
+          if (Rank[0] === user.displayName) {
+            this.setState({ userGlobalRank: Rank[1] });
+          }
+        });
+      });
+    } catch (e) {
+    }
+  }
+
+  async _localRank() {
+    try {
+      const ref = this.props.Firebase.database().ref();
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
+      const userRankingRef = ref.child('userReadable/userPoints');
+      const leaderBoard = [];
+
+      userFriendsRef.orderByKey().once('value').then((snap) => {
+        const friendList = [];
+        snap.forEach((snapshot) => {
+          friendList.push({ displayName: snapshot.val().displayName });
+        });
+        return friendList;
+      })
+      .then((friendList) => {
+        userRankingRef.orderByChild('points').once('value').then((snap) => {
+          snap.forEach((snapshot) => {
+            leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
+          });
+          return Promise.all(leaderBoard);
+        })
+          .then((leaderBoard) => {
+            const newleaderBoard = leaderBoard.reverse();
+            return newleaderBoard;
+          })
+          .then((newleaderBoard) => {
+            const friendRank = [];
+            friendList.forEach((element) => {
+              for (let i = 0; i < newleaderBoard.length; i++) {
+                if ((newleaderBoard[i][0] === `${element.displayName}`)) {
+                  friendRank.push([newleaderBoard[i][1], newleaderBoard[i][0]]);
+                }
+              }
+            });
+            newleaderBoard.forEach((element) => {
+              if (element[0] === user.displayName) {
+                friendRank.push([element[1], element[0]]);
+              }
+            });
+            function sortNumber(a, b) {
+              return b[0] - a[0];
+            }
+            const sortedFriends = friendRank.sort(sortNumber);
+            const rankings = [];
+            const ranks = Object.keys(friendRank);
+            ranks.forEach((ranked) => {
+              const name = sortedFriends[ranked][1];
+              const rank = +ranked + 1;
+              rankings.push([name, `${rank}`]);
+            });
+            return rankings;
+          })
+          .then((rankings) => {
+            const localRank = 0;
+            rankings.forEach((Rank) => {
+              if (Rank[0] === user.displayName) {
+                this.setState({ userLocalRank: Rank[1] });
+              }
+            });
+          });
+      });
+    } catch (e) {
+    }
   }
 
 
@@ -213,7 +349,7 @@ export default class Points extends Component {
           </View>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 0.5, borderColor: '#e0e0e0' }}>
             <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>World Rank</Text>
-            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>{this.state.userRank}</Text>
+            <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 17 }}>{this.state.userGlobalRank}</Text>
           </View>
         </View>
       </View>
