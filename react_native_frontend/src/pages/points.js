@@ -315,17 +315,17 @@ export default class Points extends Component {
           <Icon name="diamond" size={20} color="#ffc107" />
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width, height: height * 0.25 }}>
-          <Text style={{ fontFamily: 'OpenSans', fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100', textAlign: 'left' }}>{this.state.CurrentPoints}</Text>
-          <Text style={{ fontFamily: 'OpenSans', fontFamily: 'OpenSans', color: '#ffc107', textAlign: 'left' }}>Total Pts</Text>
+          <Text style={{ marginLeft: 10, fontFamily: 'OpenSans', fontFamily: 'OpenSans', fontSize: 100, color: '#bdbdbd', fontFamily: 'OpenSans', fontWeight: '100', textAlign: 'left' }}>{this.state.CurrentPoints}</Text>
+          <Text style={{ marginLeft: 10, fontFamily: 'OpenSans', fontFamily: 'OpenSans', color: '#ffc107', textAlign: 'left' }}>Total Pts</Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#212121', width, height: height * 0.20, borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107' }}>
+        <View style={{ padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#212121', width, height: height * 0.20, borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#ffc107' }}>
           <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 30 }}>Today's Points</Text>
           <Text style={{ fontFamily: 'OpenSans', color: 'white', fontSize: 40 }}>
             {this.state.dailyPoints}
             <Text style={{ fontFamily: 'OpenSans', fontSize: 17 }}>Pts</Text>
           </Text>
         </View>
-        <View style={{ width, height: height * 0.22 }}>
+        <View style={{ width, height: height * 0.22, padding: 10 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>+2 Pts</Text>
             <Text style={{ fontFamily: 'OpenSans', color: 'white' }}>Checking In</Text>
