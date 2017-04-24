@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { _updatePoints } from '../../utils/pointHelpers';
@@ -162,65 +162,69 @@ export default class Expenses extends Component {
     });
 
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>
+      <KeyboardAvoidingView behavior={this.props.behavior}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>
             Expenses
           </Text>
-          <TouchableOpacity onPress={this.toggleUpdateExpense.bind(this)}>
-            <Icon
-              name="plus-circle"
-              size={20}
-              color={theme.accent}
-              style={{ marginLeft: 10 }}
-            />
-          </TouchableOpacity>
-        </View>
-        <ScrollView style={{ backgroundColor: theme.bg }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 25 }}>
-          { expensesView.reverse() }
-        </ScrollView>
-        <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
-          <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
+            <TouchableOpacity onPress={this.toggleUpdateExpense.bind(this)}>
+              <Icon
+                name="plus-circle"
+                size={20}
+                color={theme.accent}
+                style={{ marginLeft: 10 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={{ backgroundColor: theme.bg }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 25 }}>
+            { expensesView.reverse() }
+          </ScrollView>
+          <View style={[styles.modal, { top: this.state.expenseModalOffset }]}>
+            <Text style={{ color: '#bdbdbd', fontSize: 17, margin: 10, fontFamily: 'OpenSans', fontWeight: '100' }}>
             Add an Expense
           </Text>
-          <View style={{ borderBottomWidth: 0.5, borderColor: theme.accent }}>
+            <View style={{ borderBottomWidth: 0.5, borderColor: theme.accent }}>
+              <TextInput
+                onFocus={this.props.setBehavior}
+                placeholder="Title"
+                placeholderTextColor="rgba(255,255,255,.5)"
+                style={{ width: 100, height: 40, alignSelf: 'center', color: 'white', fontSize: 15 }}
+                onChangeText={expenseTitleChange => this.setState({ expenseTitleChange })}
+                value={this.state.expenseTitleChange}
+              />
+            </View>
             <TextInput
-              placeholder="Title"
-              placeholderTextColor="rgba(255,255,255,.5)"
-              style={{ width: 100, height: 40, alignSelf: 'center', color: 'white', fontSize: 15 }}
-              onChangeText={expenseTitleChange => this.setState({ expenseTitleChange })}
-              value={this.state.expenseTitleChange}
+              onFocus={this.props.setBehavior}
+              keyboardType="numeric"
+              placeholder="$"
+              placeholderTextColor="white"
+              style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.1)', margin: 10, color: 'white' }}
+              onChangeText={expenseValueChange => this.setState({ expenseValueChange })}
+              value={this.state.expenseValueChange}
             />
-          </View>
-          <TextInput
-            keyboardType="numeric"
-            placeholder="$"
-            placeholderTextColor="white"
-            style={{ width: 100, height: 40, alignSelf: 'center', backgroundColor: 'rgba(255,255,255,.1)', margin: 10, color: 'white' }}
-            onChangeText={expenseValueChange => this.setState({ expenseValueChange })}
-            value={this.state.expenseValueChange}
-          />
-          <TouchableOpacity
-            style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderWidth: 0.5, borderColor: theme.accent }}
-            onPress={this._updateExpenses.bind(this)}
-          >
-            <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
+            <TouchableOpacity
+              style={{ backgroundColor: 'black', width: width * 0.5, padding: 10, margin: 10, borderRadius: 10, alignItems: 'center', borderWidth: 0.5, borderColor: theme.accent }}
+              onPress={this._updateExpenses.bind(this)}
+            >
+              <Text style={{ color: theme.accent, fontFamily: 'OpenSans' }}>
               Submit
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ position: 'absolute', top: 10, right: 10 }}
-            onPress={this.toggleUpdateExpense.bind(this)}
-          >
-            <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ position: 'absolute', top: 10, right: 10 }}
+              onPress={this.toggleUpdateExpense.bind(this)}
+            >
+              <Text style={{ color: 'white', fontFamily: 'OpenSans' }}>
               Cancel
             </Text>
-          </TouchableOpacity>
-          <Text style={[styles.errors, { color: this.state.error }]}>
+            </TouchableOpacity>
+            <Text style={[styles.errors, { color: this.state.error }]}>
             invalid title or value
           </Text>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

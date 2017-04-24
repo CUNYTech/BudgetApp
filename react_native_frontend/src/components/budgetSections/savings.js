@@ -129,6 +129,7 @@ export default class Savings extends Component {
             Update Savings
           </Text>
           <TextInput
+            onFocus={this.props.removeBehavior}
             keyboardType="numeric"
             placeholder="$"
             placeholderTextColor="#bdbdbd"

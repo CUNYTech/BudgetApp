@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 import Expenses from '../components/budgetSections/expenses.js';
@@ -33,6 +33,7 @@ export default class Budget extends Component {
     this.state = {
       expenseTotal: 0,
       budgetTotal: 0,
+      behavior: '',
     };
   }
 
@@ -65,6 +66,18 @@ export default class Budget extends Component {
     });
   }
 
+  setBehavior() {
+    this.setState({
+      behavior: 'position',
+    });
+  }
+
+  removeBehavior() {
+    this.setState({
+      behavior: '',
+    });
+  }
+
 
   render() {
     return (
@@ -94,13 +107,19 @@ export default class Budget extends Component {
         </View>
         <View style={{ backgroundColor: theme.bg }}>
           <BudgetSection
+            removeBehavior={this.removeBehavior.bind(this)}
             Firebase={this.props.Firebase}
             setBudget={this.setBudgetTotal.bind(this)}
             setExpense={this.setExpenseTotal.bind(this)}
             expenseTotal={this.state.expenseTotal}
           />
-          <Savings Firebase={this.props.Firebase} />
+          <Savings
+            removeBehavior={this.removeBehavior.bind(this)}
+            Firebase={this.props.Firebase}
+          />
           <Expenses
+            behavior={this.state.behavior}
+            setBehavior={this.setBehavior.bind(this)}
             Firebase={this.props.Firebase}
             expenseTotal={this.state.expenseTotal}
             budget={this.state.budget}

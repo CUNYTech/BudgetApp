@@ -217,6 +217,7 @@ export default class BudgetSection extends Component {
             Set Budget
           </Text>
           <TextInput
+            onFocus={this.props.removeBehavior}
             keyboardType="numeric"
             placeholder="$"
             placeholderTextColor="white"

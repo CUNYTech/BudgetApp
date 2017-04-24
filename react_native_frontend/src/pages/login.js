@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Animated, Alert } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, Animated, Alert } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
 import { _updatePoints } from '../utils/pointHelpers';
-
 
 export default class Login extends Component {
   constructor() {
@@ -110,8 +109,8 @@ export default class Login extends Component {
           onPressIcon={this.handleToHome.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <Logo />
-          <View style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="position" style={loginStyle.formContainer}>
+            <Logo marginTop={6} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>
               <Input
@@ -136,7 +135,7 @@ export default class Login extends Component {
                   Sign in
                 </Button>
             </Animated.View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
         <Animated.View style={{ position: 'relative', top: this.state.animation.statusPositionTop }}>
           <AlertStatus

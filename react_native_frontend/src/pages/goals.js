@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput,
-    LayoutAnimation, Platform, Dimensions, Alert, ScrollView } from 'react-native';
+    LayoutAnimation, Platform, Dimensions, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
 import IndiGoal from '../components/goalHelpers/indiGoal.js';
@@ -240,6 +240,7 @@ export default class Goals extends Component {
             backgroundColor: 'rgba(0,0,0,.7)',
             alignItems: 'flex-end',
             justifyContent: 'center',
+            paddingBottom: 150,
           }}
         >
           <TouchableOpacity onPress={this._showAddGoal.bind(this)} style={{ position: 'absolute', top: 10, right: 10 }}>

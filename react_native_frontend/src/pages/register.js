@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, Animated } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Actions } from 'react-native-router-flux';
@@ -204,13 +204,8 @@ export default class Register extends Component {
           onPressIcon={this.handleLogin.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <Animated.View style={{ position: 'relative', top: this.state.animation.headerPositionTop }}>
-            <Heading color="#ffffff" textAlign="center">
-              {/* {'Sign up'} */}
-            </Heading>
-          </Animated.View>
-          <Logo marginTop={25} />
-          <View style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="position" style={loginStyle.formContainer}>
+            <Logo marginTop={26} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{errors}</Text>
               <Input
@@ -235,14 +230,13 @@ export default class Register extends Component {
                 onChange={this.handleChangeInput.bind(this, 'password')}
                 secureTextEntry
               />
-              <KeyboardSpacer topSpacing={50} />
             </Animated.View>
             <Animated.View style={{ position: 'relative', top: this.state.animation.buttonPositionTop }}>
               <Button marginTop={getPlatformValue('android', 25, 38)} width={200} onPress={this._register.bind(this)}>
                 Create
               </Button>
             </Animated.View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
         <AlertStatus
           style={{ fontFamily: 'OpenSans' }}
