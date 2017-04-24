@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
-//
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { _updatePoints } from '../../utils/pointHelpers';
 
@@ -162,7 +162,7 @@ export default class Expenses extends Component {
     });
 
     return (
-      <KeyboardAvoidingView behavior={this.props.behavior}>
+      <KeyboardAvoidingView behavior={this.state.behavior}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.headerText}>
@@ -186,7 +186,8 @@ export default class Expenses extends Component {
           </Text>
             <View style={{ borderBottomWidth: 0.5, borderColor: theme.accent }}>
               <TextInput
-                onFocus={this.props.setBehavior}
+                onFocus={() => this.setState({ behavior: 'position' })}
+                onEndEditing={() => this.setState({ behavior: '' })}
                 placeholder="Title"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 style={{ width: 100, height: 40, alignSelf: 'center', color: 'white', fontSize: 15 }}
@@ -195,7 +196,8 @@ export default class Expenses extends Component {
               />
             </View>
             <TextInput
-              onFocus={this.props.setBehavior}
+              onFocus={() => this.setState({ behavior: 'position' })}
+              onEndEditing={() => this.setState({ behavior: '' })}
               keyboardType="numeric"
               placeholder="$"
               placeholderTextColor="white"
