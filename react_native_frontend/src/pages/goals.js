@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput,
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
 import IndiGoal from '../components/goalHelpers/indiGoal.js';
-import dismissKeyboard from 'react-native-dismiss-keyboard';
+//
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { height, width } = Dimensions.get('window');

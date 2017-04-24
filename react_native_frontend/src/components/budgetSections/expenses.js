@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Alert, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
-import dismissKeyboard from 'react-native-dismiss-keyboard';
+//
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { _updatePoints } from '../../utils/pointHelpers';
 

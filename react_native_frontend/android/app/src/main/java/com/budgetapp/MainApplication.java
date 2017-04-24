@@ -6,7 +6,6 @@ import android.util.Log;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.horcrux.svg.RNSvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -32,7 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ImagePickerPackage(),
             new RNFetchBlobPackage(),
-            new RNSvgPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage()
       );
