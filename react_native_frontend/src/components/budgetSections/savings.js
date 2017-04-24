@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, ScrollView, TextInput, StyleSheet, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
-//
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
 

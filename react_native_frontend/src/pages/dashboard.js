@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { BudgetSnapshot, GoalsSnapshot, FriendsSnapshot, PointsSnapshot } from '../components';
 import { getPlatformValue } from '../utils';
 
+
 const { height, width } = Dimensions.get('window');
 
 const theme = {

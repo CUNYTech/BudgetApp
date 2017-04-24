@@ -162,7 +162,7 @@ export default class Expenses extends Component {
     });
 
     return (
-      <KeyboardAvoidingView behavior={this.state.behavior}>
+      <KeyboardAvoidingView behavior={this.props.behavior}>
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.headerText}>
@@ -186,8 +186,8 @@ export default class Expenses extends Component {
           </Text>
             <View style={{ borderBottomWidth: 0.5, borderColor: theme.accent }}>
               <TextInput
-                onFocus={() => this.setState({ behavior: 'position' })}
-                onEndEditing={() => this.setState({ behavior: '' })}
+                onFocus={this.props.setBehavior}
+                // onEndEditing={() => this.setState({ behavior: '' })}
                 placeholder="Title"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 style={{ width: 100, height: 40, alignSelf: 'center', color: 'white', fontSize: 15 }}
@@ -196,8 +196,9 @@ export default class Expenses extends Component {
               />
             </View>
             <TextInput
-              onFocus={() => this.setState({ behavior: 'position' })}
-              onEndEditing={() => this.setState({ behavior: '' })}
+              onFocus={this.props.setBehavior}
+              // onFocus={() => this.setState({ behavior: 'position' })}
+              // onEndEditing={() => this.setState({ behavior: '' })}
               keyboardType="numeric"
               placeholder="$"
               placeholderTextColor="white"
