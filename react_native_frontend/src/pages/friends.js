@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Dimensions, Image, View, Alert, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase';
-import dismissKeyboard from 'react-native-dismiss-keyboard';
+//
 import { getPlatformValue } from '../utils';
 const { height, width } = Dimensions.get('window');
 
