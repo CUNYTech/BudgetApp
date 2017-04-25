@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { Container, Content, Text, Left, Right, ListItem, Spinner, Button } from 'native-base';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Container, Content, Text, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
 import * as firebase from 'firebase';
@@ -8,23 +8,12 @@ import { Actions } from 'react-native-router-flux';
 
 export default class AccountDelete extends Component {
 
-    /*Delete data
-    The simplest way to delete data is to call remove() on a reference to the location of that data.
-    You can also delete by specifying null as the value for another write operation such as set() or update().
-    You can use this technique with update() to delete multiple children in a single API call.*/
-    //TODO implement account deletion async function
-
-
-
   async deleteAccount() {
-
-      var user = firebase.auth().currentUser;
 
       try {
           const user = firebase.auth().currentUser;
-          user.delete().then(actions.login())
+          user.delete().then(Actions.login())
       } catch (e) {
-
       }
   }
 
