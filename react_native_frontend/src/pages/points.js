@@ -19,10 +19,26 @@ export default class Points extends Component {
   }
 
   componentWillMount() {
+    const uid = this.props.Firebase.auth().currentUser.uid;
+    const _this = this;
+    const storageRef = this.props.Firebase.storage().ref();
+    const userName = this.props.Firebase.auth().currentUser.displayName;
+    const ref = this.props.Firebase.database().ref();
+
+    const peopleRef = ref.child('/people');
+    peopleRef.child(userName).once('value').then((snap) => {
+      if (snap.val().photoUrl) {
+        return snap.val().photoUrl;
+      }
+      return 'https://static.pexels.com/photos/7613/pexels-photo.jpg';
+    }).then((pic) => {
+      this.setState({ chosenImage: pic });
+    });
+
+    _this.setState({ userName });
     this._localRank();
     this._getBoard();
     this.setFriends();
-    this.setPoints();
   }
 
   async setFriends() {
@@ -159,134 +175,6 @@ export default class Points extends Component {
     }
   }
 
-
-  async setPoints() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-      const userPointsRef = ref.child('userReadable/userPoints').child(uid);
-      const userDailyPointsRef = ref.child('userReadable/userDailyPoints').child(uid);
-
-      userDailyPointsRef.once('value').then((snap) => {
-        const dailyPoints = snap.val().points;
-        this.setState({ dailyPoints });
-      });
-
-      userPointsRef.once('value').then((snap) => {
-        const points = snap.val().points;
-        return points;
-      })
-      .then((points) => {
-        this.setState({ CurrentPoints: points });
-      });
-    } catch (e) {
-    }
-  }
-
-  async _localRank() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const uid = user.uid;
-      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-      const userRankingRef = ref.child('userReadable/userPoints');
-      const leaderBoard = [];
-
-      userFriendsRef.orderByKey().once('value').then((snap) => {
-        const friendList = [];
-        snap.forEach((snapshot) => {
-          friendList.push({ displayName: snapshot.val().displayName });
-        });
-        return friendList;
-      })
-      .then((friendList) => {
-        userRankingRef.orderByChild('points').once('value').then((snap) => {
-          snap.forEach((snapshot) => {
-            leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
-          });
-          return Promise.all(leaderBoard);
-        })
-          .then((leaderBoard) => {
-            const newleaderBoard = leaderBoard.reverse();
-            return newleaderBoard;
-          })
-          .then((newleaderBoard) => {
-            const friendRank = [];
-            friendList.forEach((element) => {
-              for (let i = 0; i < newleaderBoard.length; i++) {
-                if ((newleaderBoard[i][0] === `${element.displayName}`)) {
-                  friendRank.push([newleaderBoard[i][1], newleaderBoard[i][0]]);
-                }
-              }
-            });
-            newleaderBoard.forEach((element) => {
-              if (element[0] === user.displayName) {
-                friendRank.push([element[1], element[0]]);
-              }
-            });
-            function sortNumber(a, b) {
-              return b[0] - a[0];
-            }
-            const sortedFriends = friendRank.sort(sortNumber);
-            const rankings = [];
-            const ranks = Object.keys(friendRank);
-            ranks.forEach((ranked) => {
-              const name = sortedFriends[ranked][1];
-              const rank = +ranked + 1;
-              rankings.push([name, `${rank}`]);
-            });
-            return rankings;
-          })
-          .then((rankings) => {
-            rankings.forEach((Rank) => {
-              if (Rank[0] === user.displayName) {
-                this.setState({ userLocalRank: Rank[1] });
-              }
-            });
-          });
-      });
-    } catch (e) {
-    }
-  }
-
-  async _getBoard() {
-    try {
-      const ref = this.props.Firebase.database().ref();
-      const user = this.props.Firebase.auth().currentUser;
-      const userRankingRef = ref.child('userReadable/userPoints');
-      const leaderBoard = [];
-
-      userRankingRef.orderByChild('points').once('value').then((snap) => {
-        snap.forEach((snapshot) => {
-          leaderBoard.push([snapshot.val().displayName, snapshot.val().points]);
-        });
-        return Promise.all(leaderBoard);
-      })
-      .then((leaderBoard) => {
-        const newleaderBoard = leaderBoard.reverse();
-        return newleaderBoard;
-      })
-      .then((newleaderBoard) => {
-        const rankings = [];
-        const ranks = Object.keys(newleaderBoard);
-        ranks.forEach((ranked) => {
-          const name = newleaderBoard[ranked][0];
-          const rank = +ranked + 1;
-          rankings.push([name, `${rank}`]);
-        });
-        return rankings;
-      })
-      .then((rankings) => {
-        rankings.forEach((Rank) => {
-          if (Rank[0] === user.displayName) {
-            this.setState({ userRank: Rank[1] });
-          }
-        });
-      });
-    } catch (e) {
-    }
-  }
 
   render() {
     return (
