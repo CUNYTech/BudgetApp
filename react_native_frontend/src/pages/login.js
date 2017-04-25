@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, Animated, Alert } from 'react-native';
-import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
+import { View, KeyboardAvoidingView, Text, StyleSheet, Animated } from 'react-native';
+import { Input, Button, Logo, BackButton, AlertStatus } from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
-import * as firebase from 'firebase';
 import { _updatePoints } from '../utils/pointHelpers';
 
 export default class Login extends Component {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Container, Content, Text, Left, Right, ListItem, Spinner, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { getPlatformValue } from '../utils';
-
+import * as firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
 export default class AccountDelete extends Component {
 
@@ -12,6 +13,20 @@ export default class AccountDelete extends Component {
     You can also delete by specifying null as the value for another write operation such as set() or update().
     You can use this technique with update() to delete multiple children in a single API call.*/
     //TODO implement account deletion async function
+
+
+
+  async deleteAccount() {
+
+      var user = firebase.auth().currentUser;
+
+      try {
+          const user = firebase.auth().currentUser;
+          user.delete().then(actions.login())
+      } catch (e) {
+
+      }
+  }
 
   render() {
     return (
@@ -34,7 +49,7 @@ export default class AccountDelete extends Component {
                     Warning: Deleting your account will remove all traces of it from the database. You will have to recreate an
                     account if you wish to use Scale again.
                 </Text>
-                <Button full danger>
+                <Button full danger onPress={this.deleteAccount.bind(this)}>
                     <Text>Delete Account</Text>
                 </Button>
             </Content>
