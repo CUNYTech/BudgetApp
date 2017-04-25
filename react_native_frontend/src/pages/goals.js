@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput,
-    LayoutAnimation, Platform, Dimensions, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
+    LayoutAnimation, Dimensions, ScrollView } from 'react-native';
 import { BackgroundWrapper } from '../components';
 import { getPlatformValue } from '../utils';
 import IndiGoal from '../components/goalHelpers/indiGoal.js';

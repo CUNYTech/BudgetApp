@@ -7,6 +7,7 @@ import { getPlatformValue } from '../utils';
 
 
 export default class Settings extends Component {
+
   render() {
     return (
       <Container style={{ backgroundColor: 'black' }}>

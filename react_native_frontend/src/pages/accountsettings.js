@@ -9,7 +9,7 @@ export default class AccountSettings extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'white' }}>
+      <Container style={{ backgroundColor: 'black' }}>
         <View style={styles.header}>
           <TouchableOpacity>
             <Icon
@@ -19,13 +19,13 @@ export default class AccountSettings extends Component {
               onPress={this.props.sideMenu}
             />
           </TouchableOpacity>
-          <Text style={styles.title}>Account Settings</Text>
-          <Icon name="diamond" size={20} color="pink" />
+          <Text style={{color: 'white', fontSize:25, textAlign:'center', width:250, fontWeight:'300', marginBottom:5}}>Account Settings</Text>
+          <Icon name="diamond" size={20} color="gold" />
         </View>
         <ScrollView horizontal={false} showsHorizontalScrollIndicator={false} contentContainerStyle={{}}>
           <ListItem>
             <Left>
-              <Text>Work In Progress</Text>
+              <Text style={{color:'white', textAlign:'left'}}>Work In Progress</Text>
             </Left>
             <Right>
               <Spinner color="red" />
@@ -59,18 +59,10 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     height: 60,
-    backgroundColor: '#424242',
+    backgroundColor: 'black',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#424242',
-  },
-  title: {
-    fontSize: 25,
-    textAlign: 'center',
-    width: 250,
-    color: 'white',
-    fontWeight: '300',
-    marginBottom: 5,
   },
 });
