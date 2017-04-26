@@ -175,27 +175,24 @@ export default class PointsSnapshot extends Component {
             DAILY POINTS
           </Text>
         </View>
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', overflow: 'visible' }}>
           <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Total Points</Text>
           <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.CurrentPoints}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-          <View style={{ alignItems: 'center' }}>
+          <View style={{ alignItems: 'center', overflow: 'visible'}}>
             <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 13 }}>Local Rank</Text>
             <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.userLocalRank}</Text>
           </View>
-          <View style={{ alignItems: 'center' }}>
+          <View style={{ alignItems: 'center', overflow: 'visible'}}>
             <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 13 }}>Global Rank</Text>
             <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.userGlobalRank}</Text>
           </View>
         </View>
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', overflow: 'visible'}}>
           <Text style={{ color: 'white', fontFamily: 'OpenSans', textAlign: 'center', fontSize: 17 }}>Earned Today</Text>
           <Text style={{ fontFamily: 'OpenSans', textAlign: 'center', color: theme.accent, fontSize: 25 }}>{this.state.dailyPoints}</Text>
         </View>
-        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false} bounces={false}>
-          <StockLine data={graphData} options={options} xKey="x" yKey="y" />
-        </ScrollView> */}
       </TouchableOpacity>
     );
   }
@@ -210,6 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    overflow: 'visible',
   },
   headerText: {
     textAlign: 'left',
