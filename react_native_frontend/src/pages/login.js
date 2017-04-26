@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, Animated } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 import { Input, Button, Logo, BackButton, AlertStatus } from '../components';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import { _updatePoints } from '../utils/pointHelpers';
+
+const { height, width } = Dimensions.get('window');
 
 export default class Login extends Component {
   constructor() {
@@ -108,7 +110,7 @@ export default class Login extends Component {
           onPressIcon={this.handleToHome.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <KeyboardAvoidingView keyboardVerticalOffset={-280} behavior="position" style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-height * .2} behavior="position" style={loginStyle.formContainer}>
             <Logo marginTop={6} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>
