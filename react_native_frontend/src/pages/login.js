@@ -108,7 +108,7 @@ export default class Login extends Component {
           onPressIcon={this.handleToHome.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="position" style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-280} behavior="position" style={loginStyle.formContainer}>
             <Logo marginTop={6} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.usernamePostionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{this.state.errors}</Text>

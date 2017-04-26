@@ -204,7 +204,7 @@ export default class Register extends Component {
           onPressIcon={this.handleLogin.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="position" style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-300} behavior="position" style={loginStyle.formContainer}>
             <Logo marginTop={26} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{errors}</Text>
