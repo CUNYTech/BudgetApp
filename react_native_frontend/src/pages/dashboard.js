@@ -75,7 +75,7 @@ export default class Dashboard extends Component {
               </Text>
             <Icon name="diamond" size={20} color={theme.accent} />
           </View>
-          <View style={{ flexDirection: 'row', height: height * 0.35, width, backgroundColor: 'black' }}>
+          <View style={styles.pointsSection}>
             <PointsSnapshot Firebase={this.props.Firebase} />
             <BudgetSnapshot Firebase={this.props.Firebase} />
           </View>
@@ -102,5 +102,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#424242',
     borderBottomWidth: 1,
+  },
+  pointsSection: {
+    paddingBottom: 10,
+    flexDirection: 'row',
+    height: height * 0.35,
+    backgroundColor: 'black',
   },
 });

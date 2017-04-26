@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Text, StyleSheet, Animated } from 'react-native';
+import { View, KeyboardAvoidingView, Text, StyleSheet, Animated, Dimensions } from 'react-native';
 import { Input, Button, Logo, Heading, BackButton, AlertStatus } from '../components';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { Actions } from 'react-native-router-flux';
 import { getPlatformValue } from '../utils';
 import { _updatePoints } from '../utils/pointHelpers';
 
+const { height, width } = Dimensions.get('window');
 
 // const rootRef = firebaseApp.database().ref();
 // const itemsRef = rootRef.child('items');
@@ -204,7 +205,7 @@ export default class Register extends Component {
           onPressIcon={this.handleLogin.bind(this)}
         />
         <View style={loginStyle.loginContainer}>
-          <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="position" style={loginStyle.formContainer}>
+          <KeyboardAvoidingView keyboardVerticalOffset={-height * .218} behavior="position" style={loginStyle.formContainer}>
             <Logo marginTop={26} />
             <Animated.View style={{ position: 'relative', left: this.state.animation.formPositionLeft }}>
               <Text style={{ color: 'red', fontSize: 12 }}>{errors}</Text>
