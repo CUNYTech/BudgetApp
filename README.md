@@ -1,6 +1,6 @@
 ## <p style=text-align:center>Scale</p>
 ***
-<p style=text-align:center>Financial Independence Through Social Obligation</p>
+<p style=text-align:center>Build financial freedom through the support of a community. Manage your budget, share goals, and get rewarded for meeting them.</p>
 
 ***
 
