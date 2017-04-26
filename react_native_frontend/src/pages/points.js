@@ -14,7 +14,6 @@ export default class Points extends Component {
       dailyPoints: 0,
       userLocalRank: 0,
       userGlobalRank: 0,
-      friends: 0,
     };
   }
 
@@ -38,33 +37,28 @@ export default class Points extends Component {
     _this.setState({ userName });
     this._localRank();
     this._getBoard();
-    this.setFriends();
+    this.setPoints();
   }
 
-  async setFriends() {
+  async setPoints() {
     try {
-      const _this = this;
-      await this.props.Firebase.auth().currentUser;
-
-      const uid = this.props.Firebase.auth().currentUser.uid;
       const ref = this.props.Firebase.database().ref();
-      const userFriendsRef = ref.child('userReadable/userFriends').child(uid);
-      userFriendsRef.orderByKey().once('value').then((snap) => {
-        const friendList = [];
-        snap.forEach((snapshot) => {
-          friendList.push({ displayName: snapshot.val().displayName, uid: snapshot.val().uid });
-        });
-        return friendList;
-      }).then((value) => {
-        if ((value.length > 0)) {
-          _this.setState({
-            friends: value.length,
-          });
-        } else {
-          _this.setState({
-            friends: 0,
-          });
-        }
+      const user = this.props.Firebase.auth().currentUser;
+      const uid = user.uid;
+      const userPointsRef = ref.child('userReadable/userPoints').child(uid);
+      const userDailyPointsRef = ref.child('userReadable/userDailyPoints').child(uid);
+
+      userDailyPointsRef.once('value').then((snap) => {
+        const dailyPoints = snap.val().points;
+        this.setState({ dailyPoints });
+      });
+
+      userPointsRef.once('value').then((snap) => {
+        const points = snap.val().points;
+        return points;
+      })
+      .then((points) => {
+        this.setState({ CurrentPoints: points });
       });
     } catch (e) {
     }
