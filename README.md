@@ -17,4 +17,4 @@ This project uses React Native as the frontend, and Firebase on the backend to c
 
 <img class="img-responsive project-image" src="splash.png" alt="Scale" width="280"/> <img class="img-responsive project-image" src="dashboard.png" alt="Scale" width="280"/> <img class="img-responsive project-image" src="budget.png" alt="Scale" width="280"/>
 
-ReadMe & [Wiki](https://github.com/CUNYTech/BudgetApp/wiki) are a WIP, change back often for updates.
+ReadMe & [Wiki](https://github.com/CUNYTech/BudgetApp/wiki) are a WIP, check back often for updates.
