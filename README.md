@@ -15,8 +15,8 @@ proactive, and vice versa.
 
 This project uses React Native as the frontend, and Firebase on the backend to co-develop iOS and Android versions.
 
-<img style="width: 30%;" class="img-responsive project-image" src="splash.png" alt="Scale"/>
-<img style="width: 30%;" class="img-responsive project-image" src="dashboard.png" alt="Scale"/>
-<img style="width: 30%;" class="img-responsive project-image" src="budget.png" alt="Scale"/>
+<img class="img-responsive project-image" src="splash.png" alt="Scale" width: "48"/>
+<img class="img-responsive project-image" src="dashboard.png" alt="Scale" width: "48"/>
+<img class="img-responsive project-image" src="budget.png" alt="Scale" width: "48"/>
 
 ReadMe & [Wiki](https://github.com/CUNYTech/BudgetApp/wiki) are a WIP, change back often for updates.
