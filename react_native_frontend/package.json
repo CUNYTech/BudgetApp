@@ -16,8 +16,10 @@
     "react-native-fetch-blob": "0.10.4",
     "react-native-image-picker": "0.26.3",
     "react-native-keyboard-spacer": "0.3.1",
+    "react-native-linear-gradient": "^2.3.0",
     "react-native-progress": "3.2.0",
     "react-native-router-flux": "3.37.0",
+    "react-native-svg": "^5.4.1",
     "react-native-vector-icons": "4.0.0",
     "uuid": "^3.0.0"
   },
